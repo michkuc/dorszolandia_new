@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dorszolandia – interaktywna kraina zawodów, historii i zabaw dla dzieci." />
+    <title>Dorszolandia — ryby też mają marzenia!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#mieszkancy">Przejdź do treści</a>
+    <header class="site-header" id="start">
+      <nav class="nav shell" aria-label="Główna nawigacja">
+        <a href="#start" class="brand" aria-label="Dorszolandia, strona główna">
+          <img src="assets/hero/logo-dorszolandia.png" alt="" />
+          <span>Dorszolandia</span>
+        </a>
+        <button class="mobile-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu <span aria-hidden="true">☰</span></button>
+        <div class="nav-links" id="site-menu">
+          <a class="is-active" href="#start">Start</a>
+          <a href="#mapa">Mapa Krainy</a>
+          <a href="#mieszkancy">Mieszkańcy</a>
+          <a href="#przygody">Przygody</a>
+          <a href="#gry">Gry i Zagadki</a>
+          <a href="#kreator">Kreator</a>
+          <a href="#dorszopedia">Dorszopedia</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+        <a href="#kreator" class="button button-sun nav-cta">Stwórz własnego Dorsza <span aria-hidden="true">→</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-underlay" aria-hidden="true"></div>
+        <div class="shell hero-inner">
+          <aside class="wood-sign sign-left">Małe rybki,<br />wielkie sprawy</aside>
+          <div class="hero-copy">
+            <p class="eyebrow">Witaj pod wodą!</p>
+            <h1 id="hero-title">DORSZOLANDIA</h1>
+            <p class="hero-subtitle">Kraina, w której każdy Dorsz ma swoją historię</p>
+            <p class="hero-text">Przygoda, nauka, przyjaźń i wyobraźnia czekają pod wodą!</p>
+            <div class="hero-actions">
+              <a href="#mieszkancy" class="button button-sun">Poznaj mieszkańców <span aria-hidden="true">→</span></a>
+              <a href="#mapa" class="button button-light">Odwiedź mapę <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <aside class="wood-sign sign-right">Przyjaźń · Wiedza<br />Przygoda · Czyste morze <span aria-hidden="true">♥</span></aside>
+        </div>
+      </section>
+
+      <section class="section residents-section" id="mieszkancy" aria-labelledby="residents-title">
+        <div class="shell">
+          <div class="section-heading tight">
+            <div>
+              <p class="eyebrow eyebrow-blue">Ryby też mają marzenia!</p>
+              <h2 id="residents-title">Poznaj mieszkańców <span aria-hidden="true">〰</span></h2>
+              <p>W Dorszolandii każdy ma wyjątkowy talent. Poznaj naszych bohaterów!</p>
+            </div>
+            <button class="button button-outline" type="button" id="showAllResidents">Zobacz wszystkich 24 mieszkańców <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="filters" aria-label="Filtruj mieszkańców po kategorii" id="categoryFilters"></div>
+          <div class="resident-grid" id="residentGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="map-section" id="mapa" aria-labelledby="map-title">
+        <div class="shell map-wrap">
+          <aside class="wood-sign map-sign map-sign-left">Wspólnie dbamy<br />o ocean <span aria-hidden="true">♥</span></aside>
+          <div class="section-heading map-heading">
+            <div>
+              <p class="eyebrow">Kliknij i wyrusz w podróż</p>
+              <h2 id="map-title">Mapa Krainy <span aria-hidden="true">〰</span></h2>
+              <p>Odkryj najciekawsze miejsca w Dorszolandii.</p>
+            </div>
+          </div>
+          <div class="map-board" aria-label="Interaktywna mapa Dorszolandii">
+            <img src="assets/generated/map-krainy.png" alt="Bajkowa mapa podwodnego miasta Dorszolandia" />
+            <div class="map-pins" id="mapPins"></div>
+          </div>
+          <aside class="wood-sign map-sign map-sign-right">Odkrywaj · Baw się<br />Ucz się · Chroń <span aria-hidden="true">♥</span></aside>
+        </div>
+      </section>
+
+      <section class="section adventures-section" id="przygody" aria-labelledby="adventure-title">
+        <div class="shell">
+          <div class="section-heading tight">
+            <div>
+              <p class="eyebrow eyebrow-blue">Wciągające misje</p>
+              <h2 id="adventure-title">Przygody i zabawy <span aria-hidden="true">〰</span></h2>
+              <p>Ciekawe historie, gry i ważne misje czekają!</p>
+            </div>
+            <button class="button button-outline" type="button" id="openStories">Otwórz historie miasta <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="adventure-grid" id="adventureGrid"></div>
+        </div>
+      </section>
+
+      <section class="section games-section" id="gry" aria-labelledby="games-title">
+        <div class="shell">
+          <div class="section-heading compact-heading">
+            <div>
+              <p class="eyebrow eyebrow-blue">Graj, myśl, próbuj jeszcze raz</p>
+              <h2 id="games-title">Gry i zagadki <span aria-hidden="true">〰</span></h2>
+              <p>Każda gra działa od razu — wybierz jedną i podejmij wyzwanie.</p>
+            </div>
+          </div>
+          <div class="games-grid">
+            <article class="game-card memory-game">
+              <div class="game-title-row"><span class="game-icon">🫧</span><div><h3>Memory z Dorszami</h3><p>Odszukaj cztery pary mieszkańców.</p></div></div>
+              <p class="game-howto">Jak grać: odkrywaj po dwie karty. Para zostaje na planszy, pomyłka wraca do bąbelka.</p><div class="game-status"><span id="memoryStatus">Znajdź wszystkie pary!</span><button class="text-button" id="resetMemory" type="button">Od nowa</button></div>
+              <div class="memory-grid" id="memoryGrid" aria-label="Gra memory"></div>
+            </article>
+            <article class="game-card quiz-game">
+              <div class="game-title-row"><span class="game-icon">❔</span><div><h3>Jaki to zawód?</h3><p>Przeczytaj podpowiedź i wybierz odpowiedź.</p></div></div>
+              <p class="game-howto">Jak grać: przeczytaj opis, wybierz zawód i sprawdź odpowiedź. Każda nowa zagadka losuje inną postać.</p><div class="quiz-body" id="quizBody"></div>
+              <button class="button button-small button-light" type="button" id="nextQuiz">Nowa zagadka <span aria-hidden="true">↻</span></button>
+            </article>
+            <article class="game-card goalkeeper-game">
+              <div class="game-title-row"><span class="game-icon">⚽</span><div><h3>Bramkarz Dorsz</h3><p>Klikaj piłkę, zanim odpłynie!</p></div></div>
+              <p class="game-howto">Jak grać: uruchom 15 sekund treningu i kliknij piłkę przed kolejnym strzałem.</p><div class="goal-field" id="goalField" aria-label="Pole gry Bramkarz Dorsz">
+                <img src="assets/generated/zawod-19.png" alt="Bramkarz Dorsz w bramce" />
+                <button class="goal-ball" type="button" id="goalBall" aria-label="Obroń piłkę">⚽</button>
+                <div class="goal-overlay" id="goalOverlay"><button class="button button-sun button-small" type="button" id="startGoal">Start gry</button></div>
+              </div>
+              <p class="scoreline"><strong>Obrony: <span id="goalScore">0</span></strong><span>Rekord: <span id="goalBest">0</span></span><span>Czas: <span id="goalTime">15</span> s</span></p>
+            </article>
+            <article class="game-card differences-game">
+              <div class="game-title-row"><span class="game-icon">🔍</span><div><h3>Skarby Rafy</h3><p>Odszukaj cztery ukryte skarby.</p></div></div>
+              <p class="game-howto">Jak grać: znajdź i kliknij cztery ukryte skarby. Złoty błysk oznacza trafienie.</p><div class="difference-scene" id="differenceScene" aria-label="Znajdź cztery ukryte skarby na ilustracji">
+                <button type="button" class="difference-object shell-object" data-difference="muszla" aria-label="Znajdź muszlę">🐚</button>
+                <button type="button" class="difference-object star-object" data-difference="gwiazda" aria-label="Znajdź gwiazdę">⭐</button>
+                <button type="button" class="difference-object fish-object" data-difference="rybka" aria-label="Znajdź rybkę">🐠</button>
+                <button type="button" class="difference-object bubble-object" data-difference="bąbel" aria-label="Znajdź bąbel">🫧</button>
+                <span class="difference-object coral-object" aria-hidden="true">🪸</span>
+              </div>
+              <p class="difference-result" id="differenceResult">Znajdź 4 ukryte skarby. Klikaj tylko różne elementy!</p><button class="text-button" type="button" id="resetDifferences">Ułóż zagadkę od nowa</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="dream-section" aria-labelledby="dream-title">
+        <div class="shell dream-card">
+          <div><p class="eyebrow">Każdy talent jest ważny</p><h2 id="dream-title">Ryby też mają marzenia</h2><p>Nie wiesz, od czego zacząć? Wylosuj mieszkańca i odkryj jego supermoc.</p></div>
+          <button class="button button-sun" id="randomResident" type="button">Wylosuj zawód <span aria-hidden="true">✦</span></button>
+          <div class="dream-result" id="dreamResult" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="creator-section" id="kreator" aria-labelledby="creator-title">
+        <div class="shell">
+          <div class="section-heading compact-heading creator-heading"><div><p class="eyebrow eyebrow-blue">Twoja wyobraźnia prowadzi</p><h2 id="creator-title">Stwórz własnego Dorsza <span aria-hidden="true">〰</span></h2><p>Dodawaj akcesoria na rybkę i przeciągaj je w wybrane miejsce.</p></div></div>
+          <div class="creator-card">
+            <div class="creator-stage" id="creatorStage" aria-label="Podgląd tworzonego Dorsza, przeciągaj na niego dodatki">
+              <div class="creator-water" aria-hidden="true"></div>
+              <div class="placed-items placed-items-back" id="placedItemsBack" aria-label="Akcesoria za Dorszem"></div>
+              <img id="creatorFish" src="assets/generated/dorsz-baza-transparent.png" alt="Tworzony Dorsz" />
+              <div class="placed-items placed-items-front" id="placedItemsFront" aria-label="Akcesoria przed Dorszem"></div>
+              <span class="creator-bubble bubble-a" aria-hidden="true">✦</span><span class="creator-bubble bubble-b" aria-hidden="true">✦</span>
+            </div>
+            <form class="creator-controls" id="creatorForm">
+              <label>Imię<input id="fishName" name="fishName" maxlength="24" value="Mój Dorsz" /></label>
+              <fieldset><legend>Kolor</legend><div class="color-picker" id="colorPicker"><button type="button" class="color-dot is-selected" data-color="#ffad24" style="--dot:#ffad24" aria-label="Pomarańczowy"></button><button type="button" class="color-dot" data-color="#33a8e8" style="--dot:#33a8e8" aria-label="Błękitny"></button><button type="button" class="color-dot" data-color="#f26492" style="--dot:#f26492" aria-label="Różowy"></button><button type="button" class="color-dot" data-color="#75c95b" style="--dot:#75c95b" aria-label="Zielony"></button><button type="button" class="color-dot" data-color="#8c69e8" style="--dot:#8c69e8" aria-label="Fioletowy"></button></div></fieldset>
+              <label>Rola<select id="fishRole" name="fishRole"><option>Odkrywca</option><option>Naukowiec</option><option>Sportowiec</option><option>Artysta</option><option>Pomocnik miasta</option><option>Członek Dworu Króla</option></select></label>
+              <fieldset class="accessories"><legend>Akcesoria — dodaj i nałóż na Dorsza</legend><div class="accessory-palette" id="accessoryPalette"></div><button type="button" class="text-button remove-button" id="clearAccessories">Wyczyść wszystkie dodatki</button></fieldset>
+              <fieldset class="selected-accessory"><legend>Wybrany rekwizyt</legend><p id="accessorySelection">Wybierz dodatek na Dorszu, aby go przesunąć, obrócić lub zmienić jego wielkość.</p><div class="transform-ranges"><label for="accessorySize">Rozmiar <output id="accessorySizeValue">—</output><input type="range" id="accessorySize" min="24" max="104" value="48" disabled /></label><label for="accessoryRotation">Obrót <output id="accessoryRotationValue">—</output><input type="range" id="accessoryRotation" min="-180" max="180" value="0" disabled /></label></div><div class="transform-actions"><button type="button" class="transform-button" id="decreaseAccessory" aria-label="Zmniejsz wybrany rekwizyt">A−</button><button type="button" class="transform-button" id="increaseAccessory" aria-label="Powiększ wybrany rekwizyt">A+</button><button type="button" class="transform-button" id="layerDown">Warstwa ↓</button><button type="button" class="transform-button" id="layerUp">Warstwa ↑</button><button type="button" class="transform-button" id="sendToBack">Na spód</button><button type="button" class="transform-button" id="bringToFront">Na wierzch</button><button type="button" class="transform-button" id="sendBehindFish">Za Dorsza</button><button type="button" class="transform-button" id="bringBeforeFish">Przed Dorsza</button><button type="button" class="transform-button" id="resetSelectedAccessory">Reset</button><button type="button" class="transform-button" id="duplicateAccessory">Kopiuj</button><button type="button" class="text-button" id="removeSelectedAccessory" disabled>Usuń</button><button type="button" class="button button-sun button-small" id="centerAccessory" disabled>Wyśrodkuj</button></div><div class="layer-stack"><strong>Warstwy dodatków</strong><div id="layerList" aria-label="Lista dodanych rekwizytów"></div></div><p class="transform-help">Przeciągnij rekwizyt. Żółty uchwyt zmienia wielkość. „Za/Przed Dorsza” ustawia prawdziwą warstwę względem rybki.</p></fieldset>
+              <div class="creator-actions"><button class="button button-sun" type="submit">Stwórz swojego Dorsza <span aria-hidden="true">→</span></button><button class="button button-outline" id="downloadFish" type="button">Pobierz kartę PNG</button></div>
+            </form>
+          </div>
+          <div class="custom-card-output" id="customCardOutput" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="court-section" id="dwor" aria-labelledby="court-title">
+        <div class="shell">
+          <div class="court-intro"><div><p class="eyebrow">Stary zamek, współczesne miasto</p><h2 id="court-title">Dwór Króla Dorsza</h2><p>Król i jego dwór są żywą częścią dzisiejszej Dorszolandii: słuchają mieszkańców, organizują miejskie święta i wspierają dobre pomysły.</p></div><button class="button button-light" id="openCourtStory" type="button">Poznaj kronikę Dworu <span aria-hidden="true">→</span></button></div>
+          <div class="court-grid" id="courtGrid"></div>
+        </div>
+      </section>
+
+      <section class="section encyclopedia-section" id="dorszopedia" aria-labelledby="encyclopedia-title">
+        <div class="shell"><div class="section-heading compact-heading"><div><p class="eyebrow eyebrow-blue">Wiedza w bąbelkach</p><h2 id="encyclopedia-title">Dorszopedia <span aria-hidden="true">〰</span></h2><p>Krótko, ciekawie i w sam raz do dalszego odkrywania.</p></div></div><div class="encyclopedia-grid"><article><span>🐟</span><h3>Kim są mieszkańcy?</h3><p>To rybki z własnymi talentami. Każdy zawód pomaga komuś inaczej.</p></article><article><span>💛</span><h3>Wartości krainy</h3><p>Przyjaźń, ciekawość, współpraca i troska o czyste morze.</p></article><article><span>🌊</span><h3>Oceanowa ciekawostka</h3><p>Rafy są domem dla wielu zwierząt — dlatego warto chronić ich czystą wodę.</p></article><article><span>💡</span><h3>Jak odkrywać zawody?</h3><p>Pytaj, obserwuj i próbuj małych zadań. Marzenia lubią działanie.</p></article></div><button type="button" class="button button-outline encyclopedia-song" id="playSong">▶ Posłuchaj piosenki Dorszolandii</button></div>
+      </section>
+
+      <section class="shop-section" id="sklep" aria-labelledby="shop-title">
+        <div class="shell shop-inner"><div><p class="eyebrow">Dla fanów krainy</p><h2 id="shop-title">Sklep Dorszolandii</h2><p>Koszulki, kubki, przypinki i gadżety z mieszkańcami miasta. Katalog jest gotowy do późniejszego podłączenia do płatności.</p></div><div class="shop-items"><article>👕<strong>Koszulki</strong><span>ulubiony Dorsz</span></article><article>☕<strong>Kubki</strong><span>na bąbelkowe kakao</span></article><article>🎒<strong>Gadżety</strong><span>przypinki, zeszyty i torby</span></article></div><button class="button button-sun" type="button" id="shopButton">Zobacz kolekcję <span aria-hidden="true">🛍</span></button></div>
+      </section>
+    </main>
+
+    <footer id="kontakt"><div class="shell footer-inner"><a href="#start" class="brand footer-brand"><img src="assets/hero/logo-dorszolandia.png" alt="" /><span>Dorszolandia</span></a><p>Lepiej jutro zaczyna się od nas! <span aria-hidden="true">♥</span></p><div class="footer-links"><a href="#start">Start</a><a href="#mapa">Mapa</a><a href="#mieszkancy">Mieszkańcy</a><a href="#przygody">Przygody</a><a href="#gry">Gry</a><a href="#dorszopedia">Dorszopedia</a></div><div class="social-links" aria-label="Media społecznościowe"><a href="#kontakt" aria-label="YouTube">▶</a><a href="#kontakt" aria-label="Instagram">◎</a><a href="#kontakt" aria-label="Facebook">f</a></div><p class="ocean-note">Razem dla czystego oceanu! ♡</p></div></footer>
+
+    <dialog class="modal" id="modal"><button type="button" class="modal-close" id="modalClose" aria-label="Zamknij okno">×</button><div class="modal-content" id="modalContent"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

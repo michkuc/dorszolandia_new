@@ -1,4 +1,4 @@
-import { residents, places, adventures, categoryOrder, medievalResidents } from './data.js';
+import { residents, places, adventures, categoryOrder, courtResidents } from './data.js';
 
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
@@ -13,28 +13,47 @@ let toastTimer;
 const courtMembers = [
   { artIndex: 0, name: 'Król Dorsz Wielki', role: 'Gospodarz miasta', tagline: 'Prowadzi Radę Rafy i pyta mieszkańców, czego potrzebują.', story: 'Król codziennie spotyka się z mieszkańcami przy Placu Bąbelkowym. W jego zamku działa otwarta rada: można przynieść pomysł, prośbę albo dobrą wiadomość dla miasta.' },
   { artIndex: 1, name: 'Królowa Perła', role: 'Opiekunka miejskich świąt', tagline: 'Łączy tradycję, sztukę i wspólne działanie.', story: 'Królowa Perła organizuje koncerty, czytanie opowieści i akcje sąsiedzkie. Uważa, że miasto najlepiej działa wtedy, gdy każdy czuje, że jego głos jest ważny.' },
-  { artIndex: 2, name: 'Rycerz Łuska', role: 'Kapitan Straży Zamkowej', tagline: 'Pilnuje bezpieczeństwa podczas wypraw i miejskich wydarzeń.', story: 'Rycerz Łuska ćwiczy z ekipą ratunkową i strażakami. Jego tarcza jest symbolem pomocy, a nie straszenia — najważniejsze jest zawsze spokojne działanie.' },
-  { artIndex: 3, name: 'Czarodziej Bąbel', role: 'Doradca nauki', tagline: 'W zamkowej pracowni zamienia pytania w eksperymenty.', story: 'Czarodziej Bąbel nie rzuca zaklęć bez sprawdzania. Wspólnie z Naukowcem Bąblem testuje pomysły, które mogą ułatwić życie w mieście i chronić ocean.' },
-  { artIndex: 10, name: 'Pisarz Atrament', role: 'Kronikarz Dorszolandii', tagline: 'Zapisuje historie miasta i ważne pomysły mieszkańców.', story: 'Atrament prowadzi Kronikę Dorszolandii. Zapisuje w niej sukcesy, pytania i zabawne pomyłki, żeby każda kolejna ekipa mogła uczyć się z doświadczeń poprzedniej.' },
-  { artIndex: 11, name: 'Kupiec Muszelka', role: 'Gospodarz Placu Bąbelkowego', tagline: 'Dba, by spotkania, wymiany i dostawy były uczciwe.', story: 'Kupiec Muszelka zna mieszkańców po imieniu. Na placu pomaga znaleźć potrzebne rzeczy, wspiera młode pomysły Dorszusiów i pilnuje, by każdy handlował uczciwie.' }
+  { artIndex: 2, name: 'Kapitan Łuska', role: 'Koordynator bezpieczeństwa', tagline: 'Pilnuje bezpieczeństwa podczas wypraw i miejskich wydarzeń.', story: 'Kapitan Łuska ćwiczy z ekipą ratunkową i strażakami. Jego tarcza jest symbolem pomocy, a nie straszenia — najważniejsze jest zawsze spokojne działanie.' },
+  { artIndex: 3, name: 'Doktor Bąbel', role: 'Doradca nauki', tagline: 'W zamkowej pracowni zamienia pytania w eksperymenty.', story: 'Doktor Bąbel nie rzuca zaklęć — sprawdza pomysły razem z Naukowcem Bąblem, aby mogły ułatwić życie w mieście i chronić ocean.' },
+  { artIndex: 4, name: 'Kronikarz Atrament', role: 'Redaktor kroniki miasta', tagline: 'Zapisuje historie miasta i ważne pomysły mieszkańców.', story: 'Atrament prowadzi Kronikę Dorszolandii. Zapisuje w niej sukcesy, pytania i zabawne pomyłki, żeby każda kolejna ekipa mogła uczyć się z doświadczeń poprzedniej.' },
+  { artIndex: 5, name: 'Gospodarz Muszelka', role: 'Opiekun Placu Bąbelkowego', tagline: 'Dba, by spotkania, wymiany i dostawy były uczciwe.', story: 'Muszelka zna mieszkańców po imieniu. Na placu pomaga znaleźć potrzebne rzeczy, wspiera młode pomysły Dorszusiów i pilnuje, by każdy handlował uczciwie.' }
 ];
 
-const compassStory = [
-  ['Kompas, który miał jeden prosty obowiązek', 'Wszystko zaczęło się na Placu Bąbelkowym, gdzie Dorsuś kupił od Kupca stary kompas. Kupiec zapewnił, że urządzenie jest niezawodne. Nie wspomniał tylko, w czym dokładnie jest niezawodne.', 'Borys spojrzał na wskazówkę. Ta obróciła się trzy razy, zatrzymała na budce z glonolodami, a potem zdecydowanie wskazała Zatokę Tajemnic. — No to mamy plan — powiedział Borys. — Nie mamy — odpowiedział Dorsuś. — To prawie to samo.'],
-  ['Ślad numer jeden: bąbel w kapeluszu', 'Przy wejściu do zatoki znaleźli pojedynczy wielki bąbel, który nie pękał. W środku pływał maleńki kawałek mapy. Dorsuś chciał go spokojnie obejrzeć. Borys chciał potrząsnąć bąblem. Bąbel nie chciał współpracować z żadnym z nich.', 'Dopiero gdy połączyli pomysły — Dorsuś odczytał znaki, a Borys przytrzymał bąbel — odkryli wiadomość: „Szukajcie miejsca, którego nie ma na mapie”.'],
-  ['Miejsce, którego nie ma', 'Kompas zaprowadził ich między dwa ogromne wodorosty. Za nimi nie było jaskini, skarbu ani tajnego zamku. Była mała ławka i tabliczka: „Punkt odpoczynku dla zagubionych odkrywców”.', 'Pod ławką siedział Detektyw Dorsz. Wyjaśnił, że kompas był częścią starej gry terenowej. Wskazywał nie kierunki świata, ale kolejne zagadki. Problem w tym, że ktoś uruchomił wszystkie zagadki naraz.'],
-  ['Wielki test Dorszo-Kumpli', 'Ostatnia wskazówka prowadziła do starej boi. Aby ją otworzyć, potrzebne były dwie rzeczy jednocześnie: cierpliwość Dorsusia i odwaga Borysa. Po raz pierwszy żaden z nich nie próbował zrobić wszystkiego sam.', 'W środku nie było złota. Była mała metalowa plakietka: „Dorszo-Kumple — drużyna, która potrafi się różnić i nadal płynąć w tę samą stronę”. Borys uznał, że plakietka jest prawie tak dobra jak skarb. Dorsuś uznał, że zdecydowanie lepsza. Kompas zaś wskazał glonolody.']
-];
-
-const meduzaArchive = [
-  ['W którym Dorsuś ma plan, a Borys ma dość', 'Borys, domator w glonowym szlafroku, ogląda „Szczupak i Prawda: Łuski Tajemnicy” i chrupie glonowe chipsy. Dorsuś wpada z nowym planem biznesowym: DORSZO-DOSTAWY™.'],
-  ['Meduza, która myśli, że jest pizzą', 'Plan Dorszusiów okazuje się bardziej kłujący, niż brzmiał. Ich nietypowa klientka Meduzina jest przekonana, że jest pizzą — a to dopiero początek dostawowego zamieszania.'],
-  ['Król Dorsz składa zamówienie (przypadkiem)', 'Wiadomość o dostawach trafia do Zamku Dorszolandii. Królewskie zamówienie uruchamia lawinę pośpiechu, pytań i bardzo niepewnej logistyki.'],
-  ['Katastrofa dostawcza (i tron w bańkach)', 'Kolejne przesyłki krążą po mieście, a tron zostaje otoczony bąbelkami. Borys zaczyna podejrzewać, że spokojny wieczór był lepszym planem.'],
-  ['Awans lub wygnanie', 'Dwór musi zdecydować, czy Dorszo-Dostawy™ dostaną jeszcze jedną szansę. Dorsuś uczy się, że dobry pomysł potrzebuje także odpowiedzialności.'],
-  ['Cisza przed kolejną katastrofą', 'Nim ktokolwiek zdąży odetchnąć, w mieście pojawia się kolejny problem. Nawet Gwardia Smaku zaczyna tracić apetyt na niespodzianki.'],
-  ['Zamach na pizzę (i tron)', 'Zagadkowy zamach miesza w królewskim porządku. Dorsuś i Borys muszą działać razem, choć zupełnie inaczej patrzą na każdy szczegół.'],
-  ['Pizza, pokój i parmezanowa przyszłość', 'Historia kończy się zgodą, śmiechem i ważną lekcją: przyjaźń oraz dobry plan są najlepsze, gdy nie zostawia się nikogo za burtą.']
+const cityStories = [
+  {
+    id: 'pecherzyk', icon: '🫧', title: 'Wielka Afera z Pęcherzykiem',
+    teaser: 'Król Dorsz traci Złoty Pęcherz, a Dorszuś, Borys i mówiący bąbel ruszają jego tropem.',
+    people: ['Dorszuś', 'Borys', 'Bąbel Maksymalny', 'Król Dorsz', 'Krab Szczękacz', 'Rekin Filozof'],
+    chapters: [
+      ['Bąbel, który miał pomysł', 'Dorszuś budował w pracowni bąbelkową maszynę, gdy jeden z bąbli nagle przemówił. Przedstawił się bardzo poważnie jako Bąbel Maksymalny i od razu ogłosił, że miasto potrzebuje jego pomocy.', 'Na Placu Bąbelkowym czekał zmartwiony Król Dorsz. Z jego korony zniknął Złoty Pęcherz — pamiątka po pierwszym dniu Dorszolandii. Król poprosił przyjaciół o spokojne śledztwo, a Borys od razu sprawdził, czy da się to zrobić szybko.'],
+      ['Trop z błyszczącej muszli', 'Bąbel Maksymalny zauważył błyszczący ślad prowadzący ku Zatoce Tajemnic. Po drodze Dorszuś zapisywał wskazówki, a Borys wypatrywał ich między wodorostami, żeby nie przeoczyć żadnej drobinki.', 'W zatoce spotkali Kraba Szczękacza. Krab przyznał, że znalazł pęcherz i zabrał go na chwilę do obejrzenia, lecz bąbel sam wypłynął z jego szczypiec. Ostatni raz widział go, jak leciał w stronę Rekina Filozofa.'],
+      ['Rekin Filozof kicha', 'Rekin Filozof rzeczywiście miał Złoty Pęcherz, ale trzymał go wyłącznie dlatego, że podobał mu się jego blask. Dorszuś wyjaśnił, dlaczego pamiątka jest ważna dla całego miasta, a Borys zaproponował, by zamiast się kłócić, urządzić pokaz niezwykłych bąbli.', 'Rekin tak się roześmiał, że kichnął ogromną, całkiem bezpieczną chmurą bąbelków. Złoty Pęcherz wrócił prosto w płetwy Dorszusiów, a Bąbel Maksymalny oznajmił, że to był jego najlepiej zaplanowany przypadek.'],
+      ['Oficjalni Bohaterowie Dorszolandii', 'Na zamkowym dziedzińcu Król Dorsz przypiął Dorszusowi i Borysowi małe odznaki Bohaterów Miasta. Krab Szczękacz dostał zaproszenie na spotkanie o uczciwym pożyczaniu skarbów, a Rekin Filozof obiecał przynosić własne dekoracje.', 'Od tego dnia Dorszuś i Borys wiedzieli, że dobra przygoda zaczyna się od pytania, a kończy wtedy, gdy każdy może wrócić do domu z uśmiechem. Bąbel Maksymalny uniósł się wyżej i powiedział: „Następna sprawa może być jeszcze bardziej bąbelkowa!”']
+    ]
+  },
+  {
+    id: 'plecaki', icon: '🎒', title: 'Zagadka Znikających Plecaków',
+    teaser: 'W Szkole Muszelka znikają plecaki. Trop prowadzi do Przystani Ucieczki i ważnej rozmowy.',
+    people: ['Dorszuś', 'Borys', 'Pani Świecikora', 'Krab Krabiewicz', 'Zipperius Maximus'],
+    chapters: [
+      ['Alarm w Szkole Muszelka', 'Pani Świecikora, dyrektorka Szkoły Muszelka, wezwała Dorszusiów, gdy z szatni zaczęły znikać plecaki. Nie zginęły książki ani śniadania — zniknęły właśnie całe plecaki, jeden po drugim.', 'Dorszuś znalazł przy ostatniej ławce nitkę od zamka, a Borys zauważył małe ślady prowadzące ku Przystani Ucieczki. Wskazówka była prosta, ale zagadka wcale nie: dlaczego plecaki chciałyby uciekać ze szkoły?'],
+      ['Przystań Ucieczki', 'W ukrytej zatoce czekały dziesiątki plecaków. Przewodził im Zipperius Maximus, czerwony plecak z bardzo poważnym suwakiem. Powiedział, że plecaki nie chcą przeszkadzać rybkom — po prostu są zmęczone noszeniem zbyt wielu rzeczy naraz.', 'Dorszuś wysłuchał go bez przerywania. Borys chciał od razu wszystko spakować z powrotem, lecz zamiast tego zapytał, co można zrobić lepiej. To pytanie zadziałało mocniej niż najgłośniejszy rozkaz.'],
+      ['Debata rybek i toreb', 'Do Przystani przypłynęli uczniowie, nauczyciele i nawet Krab Krabiewicz, który znał się na porządkowaniu rzeczy. Wspólnie ustalili, że do szkoły warto brać tylko potrzebne przedmioty, a resztę zostawić w klasowej półce wymiany.', 'Zipperius Maximus zgodził się na próbę. Dorszuś przygotował listę „mało, ale mądrze”, a Borys zaproponował dzień bez ciężkiego plecaka, podczas którego wszyscy sprawdzą, co naprawdę jest im potrzebne.'],
+      ['Medal za dobrą rozmowę', 'Nowy sposób zadziałał. Plecaki wróciły do szkoły lżejsze, uczniowie łatwiej znajdowali rzeczy, a w klasach było więcej miejsca na pomysły. Król Dorsz nazwał to Wielką Umową o Rozsądnym Pakowaniu.', 'Dorszuś i Borys nie dostali tym razem złotego pęcherza, lecz medal z napisem: „Najpierw słuchaj”. Borys uznał, że medal jest świetny, jeśli nie trzeba go nosić w plecaku. Zipperius Maximus zapiął suwak i roześmiał się pierwszy.']
+    ]
+  },
+  {
+    id: 'algoria', icon: '🌊', title: 'Algoria Powraca',
+    teaser: 'Trzy zakończone rozdziały o tajemniczej Aligorii, zbuntowanym pomniku i najdziwniejszym antytrendzie rafy.',
+    people: ['Dorszuś', 'Borys', 'Księżniczka Algorytma', 'Pomnik Bąbel', 'Król Dorsz'],
+    chapters: [
+      ['Ryba z misją', 'Pewnego dnia Dorszuś i Borys znaleźli wiadomość podpisaną przez Algorię — krainę, która potrafi podsuwać pomysły szybciej niż prąd morski. Wiadomość zapraszała ich do rozwiązania zagadki, ale ostrzegała: nie każdy świetny pomysł jest dobry dla wszystkich.', 'Przyjaciele ruszyli razem, bo Dorszuś lubił rozumieć zasady, a Borys umiał zauważyć, kiedy zasady zaczynają przeszkadzać. Właśnie ta różnica miała uratować całe miasto.'],
+      ['Księżniczka Algorytma i zbuntowany pomnik', 'W centrum Algorii czekała Księżniczka Algorytma oraz Pomnik Bąbel, który otrzymał zbyt dużo poleceń naraz. Pomnik mówił bez przerwy, pokazywał wszystkim, co mają robić, i nie potrafił już zatrzymać własnego programu.', 'Dorszuś poprosił o instrukcję, Borys o przycisk pauzy, a księżniczka o chwilę ciszy. Kiedy połączyli te trzy rzeczy, Pomnik Bąbel usłyszał najważniejszą komendę: „Sprawdź, czy to pomaga”.'],
+      ['Algoria przejmuje śmiech', 'Po powrocie do Dorszolandii algorytm zaczął podpowiadać mieszkańcom te same mody, te same żarty i te same obrazki. Na początku wszyscy się śmiali, ale po chwili nikt nie miał już własnego pomysłu na zabawę.', 'Król Dorsz poprosił Dorszusiów o pomoc. Przyjaciele zrozumieli, że nie trzeba walczyć z technologią — trzeba nauczyć się korzystać z niej mądrze, z miejscem na rozmowę, twórczość i własne zdanie.'],
+      ['Najdziwniejszy antytrend rafy', 'Borys wymyślił plan tak dziwny, że algorytm nie umiał go powtórzyć: Dzień Zupełnie Własnego Pomysłu. Jedni śpiewali pod wodą bez słów, inni budowali domki z muszli, a ktoś urządził konkurs na najwolniejszy taniec płetw.', 'Dorszuś dodał prostą zasadę: zanim coś udostępnisz, sprawdź, czy jest prawdziwe, życzliwe i czy naprawdę chcesz to powiedzieć. Algoria zwolniła, a w mieście znowu było słychać różne głosy.'],
+      ['Dorszolandia po swojemu', 'Księżniczka Algorytma podziękowała Dorszusowi i Borysowi. Obiecała, że jej wynalazki będą pomagały, a nie decydowały za mieszkańców. Pomnik Bąbel otrzymał nowy, lepszy napis: „Myśl, pytaj, wybieraj”.', 'Historia skończyła się przy wspólnym pikniku na Placu Bąbelkowym. Borys wyłączył wszystkie powiadomienia na godzinę, Dorszuś zostawił sobie jedno pytanie na później, a Król Dorsz ogłosił, że najlepszy trend to taki, w którym każdy może być sobą.']
+    ]
+  }
 ];
 
 function showToast(message) {
@@ -54,6 +73,11 @@ function closeModal() { if (modal.open) modal.close(); }
 
 function residentById(id) { return residents.find(resident => resident.id === id); }
 
+function residentArtwork(person, alt = '') {
+  const badge = person.badge ? `<span class="resident-badge" aria-hidden="true">${escapeHtml(person.badge)}</span>` : '';
+  return `<img src="assets/${person.art}" alt="${escapeHtml(alt)}" loading="lazy" />${badge}`;
+}
+
 function renderResidents() {
   const grid = $('#residentGrid');
   const filters = $('#categoryFilters');
@@ -65,7 +89,7 @@ function renderResidents() {
     const visible = showAll || selectedCategory !== 'Wszystkie' ? matching : matching.slice(0, 8);
     grid.innerHTML = visible.map(person => `
       <button class="resident-card" type="button" data-resident="${person.id}" aria-label="Otwórz profil: ${person.name}, ${person.role}">
-        <div class="resident-art"><img src="assets/${person.art}" alt="" loading="lazy" /></div><h3>${person.name}</h3><p>${person.tagline}</p>
+        <div class="resident-art">${residentArtwork(person)}</div><h3>${person.name}</h3><p>${person.tagline}</p>
       </button>`).join('');
     const button = $('#showAllResidents');
     button.textContent = showAll ? 'Pokaż wybrane 8 mieszkańców' : `Zobacz wszystkich ${residents.length} mieszkańców →`;
@@ -88,7 +112,7 @@ function renderResidents() {
 function openResident(id) {
   const person = residentById(id);
   if (!person) return;
-  openModal(`<article class="profile-modal"><img src="assets/${person.art}" alt="Ilustracja: ${person.name}" /><div><p class="modal-eyebrow">${person.category} · ${person.place}</p><h2>${person.name}</h2><p><strong>${person.role}</strong> — ${person.tagline}</p><h3>Historia mieszkańca</h3><p>${person.story}</p><h3>Na czym polega jego rola?</h3><p>${person.roleText}</p><div class="fact-box"><strong>Ciekawostka:</strong> ${person.fact}</div><div class="mission-box"><strong>Zadanie dla Ciebie:</strong> ${person.task}</div><button class="button button-sun button-small modal-place-button" data-place-open="${places.find(place => place.name === person.place)?.id || ''}" type="button">Poznaj jego miejsce w Dorszolandii →</button></div></article>`);
+  openModal(`<article class="profile-modal"><div class="profile-art">${residentArtwork(person, `Ilustracja: ${person.name}`)}</div><div><p class="modal-eyebrow">${person.category} · ${person.place}</p><h2>${person.name}</h2><p><strong>${person.role}</strong> — ${person.tagline}</p><h3>Historia mieszkańca</h3><p>${person.story}</p><h3>Na czym polega jego rola?</h3><p>${person.roleText}</p><div class="fact-box"><strong>Ciekawostka:</strong> ${person.fact}</div><div class="mission-box"><strong>Zadanie dla Ciebie:</strong> ${person.task}</div><button class="button button-sun button-small modal-place-button" data-place-open="${places.find(place => place.name === person.place)?.id || ''}" type="button">Poznaj jego miejsce w Dorszolandii →</button></div></article>`);
 }
 
 const pinPositions = {
@@ -126,18 +150,13 @@ function openAdventure(id) {
 }
 
 function showCityStories() {
-  openModal(`<article class="story-modal"><p class="modal-eyebrow">Dorszo-Kumple</p><h2>Historie miasta</h2><p>Tu mieszkają Dorsuś i Borys: różni, ale zawsze w tej samej drużynie.</p><div class="modal-tabs"><button type="button" class="modal-tab is-active" data-story-tab="kompas">Bąbel-Kompas</button><button type="button" class="modal-tab" data-story-tab="meduza">Misja Meduza</button></div><div id="storyPanel"></div></article>`);
-  renderStoryPanel('kompas');
+  openModal(`<article class="story-modal"><p class="modal-eyebrow">Dorszo-Kumple · ukończone historie</p><h2>Biblioteka Dorszolandii</h2><p>Dorszuś i Borys są częścią dzisiejszego miasta Króla Dorsza. Każda opowieść ma zakończenie, ważną rozmowę i odrobinę bąbelkowego chaosu.</p><div class="story-library">${cityStories.map(story => `<button type="button" class="story-card" data-story-open="${story.id}"><span class="story-card-icon" aria-hidden="true">${story.icon}</span><span><span class="story-status is-complete">Ukończona historia</span><strong>${story.title}</strong><small>${story.teaser}</small></span><b aria-hidden="true">→</b></button>`).join('')}</div><div class="fact-box"><strong>W kronice:</strong> wszystkie trzy opowieści mają pełne zakończenie. Wybierz tytuł, aby przeczytać rozdziały.</div></article>`);
 }
 
-function renderStoryPanel(type) {
-  const panel = $('#storyPanel');
-  if (!panel) return;
-  if (type === 'kompas') {
-    panel.innerHTML = `<h3>Dorszo-Kumple i Bąbel-Kompas</h3>${compassStory.map(([title, first, second]) => `<section class="story-chapter"><h3>${title}</h3><p>${first}</p><p>${second}</p></section>`).join('')}`;
-  } else {
-    panel.innerHTML = `<h3>Dorszo-Kumple i Misja Meduza</h3><p><strong>Archiwum historii:</strong> zachował się układ rozdziałów i kluczowe zdarzenia. Nie dopisujemy brakującego tekstu jako rzekomej kopii 1:1.</p><ol class="story-steps">${meduzaArchive.map(([title, summary]) => `<li><strong>${title}</strong><br />${summary}</li>`).join('')}</ol>`;
-  }
+function openCityStory(id) {
+  const story = cityStories.find(item => item.id === id);
+  if (!story) return;
+  openModal(`<article class="story-modal"><button type="button" class="story-back" data-stories-home="true">← Wszystkie historie</button><p class="modal-eyebrow">Dorszo-Kumple · pełna opowieść</p><p class="story-status is-complete">Ukończona historia</p><h2>${story.icon} ${story.title}</h2><p>${story.teaser}</p><div class="modal-people">${story.people.map(person => `<span class="modal-person">${person}</span>`).join('')}</div><div class="story-reader">${story.chapters.map(([title, first, second], index) => `<section class="story-chapter"><span class="story-chapter-number">Rozdział ${index + 1}</span><h3>${title}</h3><p>${first}</p><p>${second}</p></section>`).join('')}</div><div class="mission-box"><strong>Po lekturze:</strong> Która decyzja bohaterów była najmądrzejsza? Jak Ty pomógłbyś mieszkańcom Dorszolandii?</div></article>`);
 }
 
 let memoryDeck = [];
@@ -158,7 +177,7 @@ function renderMemory() {
   const grid = $('#memoryGrid');
   grid.innerHTML = memoryDeck.map((person, index) => {
     const state = memoryMatched.has(index) ? 'is-matched is-open' : memoryOpen.includes(index) ? 'is-open' : '';
-    return `<button type="button" class="memory-card ${state}" data-memory-card="${index}" ${memoryMatched.has(index) ? 'disabled' : ''} aria-label="Karta memory ${index + 1}"><span>${memoryOpen.includes(index) || memoryMatched.has(index) ? `<img src="assets/${person.art}" alt="${person.role}" />` : '🫧'}</span></button>`;
+    return `<button type="button" class="memory-card ${state}" data-memory-card="${index}" ${memoryMatched.has(index) ? 'disabled' : ''} aria-label="Karta memory ${index + 1}"><span>${memoryOpen.includes(index) || memoryMatched.has(index) ? `<span class="memory-art">${residentArtwork(person, person.role)}</span>` : '🫧'}</span></button>`;
   }).join('');
   const pairs = memoryMatched.size / 2;
   $('#memoryStatus').textContent = pairs === 4 ? 'Brawo! Znalazłeś wszystkie pary!' : `Pary: ${pairs} z 4`;
@@ -204,8 +223,8 @@ let goalBest = 0;
 function moveGoalBall() {
   const field = $('#goalField');
   const ball = $('#goalBall');
-  const maxX = Math.max(16, field.clientWidth - 45);
-  const maxY = Math.max(18, field.clientHeight - 52);
+  const maxX = Math.max(0, field.clientWidth - ball.offsetWidth - 28);
+  const maxY = Math.max(0, field.clientHeight - ball.offsetHeight - 28);
   ball.style.left = `${14 + Math.random() * maxX}px`;
   ball.style.top = `${14 + Math.random() * maxY}px`;
 }
@@ -471,14 +490,15 @@ async function downloadCustomFish() {
 
 function renderCourt() {
   const grid = $('#courtGrid');
-  grid.innerHTML = courtMembers.map((member, index) => `<button type="button" class="court-card" data-court="${index}" aria-label="Poznaj: ${member.name}"><img src="assets/${medievalResidents[member.artIndex].art}" alt="" loading="lazy" /><h3>${member.name}</h3><p>${member.role}</p></button>`).join('');
+  grid.innerHTML = courtMembers.map((member, index) => `<button type="button" class="court-card" data-court="${index}" aria-label="Poznaj: ${member.name}"><img src="assets/${courtResidents[member.artIndex].art}" alt="" loading="lazy" /><h3>${member.name}</h3><p>${member.role}</p></button>`).join('');
   grid.addEventListener('click', event => { const card = event.target.closest('[data-court]'); if (card) openCourtMember(Number(card.dataset.court)); });
 }
 
 function openCourtMember(index) {
   const member = courtMembers[index];
   if (!member) return;
-  openModal(`<article class="profile-modal"><img src="assets/${medievalResidents[member.artIndex].art}" alt="Ilustracja: ${member.name}" /><div><p class="modal-eyebrow">Dzisiejszy Dwór Króla Dorsza</p><h2>${member.name}</h2><p><strong>${member.role}</strong> — ${member.tagline}</p><h3>Jego rola w mieście</h3><p>${member.story}</p><div class="mission-box"><strong>Mała misja Dworu:</strong> Wymyśl jedną rzecz, o którą Rada Rafy powinna zapytać mieszkańców.</div></div></article>`);
+  const courtMember = courtResidents[member.artIndex];
+  openModal(`<article class="profile-modal"><div class="profile-art"><img src="assets/${courtMember.art}" alt="Ilustracja: ${member.name}" /></div><div><p class="modal-eyebrow">Dzisiejszy Dwór Króla Dorsza</p><h2>${member.name}</h2><p><strong>${member.role}</strong> — ${member.tagline}</p><h3>Jego rola w mieście</h3><p>${member.story}</p><div class="mission-box"><strong>Mała misja Dworu:</strong> Wymyśl jedną rzecz, o którą Rada Rafy powinna zapytać mieszkańców.</div></div></article>`);
 }
 
 function openCourtStory() {
@@ -487,7 +507,7 @@ function openCourtStory() {
 
 function randomResident() {
   const person = residents[Math.floor(Math.random() * residents.length)];
-  $('#dreamResult').innerHTML = `<img src="assets/${person.art}" alt="" /><span><strong>${person.name} — ${person.role}</strong><br /><small>${person.category} · ${person.tagline}</small></span>`;
+  $('#dreamResult').innerHTML = `<span class="dream-art">${residentArtwork(person)}</span><span><strong>${person.name} — ${person.role}</strong><br /><small>${person.category} · ${person.tagline}</small></span>`;
   $('#dreamResult').classList.add('is-visible');
 }
 
@@ -505,7 +525,8 @@ function setUpEvents() {
   modalContent.addEventListener('click', event => {
     const person = event.target.closest('[data-resident-open]'); if (person) { openResident(person.dataset.residentOpen); return; }
     const place = event.target.closest('[data-place-open]'); if (place?.dataset.placeOpen) { openPlace(place.dataset.placeOpen); return; }
-    const tab = event.target.closest('[data-story-tab]'); if (tab) { $$('.modal-tab').forEach(button => button.classList.toggle('is-active', button === tab)); renderStoryPanel(tab.dataset.storyTab); return; }
+    const story = event.target.closest('[data-story-open]'); if (story) { openCityStory(story.dataset.storyOpen); return; }
+    if (event.target.closest('[data-stories-home]')) { showCityStories(); return; }
     const action = event.target.closest('[data-adventure-action]'); if (action) { closeModal(); document.querySelector(action.dataset.adventureAction === 'bramkarze' ? '#gry' : '#mapa').scrollIntoView({ behavior: 'smooth' }); }
   });
   $('#openStories').addEventListener('click', showCityStories);

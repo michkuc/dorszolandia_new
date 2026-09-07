@@ -319,7 +319,7 @@ function startGoalGame() {
   $('#goalOverlay').classList.add('is-hidden');
   $('#goalBall').classList.add('is-visible');
   moveGoalBall();
-  goalMovement = window.setInterval(moveGoalBall, 620);
+  goalMovement = window.setInterval(moveGoalBall, 950);
   goalTimer = window.setInterval(() => {
     remaining -= 1;
     $('#goalTime').textContent = String(remaining);

@@ -224,11 +224,11 @@ footer { padding: 20px 0; background: #063471; color: #eafcff; }.footer-inner { 
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 .hero.hero-original { min-height:0; display:grid; background:#22b9dd; overflow:visible; }
 .hero-original-art { display:block; width:100%; height:auto; min-height:0; object-fit:contain; }
-.hero-original-actions { position:relative; z-index:3; display:flex; justify-content:center; gap:12px; margin:-88px auto 24px; pointer-events:none; }
+.hero-original-actions { position:relative; z-index:3; display:flex; justify-content:center; gap:12px; margin:0 auto 24px; padding-top:12px; pointer-events:none; }
 .hero-original-actions .button { pointer-events:auto; box-shadow:0 8px 18px rgba(0,55,112,.28); }
 .story-portal-section { padding:28px 0; background:#f8feff; }
 .story-portal { display:grid; grid-template-columns:1fr auto; gap:26px; align-items:center; padding:22px 28px; border:2px solid #a6e4f4; border-radius:24px; background:linear-gradient(100deg,#e8fbff,#fff7c9); box-shadow:var(--soft-shadow); }
 .story-portal h2 { margin:0 0 4px; color:#063f89; }.story-portal p { margin:0; max-width:720px; color:#315f8c; font-weight:800; }
 .stories-section { background:linear-gradient(180deg,#f7fdff,#e5f8ff); }.story-volume { margin-top:28px; }.story-volume>p { display:inline-block; margin:0 0 2px; padding:4px 10px; border-radius:99px; background:#fff1a7; color:#063f89; font-size:.75rem; font-weight:1000; text-transform:uppercase; letter-spacing:.06em; }.story-volume>h3 { margin:0 0 12px; color:#063f89; font:800 1.5rem/1.1 "Baloo 2",sans-serif; }
-@media (max-width:720px) { .hero-original-actions { margin:-58px auto 15px; gap:8px; }.story-portal { grid-template-columns:1fr; gap:15px; padding:20px; }.story-portal .button { justify-self:start; }.hero-original-art { min-height:235px; object-fit:cover; object-position:center; } }
-@media (max-width:440px) { .hero-original-actions { flex-direction:column; align-items:center; margin-top:-98px; }.hero-original-actions .button { min-width:185px; justify-content:center; }.hero-original-art { min-height:260px; } }
+@media (max-width:720px) { .hero-original-actions { margin:0 auto 15px; gap:8px; }.story-portal { grid-template-columns:1fr; gap:15px; padding:20px; }.story-portal .button { justify-self:start; }.hero-original-art { min-height:0; object-fit:contain; object-position:center; } }
+@media (max-width:440px) { .hero-original-actions { flex-direction:column; align-items:center; }.hero-original-actions .button { min-width:185px; justify-content:center; } }

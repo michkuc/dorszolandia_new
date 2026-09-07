@@ -143,6 +143,35 @@ footer { padding: 20px 0; background: #063471; color: #eafcff; }.footer-inner { 
 .dream-art { position: relative; display: block; flex: 0 0 72px; width: 72px; height: 58px; }
 .dream-art > img { width: 100%; height: 100%; object-fit: contain; }
 .dream-art .resident-badge { right: -2px; bottom: -2px; width: 25px; height: 25px; font-size: 14px; }
+
+/* Expanded resident profiles and Dorszopedia */
+.encyclopedia-preview { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.encyclopedia-card { display: grid; grid-template-columns: auto 1fr; gap: 7px 10px; min-height: 172px; border: 2px solid #b4e7f5; border-radius: 17px; background: #fff; padding: 16px; color: #163f72; text-align: left; box-shadow: var(--soft-shadow); cursor: pointer; transition: transform .18s, border-color .18s, box-shadow .18s; }
+.encyclopedia-card:hover,.encyclopedia-card:focus-visible { transform: translateY(-3px); border-color: #ffcc2a; box-shadow: 0 10px 20px rgba(0,93,163,.16); outline: 0; }
+.encyclopedia-card > span { display: grid; place-items: center; grid-row: span 2; width: 48px; height: 48px; margin: 0; border-radius: 15px; background: linear-gradient(135deg,#e6fbff,#c1effb); font-size: 1.55rem; }
+.encyclopedia-card strong { align-self: end; color: #063f89; font-size: 1rem; line-height: 1.1; }
+.encyclopedia-card small { grid-column: 1/-1; color: #476e94; font-size: .82rem; font-weight: 760; line-height: 1.38; }
+.encyclopedia-card b { align-self: end; color: #087fd0; font-size: .8rem; }
+.encyclopedia-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 17px; }
+.encyclopedia-actions .encyclopedia-song { margin-top: 0; }
+.encyclopedia-library { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 15px; }
+.encyclopedia-library .encyclopedia-card { min-height: 184px; }
+.encyclopedia-filter-bar { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+.encyclopedia-lead { font-size: 1.02rem; }
+.encyclopedia-reading { display: grid; gap: 12px; margin: 16px 0; }
+.encyclopedia-reading p { margin: 0; border-radius: 14px; background: #fff; padding: 14px 16px; border: 1px solid #bdeafa; }
+.encyclopedia-facts { display: grid; gap: 8px; margin: 10px 0 16px; padding: 0; list-style: none; }
+.encyclopedia-facts li { position: relative; padding: 10px 12px 10px 37px; border-radius: 12px; background: #dff8ff; color: #315f8c; font-size: .88rem; font-weight: 800; }
+.encyclopedia-facts li::before { content: '✓'; position: absolute; left: 12px; color: #087fd0; font-size: 1.1rem; font-weight: 1000; }
+.resident-detail-card { margin-top: 13px; padding: 13px; border: 1px solid #bdeafa; border-radius: 14px; background: #fff; }
+.resident-detail-card h3 { margin-top: 0; }
+.resident-detail-card > p { margin-bottom: 11px; }
+.resident-detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+.resident-detail-grid > div { padding: 10px; border-radius: 11px; background: #eafaff; color: #315f8c; font-size: .8rem; font-weight: 720; line-height: 1.35; }
+.resident-detail-grid strong,.resident-detail-grid span { display: block; }
+.resident-detail-grid strong { margin-bottom: 4px; color: #0873b9; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+@media (max-width: 820px) { .encyclopedia-preview,.encyclopedia-library { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 540px) { .encyclopedia-preview,.encyclopedia-library { grid-template-columns: 1fr; }.encyclopedia-card { min-height: 150px; }.resident-detail-grid { grid-template-columns: 1fr; }.encyclopedia-actions { align-items: stretch; }.encyclopedia-actions .button { width: 100%; justify-content: center; } }
 .story-status { display: inline-block; margin: 0 0 8px; padding: 4px 9px; border: 1px solid #9cdcf2; border-radius: 999px; background: #edfaff; color: #1776af !important; font-size: .76rem; font-weight: 1000 !important; }
 .story-status.is-complete { border-color: #91d67c; background: #effadc; color: #327c2e !important; }
 @media (max-width: 980px) { .nav { width: min(100% - 22px, 900px); padding: 6px 9px 6px 13px; }.nav-links { position: absolute; top: calc(100% + 7px); left: 13px; right: 13px; display: none; padding: 10px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); flex-wrap: wrap; }.nav-links.is-open { display: flex; }.mobile-toggle { display: block; margin-left: auto; }.nav-cta { display: none; } }

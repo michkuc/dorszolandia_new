@@ -192,7 +192,7 @@ export const residents = [
     task: 'Narysuj trzy rzeczy, które chciałbyś zobaczyć na dnie wymyślonego oceanu.'
   },
   {
-    id: 'pilkarz', name: 'Piłkarz Fikołek', role: 'Piłkarz', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '⚽', place: 'Płetwa Arena',
+    id: 'pilkarz', name: 'Piłkarz Fikołek', role: 'Piłkarz', category: 'Sport', art: 'generated/roles/pilkarz.png', place: 'Płetwa Arena',
     tagline: 'Ćwiczy drybling i pamięta, że drużyna jest ważniejsza od wyniku.',
     story: 'Fikołek po każdym treningu pyta kolegów, co im dziś wyszło. Potem razem wybierają jedną rzecz do przećwiczenia jutro.',
     roleText: 'Piłkarz rozwija szybkość, współpracę i zasady fair play.',
@@ -200,7 +200,7 @@ export const residents = [
     task: 'Ułóż bezpieczny slalom z trzech przedmiotów i przejdź go powoli z piłką lub miękką kulką.'
   },
   {
-    id: 'koszykarz', name: 'Koszykarz Plusk', role: 'Koszykarz', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '🏀', place: 'Płetwa Arena',
+    id: 'koszykarz', name: 'Koszykarz Plusk', role: 'Koszykarz', category: 'Sport', art: 'generated/roles/koszykarz.png', place: 'Płetwa Arena',
     tagline: 'Celuje wysoko, ale zawsze podaje dalej.',
     story: 'Plusk liczy udane podania, nie tylko punkty. Wie, że najlepsza akcja zaczyna się od uważnego spojrzenia na drużynę.',
     roleText: 'Koszykarz ćwiczy koordynację, celność i współpracę w zespole.',
@@ -208,7 +208,7 @@ export const residents = [
     task: 'Wymyśl trzy sposoby podania miękkiej piłki bez rzucania jej wysoko.'
   },
   {
-    id: 'siatkarka', name: 'Siatkarka Fala', role: 'Siatkarka', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '🏐', place: 'Płetwa Arena',
+    id: 'siatkarka', name: 'Siatkarka Fala', role: 'Siatkarka', category: 'Sport', art: 'generated/roles/siatkarka.png', place: 'Płetwa Arena',
     tagline: 'Ma szybkie płetwy i jeszcze szybsze „moja!”.',
     story: 'Fala lubi, gdy każdy na boisku wie, co robić. Dlatego przed meczem drużyna ustala proste hasła i dużo się śmieje.',
     roleText: 'Siatkarz ćwiczy refleks, komunikację oraz kontrolę ruchu.',
@@ -216,7 +216,7 @@ export const residents = [
     task: 'Wymyśl jedno krótkie hasło, które w zabawie oznacza „jestem gotowy/gotowa”.'
   },
   {
-    id: 'tenisistka', name: 'Tenisistka Kropka', role: 'Tenisistka', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '🎾', place: 'Płetwa Arena',
+    id: 'tenisistka', name: 'Tenisistka Kropka', role: 'Tenisistka', category: 'Sport', art: 'generated/roles/tenisistka.png', place: 'Płetwa Arena',
     tagline: 'Uczy się cierpliwości przy każdym kolejnym odbiciu.',
     story: 'Kropka nie złości się na nieudany ruch. Odkłada płetwę, bierze oddech i próbuje jeszcze raz — często z lepszym pomysłem.',
     roleText: 'Tenisista ćwiczy celność, koncentrację i spokojne podejmowanie decyzji.',
@@ -224,7 +224,7 @@ export const residents = [
     task: 'Odbij lekki balonik pięć razy, starając się nie ścigać wyniku.'
   },
   {
-    id: 'plywak', name: 'Pływak Wir', role: 'Pływak', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '🏊', place: 'Płetwa Arena',
+    id: 'plywak', name: 'Pływak Wir', role: 'Pływak', category: 'Sport', art: 'generated/roles/plywak.png', place: 'Płetwa Arena',
     tagline: 'Zna rytm wody i zasady bezpiecznej zabawy.',
     story: 'Wir przed wejściem do basenu zawsze sprawdza, gdzie jest dorosły opiekun. Dopiero potem urządza zawody w najspokojniejsze fale.',
     roleText: 'Pływak rozwija technikę, oddech i respekt do zasad bezpieczeństwa nad wodą.',
@@ -232,7 +232,7 @@ export const residents = [
     task: 'Ułóż trzy zasady bezpiecznej zabawy nad wodą.'
   },
   {
-    id: 'kolarz', name: 'Kolarz Prąd', role: 'Kolarz', category: 'Sport', art: 'generated/dorsz-baza-transparent.png', badge: '🚲', place: 'Płetwa Arena',
+    id: 'kolarz', name: 'Kolarz Prąd', role: 'Kolarz', category: 'Sport', art: 'generated/roles/kolarz.png', place: 'Płetwa Arena',
     tagline: 'Sprawdza hamulce, trasę i dobry humor.',
     story: 'Prąd twierdzi, że kask jest jak muszla: najlepiej mieć go na sobie, zanim wydarzy się coś niespodziewanego.',
     roleText: 'Kolarz ćwiczy równowagę i poznaje zasady bezpiecznej jazdy.',
@@ -240,7 +240,7 @@ export const residents = [
     task: 'Z dorosłym sprawdź, jakie trzy rzeczy warto obejrzeć przed jazdą na rowerze.'
   },
   {
-    id: 'szachistka', name: 'Szachistka Perła', role: 'Szachistka', category: 'Edukacja', art: 'generated/dorsz-baza-transparent.png', badge: '♟️', place: 'Szkoła Muszelka',
+    id: 'szachistka', name: 'Szachistka Perła', role: 'Szachistka', category: 'Edukacja', art: 'generated/roles/szachistka.png', place: 'Szkoła Muszelka',
     tagline: 'Zanim ruszy figurą, widzi trzy spokojne możliwości.',
     story: 'Perła uczy młodsze rybki, że w szachach można myśleć długo, zmienić plan i nadal świetnie się bawić.',
     roleText: 'Szachista ćwiczy przewidywanie, cierpliwość i szacunek do przeciwnika.',
@@ -248,7 +248,7 @@ export const residents = [
     task: 'Wymyśl grę planszową z trzema prostymi zasadami.'
   },
   {
-    id: 'mechanik', name: 'Mechanik Śrubka', role: 'Mechanik', category: 'Technika', art: 'generated/dorsz-baza-transparent.png', badge: '🔧', place: 'Laboratorium Bąbel',
+    id: 'mechanik', name: 'Mechanik Śrubka', role: 'Mechanik', category: 'Technika', art: 'generated/roles/mechanik.png', place: 'Laboratorium Bąbel',
     tagline: 'Naprawia sprzęt i uczy, dlaczego nie wszystko trzeba od razu wyrzucać.',
     story: 'Śrubka najpierw słucha, jak urządzenie pracuje, a potem sprawdza po kolei możliwe przyczyny. Mówi, że pośpiech jest kiepskim narzędziem.',
     roleText: 'Mechanik diagnozuje usterki, naprawia urządzenia i dba o bezpieczne używanie narzędzi.',
@@ -256,7 +256,7 @@ export const residents = [
     task: 'Z dorosłym znajdź w domu jedną rzecz, którą można uporządkować lub naprawić zamiast wymieniać.'
   },
   {
-    id: 'piekarz', name: 'Piekarz Bułeczka', role: 'Piekarz', category: 'Usługi', art: 'generated/dorsz-baza-transparent.png', badge: '🥖', place: 'Port Muszelka',
+    id: 'piekarz', name: 'Piekarz Bułeczka', role: 'Piekarz', category: 'Usługi', art: 'generated/roles/piekarz.png', place: 'Port Muszelka',
     tagline: 'Z ciepłego pieca wyjmuje zapach całego poranka.',
     story: 'Bułeczka planuje pracę noc wcześniej, żeby rano każdy mógł dostać świeże pieczywo. Najlepiej smakuje mu chleb podzielony z kimś bliskim.',
     roleText: 'Piekarz przygotowuje pieczywo, mierzy składniki i pilnuje porządku oraz bezpieczeństwa w pracowni.',
@@ -264,7 +264,7 @@ export const residents = [
     task: 'Wymyśl nazwę dla pieczywa, które pasowałoby do Dorszolandii.'
   },
   {
-    id: 'architektka', name: 'Architektka Planika', role: 'Architekt', category: 'Technika', art: 'generated/dorsz-baza-transparent.png', badge: '📐', place: 'Laboratorium Bąbel',
+    id: 'architektka', name: 'Architektka Planika', role: 'Architektka', category: 'Technika', art: 'generated/roles/architektka.png', place: 'Laboratorium Bąbel',
     tagline: 'Rysuje miejsca, w których wszystkim wygodnie jest być razem.',
     story: 'Planika pyta mieszkańców, zanim narysuje pierwszy projekt. Dzięki temu jej place mają miejsce na odpoczynek, zabawę i bezpieczny przejazd.',
     roleText: 'Architekt projektuje budynki i przestrzenie, łącząc pomysł, potrzeby ludzi oraz zasady bezpieczeństwa.',
@@ -272,7 +272,7 @@ export const residents = [
     task: 'Narysuj plac Dorszolandii z miejscem do zabawy, odpoczynku i rośliną.'
   },
   {
-    id: 'ratownik', name: 'Ratownik Fala', role: 'Ratownik', category: 'Bezpieczeństwo', art: 'generated/dorsz-baza-transparent.png', badge: '🛟', place: 'Zamek Dorszolandii',
+    id: 'ratownik', name: 'Ratownik Fala', role: 'Ratownik', category: 'Bezpieczeństwo', art: 'generated/roles/ratownik.png', place: 'Zamek Dorszolandii',
     tagline: 'Pomaga szybko, spokojnie i zawsze z drużyną.',
     story: 'Fala ćwiczy, jak zauważyć kłopot zanim zrobi się duży. Najpierw wzywa wsparcie, potem działa bez ryzykowania własnego bezpieczeństwa.',
     roleText: 'Ratownik pomaga w nagłych sytuacjach, przestrzega procedur i współpracuje z innymi służbami.',
@@ -280,7 +280,7 @@ export const residents = [
     task: 'Powiedz dorosłemu, gdzie w waszej okolicy można szukać pomocy w nagłej sytuacji.'
   },
   {
-    id: 'listonosz', name: 'Listonosz Kropelka', role: 'Listonosz', category: 'Transport', art: 'generated/dorsz-baza-transparent.png', badge: '✉️', place: 'Port Muszelka',
+    id: 'listonosz', name: 'Listonosz Kropelka', role: 'Listonosz', category: 'Transport', art: 'generated/roles/listonosz.png', place: 'Port Muszelka',
     tagline: 'Dostarcza wiadomości, które pomagają miastu działać razem.',
     story: 'Kropelka zna bezpieczne trasy przez rafę i nigdy nie zagląda do cudzej poczty. Najbardziej lubi listy z rysunkami.',
     roleText: 'Listonosz sortuje i doręcza przesyłki, dbając o ich bezpieczeństwo oraz prywatność.',
@@ -288,7 +288,7 @@ export const residents = [
     task: 'Narysuj pocztówkę dla kogoś, komu chcesz poprawić dzień.'
   },
   {
-    id: 'detektyw', name: 'Detektyw Trop', role: 'Detektyw', category: 'Nauka', art: 'generated/dorsz-baza-transparent.png', badge: '🔎', place: 'Zatoka Tajemnic',
+    id: 'detektyw', name: 'Detektyw Trop', role: 'Detektyw', category: 'Nauka', art: 'generated/roles/detektyw.png', place: 'Zatoka Tajemnic',
     tagline: 'Nie zgaduje — szuka śladów i zadaje dobre pytania.',
     story: 'Trop rozwiązuje zagadki, porównując wskazówki. Kiedy czegoś nie wie, mówi: „Sprawdźmy”, a nie „Na pewno”.',
     roleText: 'Detektyw zbiera informacje, sprawdza tropy i wyciąga wnioski z faktów.',
@@ -296,7 +296,7 @@ export const residents = [
     task: 'Zostaw trzy bezpieczne wskazówki do ukrytego przedmiotu i poproś kogoś o rozwiązanie zagadki.'
   },
   {
-    id: 'wynalazczyni', name: 'Wynalazczyni Iskra', role: 'Wynalazca', category: 'Technika', art: 'generated/dorsz-baza-transparent.png', badge: '💡', place: 'Laboratorium Bąbel',
+    id: 'wynalazczyni', name: 'Wynalazczyni Iskra', role: 'Wynalazczyni', category: 'Technika', art: 'generated/roles/wynalazczyni.png', place: 'Laboratorium Bąbel',
     tagline: 'Zadaje pytanie „a gdyby tak…?” i zabiera się do testów.',
     story: 'Iskra tworzy prototypy z prostych materiałów. Gdy coś nie działa, zapisuje dlaczego i buduje następną wersję.',
     roleText: 'Wynalazca tworzy nowe rozwiązania, testuje je i poprawia na podstawie obserwacji.',
@@ -304,7 +304,7 @@ export const residents = [
     task: 'Wymyśl przedmiot, który rozwiązuje mały problem w twoim domu, i narysuj go z opisem.'
   },
   {
-    id: 'reporter', name: 'Reporter Fala', role: 'Reporter', category: 'Kultura', art: 'generated/dorsz-baza-transparent.png', badge: '🎤', place: 'Zatoka Tajemnic',
+    id: 'reporter', name: 'Reporter Fala', role: 'Reporter', category: 'Kultura', art: 'generated/roles/reporter.png', place: 'Zatoka Tajemnic',
     tagline: 'Słucha mieszkańców, sprawdza fakty i opowiada, co ważne.',
     story: 'Fala przed napisaniem wiadomości pyta więcej niż jedną osobę. Wie, że dobra opowieść ma być ciekawa, ale też prawdziwa.',
     roleText: 'Reporter zbiera informacje, rozmawia z ludźmi i przedstawia sprawdzone wiadomości.',
@@ -312,7 +312,7 @@ export const residents = [
     task: 'Zadaj komuś trzy krótkie pytania o jego ulubione zajęcie i opowiedz o nim w trzech zdaniach.'
   },
   {
-    id: 'ogrodniczka', name: 'Ogrodniczka Zielinka', role: 'Ogrodnik', category: 'Natura', art: 'generated/dorsz-baza-transparent.png', badge: '🪴', place: 'Las Wodorostów',
+    id: 'ogrodniczka', name: 'Ogrodniczka Zielinka', role: 'Ogrodniczka', category: 'Natura', art: 'generated/roles/ogrodniczka.png', place: 'Las Wodorostów',
     tagline: 'Wie, że dobre rzeczy rosną po trochu.',
     story: 'Zielinka tworzy miejskie ogrody z miejscem dla roślin i małych stworzeń. Jej ulubionym narzędziem jest cierpliwość.',
     roleText: 'Ogrodnik sadzi, pielęgnuje rośliny i obserwuje, czego potrzebują.',
@@ -320,7 +320,7 @@ export const residents = [
     task: 'Zaobserwuj roślinę przez trzy dni i narysuj, co zauważysz.'
   },
   {
-    id: 'czytelnik', name: 'Czytelnik Książek', role: 'Czytelnik', category: 'Edukacja', art: 'generated/dorsz-baza-transparent.png', badge: '📚', place: 'Szkoła Muszelka',
+    id: 'czytelnik', name: 'Czytelnik Książek', role: 'Czytelnik', category: 'Edukacja', art: 'generated/roles/czytelnik.png', place: 'Szkoła Muszelka',
     tagline: 'Potrafi odnaleźć przygodę nawet między dwiema okładkami.',
     story: 'Książek prowadzi w szkole klub opowieści. Każdy może przynieść książkę, komiks albo własny rysunek z historią.',
     roleText: 'Czytelnik ćwiczy wyobraźnię, koncentrację i dzielenie się tym, co odkrył.',
@@ -328,7 +328,7 @@ export const residents = [
     task: 'Wymyśl tytuł książki, którą chciałbyś przeczytać, i narysuj jej okładkę.'
   },
   {
-    id: 'majsterkowicz', name: 'Majsterkowicz Nitka', role: 'Majsterkowicz', category: 'Technika', art: 'generated/dorsz-baza-transparent.png', badge: '🛠️', place: 'Laboratorium Bąbel',
+    id: 'majsterkowicz', name: 'Majsterkowicz Nitka', role: 'Majsterkowicz', category: 'Technika', art: 'generated/roles/majsterkowicz.png', place: 'Laboratorium Bąbel',
     tagline: 'Z prostych rzeczy buduje sprytne rozwiązania.',
     story: 'Nitka zbiera kartony, rolki i bezpieczne materiały, zanim zacznie tworzyć. Najlepsze pomysły sprawdza małymi krokami.',
     roleText: 'Majsterkowicz planuje, łączy materiały i uczy się przez praktyczne próby.',

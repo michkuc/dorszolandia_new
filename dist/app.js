@@ -249,29 +249,29 @@ function openAdventure(id) {
 }
 
 function showCityStories() {
-  const source = storyLibrary.filter(story => story.sourceCycle);
-  const newCycle = storyLibrary.filter(story => !story.sourceCycle);
-  const cards = stories => stories.map(story => `<button type="button" class="story-card" data-story-open="${story.id}"><img class="story-card-cover" src="assets/${story.cover}" alt="" loading="lazy" /><span><span class="story-status is-complete">${story.sourceCycle ? 'Oryginał 1:1' : 'Nowa historia'} · ${story.minutes} min czytania</span><strong>${story.title}</strong><small>${story.teaser}</small></span><b aria-hidden="true">→</b></button>`).join('');
-  openModal(`<article class="story-modal"><p class="modal-eyebrow">Dorszo-Kumple · biblioteka</p><h2>Biblioteka Dorszolandii</h2><p>Najpierw jest oryginalny pięciorozdziałowy cykl Borysa i Dorszusia. Zachowuje pełną treść materiału źródłowego. Kolejne teksty są osobnym, nowym cyklem.</p><h3>Tom źródłowy — wersja 1:1</h3><div class="story-library">${cards(source)}</div><h3>Nowe historie Dorszolandii</h3><div class="story-library">${cards(newCycle)}</div><div class="fact-box"><strong>Jak czytać:</strong> znak „Oryginał 1:1” oznacza pełny zapis z wybranego cyklu PDF-a — bez skracania tekstu w czytniku.</div></article>`);
+  const volumeOne = storyLibrary.filter(story => story.volume === 1);
+  const volumeTwo = storyLibrary.filter(story => story.volume === 2);
+  const cards = stories => stories.map(story => `<button type="button" class="story-card" data-story-open="${story.id}"><img class="story-card-cover" src="assets/${story.cover}" alt="" loading="lazy" /><span><span class="story-status is-complete">Tom ${story.volume} · ${story.minutes} min czytania</span><strong>${story.title}</strong><small>${story.teaser}</small></span><b aria-hidden="true">→</b></button>`).join('');
+  openModal(`<article class="story-modal"><p class="modal-eyebrow">Dorszo-Kumple · biblioteka</p><h2>Biblioteka Dorszolandii</h2><p>Każda pozycja otwiera jedną całą historię — bez skrótów i bez dzielenia jej na sztuczne części.</p><h3>Tom 1 — pierwsze przygody</h3><div class="story-library">${cards(volumeOne)}</div><h3>Tom 2 — nowe wyprawy</h3><div class="story-library">${cards(volumeTwo)}</div></article>`);
 }
 
 function openCityStory(id) {
   const story = storyLibrary.find(item => item.id === id);
   if (!story) return;
-  const label = story.sourceCycle ? 'Tom źródłowy · pełna wersja 1:1' : 'Nowy cykl Dorszolandii · pełna opowieść';
-  const status = story.sourceCycle ? 'Oryginał 1:1 · pełny tekst źródłowy' : `Nowa historia · około ${story.minutes} min czytania`;
-  openModal(`<article class="story-modal"><button type="button" class="story-back" data-stories-home="true">← Wszystkie historie</button><p class="modal-eyebrow">${label}</p><img class="story-reader-cover" src="assets/${story.cover}" alt="Ilustracja do opowiadania: ${story.title}" /><p class="story-status is-complete">${status}</p><h2>${story.icon} ${story.title}</h2><p>${story.teaser}</p><div class="modal-people">${story.people.map(person => `<span class="modal-person">${person}</span>`).join('')}</div><div class="story-reader">${story.chapters.map((chapter, index) => `<section class="story-chapter"><span class="story-chapter-number">${story.sourceCycle ? 'Rozdział źródłowy' : `Rozdział ${index + 1}`}</span><h3>${chapter.title}</h3>${chapter.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('')}</section>`).join('')}</div><div class="mission-box"><strong>Po lekturze:</strong> Która decyzja bohaterów była najmądrzejsza? Jak Ty pomógłbyś mieszkańcom Dorszolandii?</div></article>`);
+  const label = `Tom ${story.volume} · pełna opowieść`;
+  const status = `Pełny tekst · około ${story.minutes} min czytania`;
+  openModal(`<article class="story-modal"><button type="button" class="story-back" data-stories-home="true">← Wszystkie historie</button><p class="modal-eyebrow">${label}</p><img class="story-reader-cover" src="assets/${story.cover}" alt="Ilustracja do opowiadania: ${story.title}" /><p class="story-status is-complete">${status}</p><h2>${story.icon} ${story.title}</h2><p>${story.teaser}</p><div class="modal-people">${story.people.map(person => `<span class="modal-person">${person}</span>`).join('')}</div><div class="story-reader">${story.chapters.map(chapter => `<section class="story-chapter"><span class="story-chapter-number">Pełna historia</span><h3>${chapter.title}</h3>${chapter.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('')}</section>`).join('')}</div><div class="mission-box"><strong>Po lekturze:</strong> Która decyzja bohaterów była najmądrzejsza? Jak Ty pomógłbyś mieszkańcom Dorszolandii?</div></article>`);
 }
 
 function storyShelfCard(story) {
-  return `<button type="button" class="story-shelf-card" data-story-open="${story.id}" aria-label="Czytaj opowiadanie: ${story.title}"><img src="assets/${story.cover}" alt="" loading="lazy" /><span class="story-shelf-copy"><span class="story-status is-complete">${story.sourceCycle ? 'Oryginał 1:1' : 'Nowa historia'} · ${story.minutes} min</span><strong>${story.title}</strong><small>${story.teaser}</small><em>${story.sourceCycle ? 'Czytaj pełny tekst →' : 'Czytaj opowieść →'}</em></span></button>`;
+  return `<button type="button" class="story-shelf-card" data-story-open="${story.id}" aria-label="Czytaj opowiadanie: ${story.title}"><img src="assets/${story.cover}" alt="" loading="lazy" /><span class="story-shelf-copy"><span class="story-status is-complete">Tom ${story.volume} · ${story.minutes} min</span><strong>${story.title}</strong><small>${story.teaser}</small><em>Czytaj pełną historię →</em></span></button>`;
 }
 
 function renderStoryShelf() {
   const shelf = $('#storyShelf');
   const supplementShelf = $('#storySupplementShelf');
-  shelf.innerHTML = storyLibrary.filter(story => story.sourceCycle).map(storyShelfCard).join('');
-  supplementShelf.innerHTML = storyLibrary.filter(story => !story.sourceCycle).map(storyShelfCard).join('');
+  shelf.innerHTML = storyLibrary.filter(story => story.volume === 1).map(storyShelfCard).join('');
+  supplementShelf.innerHTML = storyLibrary.filter(story => story.volume === 2).map(storyShelfCard).join('');
   shelf.addEventListener('click', event => { const card = event.target.closest('[data-story-open]'); if (card) openCityStory(card.dataset.storyOpen); });
   supplementShelf.addEventListener('click', event => { const card = event.target.closest('[data-story-open]'); if (card) openCityStory(card.dataset.storyOpen); });
 }
@@ -642,9 +642,7 @@ function openShop() {
 }
 
 function openSong() {
-  const driveSong2 = 'https://drive.google.com/uc?export=download&id=1bEbEMmYvLJ5LCRJaHxTyXt0nvJXP3HgA';
-  const driveSong3 = 'https://drive.google.com/uc?export=download&id=1CclG0AAkXFku_KgwvCVDGV76bABHn39U';
-  openModal(`<article class="story-modal"><p class="modal-eyebrow">Melodia miasta</p><h2>♫ Piosenki Dorszolandii</h2><p>Trzy utwory do słuchania podczas wspólnej zabawy pod wodą.</p><section class="song-player"><h3>Piosenka Dorszolandii</h3><video controls preload="metadata"><source src="assets/stories/piosenka-dorszolandii.mp4" type="video/mp4" />Twoja przeglądarka nie obsługuje odtwarzania filmu.</video></section><section class="song-player"><h3>Piosenka Dorszolandii 2</h3><audio controls preload="metadata"><source src="${driveSong2}" type="audio/mpeg" />Twoja przeglądarka nie obsługuje odtwarzania dźwięku.</audio><a class="text-link" href="https://drive.google.com/file/d/1bEbEMmYvLJ5LCRJaHxTyXt0nvJXP3HgA/view?usp=drivesdk" target="_blank" rel="noopener">Otwórz piosenkę 2 na Dysku →</a></section><section class="song-player"><h3>Piosenka Dorszolandii 3</h3><audio controls preload="metadata"><source src="${driveSong3}" type="audio/mpeg" />Twoja przeglądarka nie obsługuje odtwarzania dźwięku.</audio><a class="text-link" href="https://drive.google.com/file/d/1CclG0AAkXFku_KgwvCVDGV76bABHn39U/view?usp=drivesdk" target="_blank" rel="noopener">Otwórz piosenkę 3 na Dysku →</a></section></article>`);
+  openModal(`<article class="story-modal"><p class="modal-eyebrow">Melodia miasta</p><h2>♫ Piosenki Dorszolandii</h2><p>Trzy utwory są zapisane bezpośrednio w Dorszolandii i odtwarzają się bez przechodzenia na Dysk.</p><section class="song-player"><h3>Piosenka Dorszolandii</h3><video controls preload="metadata"><source src="assets/stories/piosenka-dorszolandii.mp4" type="video/mp4" />Twoja przeglądarka nie obsługuje odtwarzania filmu.</video></section><section class="song-player"><h3>Piosenka Dorszolandii 2</h3><audio controls preload="metadata"><source src="assets/songs/dorszolandia-2.mp3" type="audio/mpeg" />Twoja przeglądarka nie obsługuje odtwarzania dźwięku.</audio></section><section class="song-player"><h3>Piosenka Dorszolandii 3</h3><audio controls preload="metadata"><source src="assets/songs/dorszolandia-3.mp3" type="audio/mpeg" />Twoja przeglądarka nie obsługuje odtwarzania dźwięku.</audio></section></article>`);
 }
 
 function setUpEvents() {
@@ -721,7 +719,7 @@ function setUpEvents() {
 }
 
 function init() {
-  renderResidents(); renderMap(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); setUpDifferences(); renderAccessories(); setUpEvents();
+  renderResidents(); renderMap(); renderAdventures(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); setUpDifferences(); renderAccessories(); setUpEvents();
 }
 
 init();

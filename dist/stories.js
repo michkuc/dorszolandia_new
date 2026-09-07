@@ -303,24 +303,17 @@ const completeStories = [
   }
 ];
 
-const sourceCycleIds = new Set(['pecherzyk', 'plecaki', 'misja', 'zbuntowany-pomnik', 'influencerzy']);
+const volumeOneIds = new Set(['pecherzyk', 'plecaki', 'misja', 'zbuntowany-pomnik', 'influencerzy']);
 
-function makeChapters(body, isSourceText = false) {
+// Jeden tytuł = jedna pełna historia. Dokument źródłowy jest dzielony tylko
+// między opowiadania, nigdy na sztuczne części wewnątrz opowiadania.
+function makeChapters(body) {
   const paragraphs = body.split(/\n+/).map(part => part.trim()).filter(Boolean);
-  if (isSourceText) return [{
-    title: 'Tekst oryginalny — wersja 1:1',
-    paragraphs
-  }];
-  const chunkSize = Math.max(4, Math.ceil(paragraphs.length / 4));
-  const titles = ['Początek przygody', 'Tropy i komplikacje', 'Plan przyjaciół', 'Finał'];
-  return Array.from({ length: Math.ceil(paragraphs.length / chunkSize) }, (_, index) => ({
-    title: titles[index] || `Część ${index + 1}`,
-    paragraphs: paragraphs.slice(index * chunkSize, (index + 1) * chunkSize)
-  }));
+  return [{ title: 'Pełna opowieść', paragraphs }];
 }
 
 export const storyLibrary = completeStories.map(story => ({
   ...story,
-  sourceCycle: sourceCycleIds.has(story.id),
-  chapters: makeChapters(story.body, sourceCycleIds.has(story.id))
+  volume: volumeOneIds.has(story.id) ? 1 : 2,
+  chapters: makeChapters(story.body)
 }));

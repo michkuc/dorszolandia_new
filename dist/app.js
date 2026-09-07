@@ -418,7 +418,12 @@ const accessoryOptions = [
   { key: 'paleta', label: 'Paleta', icon: '🎨', x: 70, y: 67 }, { key: 'latarka', label: 'Latarka', icon: '🔦', x: 70, y: 60 },
   { key: 'tablet', label: 'Tablet', icon: '💻', x: 69, y: 66 }, { key: 'mikroskop', label: 'Mikroskop', icon: '🔬', x: 69, y: 64 },
   { key: 'roslinka', label: 'Roślinka', icon: '🌿', x: 29, y: 68 }, { key: 'gwiazdka', label: 'Odznaka', icon: '⭐', x: 60, y: 56 },
-  { key: 'choragiewka', label: 'Flaga', icon: '🚩', x: 75, y: 47 }, { key: 'gwizdek', label: 'Gwizdek', icon: '📣', x: 72, y: 61 }
+  { key: 'choragiewka', label: 'Flaga', icon: '🚩', x: 75, y: 47 }, { key: 'gwizdek', label: 'Gwizdek', icon: '📣', x: 72, y: 61 },
+  { key: 'dzwonek', label: 'Dzwonek szkolny', icon: '🔔', x: 72, y: 57 }, { key: 'bilet', label: 'Bilet na meduzotram', icon: '🎟️', x: 69, y: 64 },
+  { key: 'zegarek', label: 'Chronobąbel', icon: '⏰', x: 70, y: 60 }, { key: 'latarnia', label: 'Latarnia', icon: '🏮', x: 72, y: 56 },
+  { key: 'puchar', label: 'Puchar', icon: '🏆', x: 68, y: 62 }, { key: 'rakieta', label: 'Rakieta Koral-1', icon: '🚀', x: 73, y: 58 },
+  { key: 'meduza', label: 'Świecąca meduza', icon: '🪼', x: 71, y: 54 }, { key: 'ksiezyc', label: 'Nocny księżyc', icon: '🌙', x: 69, y: 49 },
+  { key: 'narzedzia', label: 'Narzędzia Torpedy', icon: '🧰', x: 71, y: 68 }, { key: 'zwoj', label: 'Stara mapa', icon: '📜', x: 69, y: 65 }
 ];
 const colorFilters = { '#ffad24': 'none', '#33a8e8': 'hue-rotate(135deg) saturate(1.16)', '#f26492': 'hue-rotate(295deg) saturate(1.13)', '#75c95b': 'hue-rotate(74deg) saturate(1.1)', '#8c69e8': 'hue-rotate(218deg) saturate(1.14)' };
 let creatorItems = [];

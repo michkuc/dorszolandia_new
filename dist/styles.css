@@ -177,3 +177,8 @@ footer { padding: 20px 0; background: #063471; color: #eafcff; }.footer-inner { 
 @media (max-width: 980px) { .nav { width: min(100% - 22px, 900px); padding: 6px 9px 6px 13px; }.nav-links { position: absolute; top: calc(100% + 7px); left: 13px; right: 13px; display: none; padding: 10px; border-radius: 18px; background: #fff; box-shadow: var(--shadow); flex-wrap: wrap; }.nav-links.is-open { display: flex; }.mobile-toggle { display: block; margin-left: auto; }.nav-cta { display: none; } }
 @media (max-width: 540px) { .profile-art { width: min(210px,100%); min-height: 190px; }.profile-art > img { min-height: 190px; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+.place-lead { font-size: 1.02rem; }
+.place-reading { display: grid; gap: 10px; margin: 16px 0; }
+.place-reading section { padding: 13px 15px; border: 1px solid #bdeafa; border-radius: 14px; background: #fff; }
+.place-reading h3 { margin: 0 0 7px; }
+.place-reading p { margin: 0; }

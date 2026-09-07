@@ -23,7 +23,7 @@
           <a class="is-active" href="#start">Start</a>
           <a href="#mapa">Mapa Krainy</a>
           <a href="#mieszkancy">Mieszkańcy</a>
-          <a href="#przygody">Przygody</a>
+          <a href="#opowiadania">Opowiadania</a>
           <a href="#gry">Gry i Zagadki</a>
           <a href="#kreator">Kreator</a>
           <a href="#dorszopedia">Dorszopedia</a>
@@ -37,6 +37,8 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-underlay" aria-hidden="true"></div>
         <div class="shell hero-inner">
+          <div class="hero-character hero-character-dorszusi" aria-hidden="true"><img src="assets/generated/story-characters/dorszusi.webp" alt="" /></div>
+          <div class="hero-character hero-character-borys" aria-hidden="true"><img src="assets/generated/story-characters/borys.webp" alt="" /></div>
           <aside class="wood-sign sign-left">Małe rybki,<br />wielkie sprawy</aside>
           <div class="hero-copy">
             <p class="eyebrow">Witaj pod wodą!</p>
@@ -85,17 +87,17 @@
         </div>
       </section>
 
-      <section class="section adventures-section" id="przygody" aria-labelledby="adventure-title">
+      <section class="section stories-section" id="opowiadania" aria-labelledby="stories-title">
         <div class="shell">
           <div class="section-heading tight">
             <div>
-              <p class="eyebrow eyebrow-blue">Wciągające misje</p>
-              <h2 id="adventure-title">Przygody i zabawy <span aria-hidden="true">〰</span></h2>
-              <p>Ciekawe historie, gry i ważne misje czekają!</p>
+              <p class="eyebrow eyebrow-blue">Dorszuś, Borys i mieszkańcy miasta</p>
+              <h2 id="stories-title">Opowiadania Dorszolandii <span aria-hidden="true">〰</span></h2>
+              <p>Pięć ukończonych, pełnych opowieści do czytania rozdział po rozdziale.</p>
             </div>
-            <button class="button button-outline" type="button" id="openStories">Otwórz historie miasta <span aria-hidden="true">→</span></button>
+            <button class="button button-outline" type="button" id="openStories">Otwórz bibliotekę <span aria-hidden="true">→</span></button>
           </div>
-          <div class="adventure-grid" id="adventureGrid"></div>
+          <div class="story-shelf" id="storyShelf" aria-live="polite"></div>
         </div>
       </section>
 
@@ -175,23 +177,13 @@
         </div>
       </section>
 
-      <section class="court-section" id="dwor" aria-labelledby="court-title">
-        <div class="shell">
-          <div class="court-intro"><div><p class="eyebrow">Stary zamek, współczesne miasto</p><h2 id="court-title">Dwór Króla Dorsza</h2><p>Król i jego dwór są żywą częścią dzisiejszej Dorszolandii: słuchają mieszkańców, organizują miejskie święta i wspierają dobre pomysły.</p></div><button class="button button-light" id="openCourtStory" type="button">Poznaj kronikę Dworu <span aria-hidden="true">→</span></button></div>
-          <div class="court-grid" id="courtGrid"></div>
-        </div>
-      </section>
-
       <section class="section encyclopedia-section" id="dorszopedia" aria-labelledby="encyclopedia-title">
         <div class="shell"><div class="section-heading compact-heading"><div><p class="eyebrow eyebrow-blue">Wiedza w bąbelkach</p><h2 id="encyclopedia-title">Dorszopedia <span aria-hidden="true">〰</span></h2><p>Przewodnik po mieście, oceanie, mieszkańcach i ukończonych historiach Dorszo-Kumpli.</p></div><button type="button" class="button button-outline" id="openDorszopedia">Otwórz całą Dorszopedię →</button></div><div class="encyclopedia-grid encyclopedia-preview" id="encyclopediaPreview" aria-live="polite"></div><div class="encyclopedia-actions"><button type="button" class="button button-outline encyclopedia-song" id="playSong">▶ Posłuchaj piosenki Dorszolandii</button><a class="text-link" href="#mieszkancy">Poznaj mieszkańców →</a></div></div>
       </section>
 
-      <section class="shop-section" id="sklep" aria-labelledby="shop-title">
-        <div class="shell shop-inner"><div><p class="eyebrow">Dla fanów krainy</p><h2 id="shop-title">Sklep Dorszolandii</h2><p>Koszulki, kubki, przypinki i gadżety z mieszkańcami miasta. Katalog jest gotowy do późniejszego podłączenia do płatności.</p></div><div class="shop-items"><article>👕<strong>Koszulki</strong><span>ulubiony Dorsz</span></article><article>☕<strong>Kubki</strong><span>na bąbelkowe kakao</span></article><article>🎒<strong>Gadżety</strong><span>przypinki, zeszyty i torby</span></article></div><button class="button button-sun" type="button" id="shopButton">Zobacz kolekcję <span aria-hidden="true">🛍</span></button></div>
-      </section>
     </main>
 
-    <footer id="kontakt"><div class="shell footer-inner"><a href="#start" class="brand footer-brand"><img src="assets/hero/logo-dorszolandia.png" alt="" /><span>Dorszolandia</span></a><p>Lepiej jutro zaczyna się od nas! <span aria-hidden="true">♥</span></p><div class="footer-links"><a href="#start">Start</a><a href="#mapa">Mapa</a><a href="#mieszkancy">Mieszkańcy</a><a href="#przygody">Przygody</a><a href="#gry">Gry</a><a href="#dorszopedia">Dorszopedia</a></div><div class="social-links" aria-label="Media społecznościowe"><a href="#kontakt" aria-label="YouTube">▶</a><a href="#kontakt" aria-label="Instagram">◎</a><a href="#kontakt" aria-label="Facebook">f</a></div><p class="ocean-note">Razem dla czystego oceanu! ♡</p></div></footer>
+    <footer id="kontakt"><div class="shell footer-inner"><a href="#start" class="brand footer-brand"><img src="assets/hero/logo-dorszolandia.png" alt="" /><span>Dorszolandia</span></a><p>Lepiej jutro zaczyna się od nas! <span aria-hidden="true">♥</span></p><div class="footer-links"><a href="#start">Start</a><a href="#mapa">Mapa</a><a href="#mieszkancy">Mieszkańcy</a><a href="#opowiadania">Opowiadania</a><a href="#gry">Gry</a><a href="#dorszopedia">Dorszopedia</a></div><div class="social-links" aria-label="Media społecznościowe"><a href="#kontakt" aria-label="YouTube">▶</a><a href="#kontakt" aria-label="Instagram">◎</a><a href="#kontakt" aria-label="Facebook">f</a></div><p class="ocean-note">Razem dla czystego oceanu! ♡</p></div></footer>
 
     <dialog class="modal" id="modal"><button type="button" class="modal-close" id="modalClose" aria-label="Zamknij okno">×</button><div class="modal-content" id="modalContent"></div></dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

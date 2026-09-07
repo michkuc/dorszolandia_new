@@ -4,7 +4,7 @@ const completeStories = [
   {
     "id": "pecherzyk",
     "icon": "🫧",
-    "cover": "generated/story-characters/babel-maksymalny.webp",
+    "cover": "generated/story-covers/pecherzyk.webp",
     "minutes": 9,
     "title": "Borys i Dorszuś i Wielka Afera z Pęcherzykiem",
     "teaser": "Pełna opowieść nr 1 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -19,7 +19,7 @@ const completeStories = [
   {
     "id": "plecaki",
     "icon": "🎒",
-    "cover": "generated/story-characters/dorszusi.webp",
+    "cover": "generated/story-covers/plecaki.webp",
     "minutes": 10,
     "title": "Zagadka Znikających Plecaków",
     "teaser": "Pełna opowieść nr 2 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -34,7 +34,7 @@ const completeStories = [
   {
     "id": "misja",
     "icon": "📺",
-    "cover": "generated/story-characters/borys.webp",
+    "cover": "generated/story-covers/misja.webp",
     "minutes": 8,
     "title": "Ryba z Misją (i bez Planu)",
     "teaser": "Pełna opowieść nr 3 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -49,7 +49,7 @@ const completeStories = [
   {
     "id": "zbuntowany-pomnik",
     "icon": "✨",
-    "cover": "generated/story-characters/algoria.webp",
+    "cover": "generated/story-covers/zbuntowany-pomnik.webp",
     "minutes": 8,
     "title": "Księżniczka Algorytma i Zbuntowany Pomnik",
     "teaser": "Pełna opowieść nr 4 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -64,7 +64,7 @@ const completeStories = [
   {
     "id": "influencerzy",
     "icon": "📱",
-    "cover": "generated/story-characters/krol-dorsz.webp",
+    "cover": "generated/story-covers/algoria-powraca.webp",
     "minutes": 8,
     "title": "Algoria Powraca, czyli Influencerzy z Głębin",
     "teaser": "Pełna opowieść nr 5 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -79,7 +79,7 @@ const completeStories = [
   {
     "id": "meduzotram",
     "icon": "🚋",
-    "cover": "generated/story-characters/babel-maksymalny.webp",
+    "cover": "generated/story-covers/meduzotram.webp",
     "minutes": 8,
     "title": "Tajemnica Nocnego Meduzotramu",
     "teaser": "Pełna opowieść nr 6 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -94,7 +94,7 @@ const completeStories = [
   {
     "id": "wyscig",
     "icon": "🏁",
-    "cover": "generated/story-characters/dorszusi.webp",
+    "cover": "generated/story-covers/wyscig.webp",
     "minutes": 8,
     "title": "Wielki Wyścig przez Neptunopol",
     "teaser": "Pełna opowieść nr 7 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -109,7 +109,7 @@ const completeStories = [
   {
     "id": "dzwonek",
     "icon": "🔔",
-    "cover": "generated/story-characters/borys.webp",
+    "cover": "generated/story-covers/dzwonek.webp",
     "minutes": 8,
     "title": "Operacja Zaginiony Dzwonek",
     "teaser": "Pełna opowieść nr 8 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -124,7 +124,7 @@ const completeStories = [
   {
     "id": "latarnia",
     "icon": "🔦",
-    "cover": "generated/story-characters/algoria.webp",
+    "cover": "generated/story-covers/latarnia.webp",
     "minutes": 8,
     "title": "Duch Starej Latarni",
     "teaser": "Pełna opowieść nr 9 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -139,7 +139,7 @@ const completeStories = [
   {
     "id": "labirynt",
     "icon": "🪸",
-    "cover": "generated/story-characters/krol-dorsz.webp",
+    "cover": "generated/story-covers/labirynt.webp",
     "minutes": 8,
     "title": "Koralowy Labirynt",
     "teaser": "Pełna opowieść nr 10 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -154,7 +154,7 @@ const completeStories = [
   {
     "id": "wynalazki",
     "icon": "🔧",
-    "cover": "generated/story-characters/babel-maksymalny.webp",
+    "cover": "generated/story-covers/wynalazki.webp",
     "minutes": 8,
     "title": "Turniej Najgorszych Wynalazków",
     "teaser": "Pełna opowieść nr 11 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -169,7 +169,7 @@ const completeStories = [
   {
     "id": "krol-drzemki",
     "icon": "😴",
-    "cover": "generated/story-characters/dorszusi.webp",
+    "cover": "generated/story-covers/krol-drzemki.webp",
     "minutes": 8,
     "title": "Borys i Dorszuś kontra Król Drzemki",
     "teaser": "Pełna opowieść nr 12 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -184,7 +184,7 @@ const completeStories = [
   {
     "id": "biblioteka",
     "icon": "📚",
-    "cover": "generated/story-characters/borys.webp",
+    "cover": "generated/story-covers/biblioteka.webp",
     "minutes": 8,
     "title": "Sekret Biblioteki w Muszli",
     "teaser": "Pełna opowieść nr 13 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -199,7 +199,7 @@ const completeStories = [
   {
     "id": "meduzy",
     "icon": "🪼",
-    "cover": "generated/story-characters/algoria.webp",
+    "cover": "generated/story-covers/meduzy.webp",
     "minutes": 8,
     "title": "Wielka Noc Świecących Meduz",
     "teaser": "Pełna opowieść nr 14 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -214,7 +214,7 @@ const completeStories = [
   {
     "id": "kosmos",
     "icon": "🚀",
-    "cover": "generated/story-characters/krol-dorsz.webp",
+    "cover": "generated/story-covers/kosmos.webp",
     "minutes": 8,
     "title": "Operacja Koralowy Kosmos",
     "teaser": "Pełna opowieść nr 15 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -229,7 +229,7 @@ const completeStories = [
   {
     "id": "wyspa-babelkow",
     "icon": "🏝️",
-    "cover": "generated/story-characters/babel-maksymalny.webp",
+    "cover": "generated/story-covers/wyspa-babelkow.webp",
     "minutes": 8,
     "title": "Zaginiona Wyspa Bąbelków",
     "teaser": "Pełna opowieść nr 16 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -244,7 +244,7 @@ const completeStories = [
   {
     "id": "mistrzostwa",
     "icon": "🏆",
-    "cover": "generated/story-characters/dorszusi.webp",
+    "cover": "generated/story-covers/mistrzostwa.webp",
     "minutes": 8,
     "title": "Mistrzostwa Dorszolandii w Wszystkim",
     "teaser": "Pełna opowieść nr 17 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -259,7 +259,7 @@ const completeStories = [
   {
     "id": "zegar",
     "icon": "⏰",
-    "cover": "generated/story-characters/borys.webp",
+    "cover": "generated/story-covers/zegar.webp",
     "minutes": 8,
     "title": "Zegar Cofający Poniedziałek",
     "teaser": "Pełna opowieść nr 18 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -274,7 +274,7 @@ const completeStories = [
   {
     "id": "pociag",
     "icon": "🚇",
-    "cover": "generated/story-characters/algoria.webp",
+    "cover": "generated/story-covers/pociag.webp",
     "minutes": 8,
     "title": "Tajemnica Głębinowego Pociągu",
     "teaser": "Pełna opowieść nr 19 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -289,7 +289,7 @@ const completeStories = [
   {
     "id": "noc-bez-smiechu",
     "icon": "🌙",
-    "cover": "generated/story-characters/krol-dorsz.webp",
+    "cover": "generated/story-covers/noc-bez-smiechu.webp",
     "minutes": 10,
     "title": "Noc, Kiedy Dorszolandia Przestała Się Śmiać",
     "teaser": "Pełna opowieść nr 20 z „Wielkiej Księgi Przygód Borysa i Dorszusia”.",
@@ -303,8 +303,14 @@ const completeStories = [
   }
 ];
 
-function makeChapters(body) {
+const sourceCycleIds = new Set(['pecherzyk', 'plecaki', 'misja', 'zbuntowany-pomnik', 'influencerzy']);
+
+function makeChapters(body, isSourceText = false) {
   const paragraphs = body.split(/\n+/).map(part => part.trim()).filter(Boolean);
+  if (isSourceText) return [{
+    title: 'Tekst oryginalny — wersja 1:1',
+    paragraphs
+  }];
   const chunkSize = Math.max(4, Math.ceil(paragraphs.length / 4));
   const titles = ['Początek przygody', 'Tropy i komplikacje', 'Plan przyjaciół', 'Finał'];
   return Array.from({ length: Math.ceil(paragraphs.length / chunkSize) }, (_, index) => ({
@@ -315,6 +321,6 @@ function makeChapters(body) {
 
 export const storyLibrary = completeStories.map(story => ({
   ...story,
-  chapters: makeChapters(story.body)
+  sourceCycle: sourceCycleIds.has(story.id),
+  chapters: makeChapters(story.body, sourceCycleIds.has(story.id))
 }));
-

@@ -2,3 +2,4 @@
 import './final-pass-core.js';
 import './creator-drive.js';
 import './library-upgrade.js';
+import './library-polish.js';

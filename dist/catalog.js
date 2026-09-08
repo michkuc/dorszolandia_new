@@ -29,7 +29,7 @@ export const court = [
   ['mysliwy','Rogalik Zielonopióry','Strażnik Lasów Wodorostowych','Zna ścieżki lasu wodorostów i dba, by przyroda oraz podróżnicy byli bezpieczni.','1Jr8P-RiNqNRdv9a-YkA5Tz2WjfhmXrlY'],
   ['krzyzowiec','Sir Białopłetwy','Strażnik Zakonu Białej Rafy','Wytrwały opiekun Białej Rafy, zawsze gotów wyruszyć z pomocą.','1_oeH2OAMCTbrikI94DVI8QaMrztNqOb2'],
   ['pogromca-smokow','Drakoryn i Pyrtek','Opiekun smoka morskiego i jego towarzysz','Opiekuje się morskim smokiem Pyrtkiem i uczy, że odwaga idzie w parze z troską.','13qfeqCQkVdG4UaZv-IniQvnK8WSQTQe2']
-].map(([id, name, role, description, imageId]) => ({ id, name, role, description, category: 'Dwór Królewski', art: driveImage(imageId) }));
+].map(([id, name, role, description]) => ({ id, name, role, description, category: 'Dwór Królewski', art: `source/${id}.webp` }));
 
 // Katalog źródłowy obejmuje 36 pozycji. Grafiki są podpinane w kolejnym kroku
 // wyłącznie z osobnych plików źródłowych, bez automatycznego wycinania z arkusza.

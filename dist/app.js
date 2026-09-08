@@ -172,7 +172,14 @@ function residentById(id) { return residents.find(resident => resident.id === id
 
 function residentArtwork(person, alt = '') {
   const badge = person.badge ? `<span class="resident-badge" aria-hidden="true">${escapeHtml(person.badge)}</span>` : '';
+  if (person.art === 'inline:dorszusi' || person.art === 'inline:borys') return `<span class="resident-inline-art resident-inline-art--${person.art.slice(7)}" role="img" aria-label="${escapeHtml(alt || `Ilustracja: ${person.name}`)}"></span>${badge}`;
   return `<img src="assets/${person.art}" alt="${escapeHtml(alt)}" loading="lazy" />${badge}`;
+}
+
+function renderCourt() {
+  const court = residents.filter(person => person.category === 'Dwór Króla');
+  $('#courtGrid').innerHTML = court.map(person => `<button class="court-card" type="button" data-court-resident="${person.id}" aria-label="Otwórz profil: ${person.name}"><div class="court-art">${residentArtwork(person, `Ilustracja: ${person.name}`)}</div><h3>${person.name}</h3><p>${person.role}</p></button>`).join('');
+  $('#courtGrid').addEventListener('click', event => { const card = event.target.closest('[data-court-resident]'); if (card) openResident(card.dataset.courtResident); });
 }
 
 function renderResidents() {
@@ -467,24 +474,32 @@ function answerBubbleCode(button) {
 }
 
 const accessoryOptions = [
-  { key: 'czapka', label: 'Czapka', icon: '🧢', x: 49, y: 19 }, { key: 'korona', label: 'Korona', icon: '👑', x: 50, y: 16 },
-  { key: 'helm', label: 'Hełm', icon: '⛑️', x: 49, y: 20 }, { key: 'czapka-kapitana', label: 'Czapka kapitana', icon: '⚓', x: 49, y: 19 },
-  { key: 'okulary', label: 'Okulary', icon: '👓', x: 48, y: 42 }, { key: 'maska', label: 'Maska nurka', icon: '🥽', x: 49, y: 42 },
-  { key: 'sluchawki', label: 'Słuchawki', icon: '🎧', x: 49, y: 34 }, { key: 'mucha', label: 'Mucha', icon: '🎀', x: 54, y: 58 },
-  { key: 'plecak', label: 'Plecak', icon: '🎒', x: 26, y: 60 }, { key: 'pilka', label: 'Piłka', icon: '⚽', x: 77, y: 66 },
-  { key: 'lupa', label: 'Lupa', icon: '🔍', x: 72, y: 56 }, { key: 'stetoskop', label: 'Stetoskop', icon: '🩺', x: 52, y: 66 },
+  { key: 'czapka', label: 'Czapka', icon: '🧢', sprite: '4,1', x: 49, y: 19 }, { key: 'korona', label: 'Korona', icon: '👑', sprite: '0,0', x: 50, y: 16 },
+  { key: 'helm', label: 'Hełm rycerza', icon: '⛑️', sprite: '2,0', x: 49, y: 20 }, { key: 'czapka-kapitana', label: 'Czapka kapitana', icon: '⚓', sprite: '6,0', x: 49, y: 19 },
+  { key: 'okulary', label: 'Okulary', icon: '👓', sprite: '0,2', x: 48, y: 42 }, { key: 'maska', label: 'Maska nurka', icon: '🥽', sprite: '2,2', x: 49, y: 42 },
+  { key: 'sluchawki', label: 'Słuchawki', icon: '🎧', sprite: '5,5', x: 49, y: 34 }, { key: 'mucha', label: 'Maska balowa', icon: '🎀', sprite: '8,2', x: 54, y: 58 },
+  { key: 'plecak', label: 'Plecak', icon: '🎒', sprite: '2,8', x: 26, y: 60 }, { key: 'pilka', label: 'Piłka', icon: '⚽', sprite: '0,4', x: 77, y: 66 },
+  { key: 'lupa', label: 'Lupa', icon: '🔍', sprite: '6,2', x: 72, y: 56 }, { key: 'stetoskop', label: 'Mikrofon', icon: '🩺', sprite: '4,4', x: 52, y: 66 },
   { key: 'ksiazka', label: 'Książka', icon: '📘', x: 70, y: 68 }, { key: 'mapa', label: 'Mapa', icon: '🗺️', x: 70, y: 68 },
   { key: 'kompas', label: 'Kompas', icon: '🧭', x: 73, y: 61 }, { key: 'aparat', label: 'Aparat', icon: '📷', x: 66, y: 54 },
-  { key: 'gitara', label: 'Gitara', icon: '🎸', x: 66, y: 70 }, { key: 'pedzel', label: 'Pędzel', icon: '🖌️', x: 72, y: 64 },
-  { key: 'paleta', label: 'Paleta', icon: '🎨', x: 70, y: 67 }, { key: 'latarka', label: 'Latarka', icon: '🔦', x: 70, y: 60 },
+  { key: 'gitara', label: 'Gitara', icon: '🎸', sprite: '0,5', x: 66, y: 70 }, { key: 'pedzel', label: 'Pędzel', icon: '🖌️', sprite: '8,5', x: 72, y: 64 },
+  { key: 'paleta', label: 'Paleta', icon: '🎨', sprite: '7,5', x: 70, y: 67 }, { key: 'latarka', label: 'Latarka', icon: '🔦', sprite: '10,3', x: 70, y: 60 },
   { key: 'tablet', label: 'Tablet', icon: '💻', x: 69, y: 66 }, { key: 'mikroskop', label: 'Mikroskop', icon: '🔬', x: 69, y: 64 },
   { key: 'roslinka', label: 'Roślinka', icon: '🌿', x: 29, y: 68 }, { key: 'gwiazdka', label: 'Odznaka', icon: '⭐', x: 60, y: 56 },
   { key: 'choragiewka', label: 'Flaga', icon: '🚩', x: 75, y: 47 }, { key: 'gwizdek', label: 'Gwizdek', icon: '📣', x: 72, y: 61 },
   { key: 'dzwonek', label: 'Dzwonek szkolny', icon: '🔔', x: 72, y: 57 }, { key: 'bilet', label: 'Bilet na meduzotram', icon: '🎟️', x: 69, y: 64 },
   { key: 'zegarek', label: 'Chronobąbel', icon: '⏰', x: 70, y: 60 }, { key: 'latarnia', label: 'Latarnia', icon: '🏮', x: 72, y: 56 },
-  { key: 'puchar', label: 'Puchar', icon: '🏆', x: 68, y: 62 }, { key: 'rakieta', label: 'Rakieta Koral-1', icon: '🚀', x: 73, y: 58 },
+  { key: 'puchar', label: 'Puchar', icon: '🏆', sprite: '3,9', x: 68, y: 62 }, { key: 'rakieta', label: 'Rakieta Koral-1', icon: '🚀', sprite: '9,7', x: 73, y: 58 },
   { key: 'meduza', label: 'Świecąca meduza', icon: '🪼', x: 71, y: 54 }, { key: 'ksiezyc', label: 'Nocny księżyc', icon: '🌙', x: 69, y: 49 },
-  { key: 'narzedzia', label: 'Narzędzia Torpedy', icon: '🧰', x: 71, y: 68 }, { key: 'zwoj', label: 'Stara mapa', icon: '📜', x: 69, y: 65 }
+  { key: 'narzedzia', label: 'Narzędzia Torpedy', icon: '🧰', sprite: '9,3', x: 71, y: 68 }, { key: 'zwoj', label: 'Stara mapa', icon: '📜', sprite: '10,7', x: 69, y: 65 },
+  { key: 'tiara', label: 'Tiara królowej', icon: '👑', sprite: '1,0', x: 50, y: 16 }, { key: 'kapelusz-czarodzieja', label: 'Kapelusz czarodzieja', icon: '🧙', sprite: '3,0', x: 49, y: 17 },
+  { key: 'kapelusz-pirata', label: 'Kapelusz pirata', icon: '🏴‍☠️', sprite: '4,0', x: 49, y: 18 }, { key: 'czapka-kucharska', label: 'Czapka kucharska', icon: '👨‍🍳', sprite: '8,0', x: 49, y: 18 },
+  { key: 'gogle-lotnika', label: 'Gogle lotnika', icon: '🥽', sprite: '6,1', x: 49, y: 38 }, { key: 'maska-superbohatera', label: 'Maska superbohatera', icon: '🥷', sprite: '8,2', x: 49, y: 41 },
+  { key: 'miecz', label: 'Miecz', icon: '⚔️', sprite: '0,3', x: 71, y: 61 }, { key: 'tarcza', label: 'Tarcza', icon: '🛡️', sprite: '1,3', x: 30, y: 56 },
+  { key: 'laska-magiczna', label: 'Magiczna laska', icon: '🪄', sprite: '4,3', x: 70, y: 56 }, { key: 'trident', label: 'Trójząb', icon: '🔱', sprite: '5,3', x: 70, y: 58 },
+  { key: 'saksofon', label: 'Saksofon', icon: '🎷', sprite: '3,5', x: 71, y: 67 }, { key: 'trabka', label: 'Trąbka', icon: '🎺', sprite: '2,5', x: 71, y: 67 },
+  { key: 'aparat-foto', label: 'Aparat fotograficzny', icon: '📷', sprite: '10,5', x: 70, y: 58 }, { key: 'teleskop', label: 'Teleskop', icon: '🔭', sprite: '5,8', x: 72, y: 55 },
+  { key: 'kolo-ratunkowe', label: 'Koło ratunkowe', icon: '🛟', sprite: '4,8', x: 70, y: 67 }, { key: 'kotwica', label: 'Kotwica', icon: '⚓', sprite: '3,8', x: 30, y: 67 }
 ];
 const colorFilters = { '#ffad24': 'none', '#33a8e8': 'hue-rotate(135deg) saturate(1.16)', '#f26492': 'hue-rotate(295deg) saturate(1.13)', '#75c95b': 'hue-rotate(74deg) saturate(1.1)', '#8c69e8': 'hue-rotate(218deg) saturate(1.14)' };
 let creatorItems = [];
@@ -494,12 +509,17 @@ let selectedItemId = null;
 let resizeState = null;
 
 function renderAccessories() {
-  $('#accessoryPalette').innerHTML = accessoryOptions.map(accessory => `<button type="button" class="accessory-button" data-accessory="${accessory.key}" title="Dodaj: ${accessory.label}" aria-label="Dodaj ${accessory.label}">${accessory.icon}</button>`).join('');
-  const itemMarkup = item => `<button type="button" class="placed-item ${item.id === selectedItemId ? 'is-selected' : ''}" data-item-id="${item.id}" style="left:${item.x}%;top:${item.y}%;z-index:${item.layer};font-size:${item.size}px;transform:translate(-50%,-50%) rotate(${item.angle}deg)" aria-label="${item.label}. Przeciągnij, aby przesunąć. Użyj żółtego uchwytu, aby zmienić wielkość.">${item.icon}<span class="resize-handle" aria-hidden="true">↘</span></button>`;
+  const accessoryVisual = item => {
+    if (!item.sprite) return item.icon;
+    const [spriteX, spriteY] = item.sprite.split(',');
+    return `<span class="accessory-art" style="--sprite-x:${spriteX};--sprite-y:${spriteY}"></span>`;
+  };
+  $('#accessoryPalette').innerHTML = accessoryOptions.map(accessory => `<button type="button" class="accessory-button ${accessory.sprite ? 'has-art' : ''}" data-accessory="${accessory.key}" title="Dodaj: ${accessory.label}" aria-label="Dodaj ${accessory.label}">${accessoryVisual(accessory)}</button>`).join('');
+  const itemMarkup = item => `<button type="button" class="placed-item ${item.sprite ? 'has-art' : ''} ${item.id === selectedItemId ? 'is-selected' : ''}" data-item-id="${item.id}" style="left:${item.x}%;top:${item.y}%;z-index:${item.layer};font-size:${item.size}px;transform:translate(-50%,-50%) rotate(${item.angle}deg)" aria-label="${item.label}. Przeciągnij, aby przesunąć. Użyj żółtego uchwytu, aby zmienić wielkość.">${accessoryVisual(item)}<span class="resize-handle" aria-hidden="true">↘</span></button>`;
   const ordered = items => [...items].sort((first, second) => first.layer - second.layer).map(itemMarkup).join('');
   $('#placedItemsBack').innerHTML = ordered(creatorItems.filter(item => item.surface === 'back'));
   $('#placedItemsFront').innerHTML = ordered(creatorItems.filter(item => item.surface !== 'back'));
-  $('#layerList').innerHTML = creatorItems.length ? [...creatorItems].sort((first, second) => (first.surface === second.surface ? second.layer - first.layer : first.surface === 'front' ? -1 : 1)).map(item => `<button type="button" class="layer-chip ${item.id === selectedItemId ? 'is-selected' : ''}" data-layer-item="${item.id}"><span>${item.icon}</span>${item.label}<small>${item.surface === 'back' ? 'za' : 'przed'} · ${item.layer}</small></button>`).join('') : '<span class="layer-empty">Dodaj pierwszy rekwizyt z palety.</span>';
+  $('#layerList').innerHTML = creatorItems.length ? [...creatorItems].sort((first, second) => (first.surface === second.surface ? second.layer - first.layer : first.surface === 'front' ? -1 : 1)).map(item => `<button type="button" class="layer-chip ${item.id === selectedItemId ? 'is-selected' : ''}" data-layer-item="${item.id}"><span class="layer-icon">${accessoryVisual(item)}</span>${item.label}<small>${item.surface === 'back' ? 'za' : 'przed'} · ${item.layer}</small></button>`).join('') : '<span class="layer-empty">Dodaj pierwszy rekwizyt z palety.</span>';
   updateAccessoryControls();
 }
 
@@ -619,6 +639,7 @@ function loadCreatorFish() {
     image.onerror = reject;
     image.src = 'assets/generated/dorsz-baza-transparent.png';
   });
+  $('#showCourtResidents').addEventListener('click', () => { selectedCategory = 'Dwór Króla'; showAll = true; render(); document.querySelector('#mieszkancy').scrollIntoView({ behavior: 'smooth' }); });
 }
 
 function drawCreatorItem(context, item, stage) {
@@ -779,7 +800,7 @@ function setUpEvents() {
 }
 
 function init() {
-  renderResidents(); renderMap(); renderAdventures(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); newDetective(); setUpDifferences(); renderAccessories(); setUpEvents();
+  renderResidents(); renderCourt(); renderMap(); renderAdventures(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); newDetective(); setUpDifferences(); renderAccessories(); setUpEvents();
 }
 
 init();

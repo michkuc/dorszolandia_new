@@ -111,7 +111,7 @@ function patchVisibleWorldCopy() {
     copy.textContent = 'Borys, Dorszuś, Król Dorsz i Bąbel Maksymalny należą do głównego cyklu opowiadań. Dwór Koralu z Królem Koralisem I to niezależny atlas postaci — nie jest tym samym wątkiem fabularnym.';
   }
   document.querySelectorAll('#categoryFilters [data-category="Dwór Królewski"]').forEach(button => {
-    button.textContent = 'Atlas Dworu Koralu';
+    if (button.textContent !== 'Atlas Dworu Koralu') button.textContent = 'Atlas Dworu Koralu';
   });
 }
 

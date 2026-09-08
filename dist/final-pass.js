@@ -1,3 +1,4 @@
-// Finalny loader strony: najpierw istniejący pass, potem dopasowany kreator z assetami Drive.
+// Finalny loader strony: istniejący pass, dopasowany kreator i kanoniczna biblioteka opowiadań.
 import './final-pass-core.js';
 import './creator-drive.js';
+import './library-upgrade.js';

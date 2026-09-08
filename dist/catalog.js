@@ -2,8 +2,8 @@
 // rekord tutaj i dodaj plik graficzny do assets/ — układ strony zostaje bez zmian.
 
 export const navigation = [
-  ['Odkrywaj', '#odkrywaj'], ['Graj', '#gry'], ['Twórz', '#kreator'],
-  ['Czytaj', '#opowiadania'], ['Słuchaj', '#muzyka'], ['Kolekcja', '#sklep']
+  ['Start', '#start'], ['Mapa Krainy', '#mapa'], ['Mieszkańcy', '#mieszkancy'],
+  ['Przygody', '#przygody'], ['Gry i zagadki', '#gry'], ['Dorszopedia', '#opowiadania']
 ];
 
 const driveImage = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;

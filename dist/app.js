@@ -63,9 +63,12 @@ function renderNavigation() {
 
 function renderPortals() {
   const portals = [
-    ['Postacie', 'Mieszkańcy miasta i cały królewski dwór w jednej księdze.', '#mieszkancy', '🫧'],
-    ['Mapa miejsc', 'Zobacz prawdziwe miejsca Dorszolandii.', '#mapa', '🗺️'],
-    ['Gry', 'Wybierz grę i od razu poznaj jej cel.', '#gry', '🎮']
+    ['Mieszkańcy', 'Poznaj miasto i królewski dwór.', '#mieszkancy', '🫧'],
+    ['Mapa Krainy', 'Odwiedź prawdziwe miejsca Dorszolandii.', '#mapa', '🗺️'],
+    ['Przygody', 'Wybierz misję na dzisiaj.', '#przygody', '🐚'],
+    ['Gry i zagadki', 'Graj od razu, z jasnym celem.', '#gry', '🎮'],
+    ['Biblioteka', 'Czytaj pełne historie Borysa i Dorszusia.', '#opowiadania', '📚'],
+    ['Twój Dorsz', 'Zaprojektuj własnego mieszkańca.', '#kreator', '✨']
   ];
   $('#portalGrid').innerHTML = portals.map(([title, copy, href, icon]) => `<a class="portal-card" href="${href}"><span>${icon}</span><h3>${title}</h3><p>${copy}</p><b>Odkryj →</b></a>`).join('');
 }

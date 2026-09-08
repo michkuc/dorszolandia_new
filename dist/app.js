@@ -413,6 +413,59 @@ function setUpDifferences() {
   $('#resetDifferences').addEventListener('click', resetDifferences);
 }
 
+const detectiveCases = [
+  { clue: 'W bibliotece zaginęła mapa do Skrzydłobusu. Czym Dorszuś powinien jej poszukać?', answer: 'Lupa', options: [['Lupa', '🔍'], ['Piłka', '⚽'], ['Garnek', '🍲']] },
+  { clue: 'Borys płynie w nocną wyprawę przez Koralowy Las. Co pomoże mu bezpiecznie znaleźć drogę?', answer: 'Latarka', options: [['Latarka', '🔦'], ['Gitara', '🎸'], ['Pędzel', '🖌️']] },
+  { clue: 'Przed zawodami ktoś ukrył medal wśród muszli. Jaki przedmiot pomoże odnaleźć właściwe miejsce?', answer: 'Mapa', options: [['Mapa', '🗺️'], ['Słuchawki', '🎧'], ['Puchar', '🏆']] },
+  { clue: 'W pracowni Torpedy trzeba zobaczyć maleńki ślad na koralu. Czego użyje detektyw?', answer: 'Lupa', options: [['Lupa', '🔍'], ['Korona', '👑'], ['Rakieta', '🚀']] },
+  { clue: 'Dorszuś szykuje występ dla całej rafy. Co będzie potrzebne, aby zagrać melodię?', answer: 'Gitara', options: [['Gitara', '🎸'], ['Kompas', '🧭'], ['Teleskop', '🔭']] }
+];
+let currentDetective;
+function newDetective() {
+  currentDetective = detectiveCases[Math.floor(Math.random() * detectiveCases.length)];
+  $('#detectiveBody').innerHTML = `<p class="detective-clue">${currentDetective.clue}</p><div class="detective-options">${shuffle(currentDetective.options).map(([label, icon]) => `<button type="button" class="detective-option" data-detective-answer="${label}"><span aria-hidden="true">${icon}</span>${label}</button>`).join('')}</div><p class="detective-feedback" id="detectiveFeedback"></p>`;
+}
+function answerDetective(button) {
+  const right = button.dataset.detectiveAnswer === currentDetective.answer;
+  $$('.detective-option').forEach(option => { option.disabled = true; if (option.dataset.detectiveAnswer === currentDetective.answer) option.classList.add('is-right'); });
+  if (!right) button.classList.add('is-wrong');
+  $('#detectiveFeedback').textContent = right ? 'Brawo, detektywie! Trop rozwiązany.' : `Prawidłowo: ${currentDetective.answer}. Spróbuj kolejnego tropu.`;
+  if (right) showToast('Detektyw Dorszuś rozwiązał zagadkę!');
+}
+
+const bubbleSymbols = ['🐚', '⭐', '🫧', '🐠', '⚓', '🪸'];
+let bubbleSequence = [];
+let bubbleProgress = 0;
+let bubbleReady = false;
+function renderBubbleCode(reveal = false) {
+  $('#bubbleCodeDisplay').innerHTML = bubbleSequence.map(symbol => `<span class="bubble-symbol ${reveal ? '' : 'is-hidden'}">${symbol}</span>`).join('');
+  $('#bubbleCodeOptions').innerHTML = shuffle(bubbleSymbols).map(symbol => `<button type="button" class="bubble-code-option" data-bubble-symbol="${symbol}"><span aria-hidden="true">${symbol}</span></button>`).join('');
+}
+function startBubbleCode() {
+  bubbleSequence = [bubbleSymbols[Math.floor(Math.random() * bubbleSymbols.length)]];
+  bubbleProgress = 0; bubbleReady = false;
+  $('#bubbleCodeResult').textContent = 'Zapamiętaj symbol…';
+  $('#startBubbleCode').textContent = 'Pokaż kod →';
+  renderBubbleCode(true);
+  window.setTimeout(() => { bubbleReady = true; renderBubbleCode(false); $('#bubbleCodeResult').textContent = 'Teraz powtórz kod.'; }, 1100);
+}
+function answerBubbleCode(button) {
+  if (!bubbleReady) return;
+  const symbol = button.dataset.bubbleSymbol;
+  if (symbol !== bubbleSequence[bubbleProgress]) {
+    bubbleReady = false; $('#bubbleCodeResult').textContent = 'Prawie! Kod zaczął się od nowa.'; renderBubbleCode(true);
+    window.setTimeout(() => { bubbleProgress = 0; bubbleReady = true; renderBubbleCode(false); $('#bubbleCodeResult').textContent = 'Spróbuj ponownie.'; }, 850);
+    return;
+  }
+  bubbleProgress += 1;
+  if (bubbleProgress < bubbleSequence.length) { $('#bubbleCodeResult').textContent = 'Dobrze! Jaki jest następny bąbelek?'; return; }
+  bubbleSequence.push(bubbleSymbols[Math.floor(Math.random() * bubbleSymbols.length)]);
+  bubbleProgress = 0; bubbleReady = false;
+  $('#bubbleCodeResult').textContent = `Brawo! Poziom ${bubbleSequence.length - 1}. Nowy symbol już płynie…`;
+  renderBubbleCode(true);
+  window.setTimeout(() => { bubbleReady = true; renderBubbleCode(false); $('#bubbleCodeResult').textContent = `Poziom ${bubbleSequence.length}: powtórz cały kod.`; }, 1200);
+}
+
 const accessoryOptions = [
   { key: 'czapka', label: 'Czapka', icon: '🧢', x: 49, y: 19 }, { key: 'korona', label: 'Korona', icon: '👑', x: 50, y: 16 },
   { key: 'helm', label: 'Hełm', icon: '⛑️', x: 49, y: 20 }, { key: 'czapka-kapitana', label: 'Czapka kapitana', icon: '⚓', x: 49, y: 19 },
@@ -677,6 +730,10 @@ function setUpEvents() {
   $('#resetMemory').addEventListener('click', resetMemory);
   $('#quizBody').addEventListener('click', event => { const option = event.target.closest('[data-quiz-answer]'); if (option && !option.disabled) answerQuiz(option); });
   $('#nextQuiz').addEventListener('click', newQuiz);
+  $('#detectiveBody').addEventListener('click', event => { const option = event.target.closest('[data-detective-answer]'); if (option && !option.disabled) answerDetective(option); });
+  $('#nextDetective').addEventListener('click', newDetective);
+  $('#bubbleCodeOptions').addEventListener('click', event => { const option = event.target.closest('[data-bubble-symbol]'); if (option) answerBubbleCode(option); });
+  $('#startBubbleCode').addEventListener('click', startBubbleCode);
   $('#goalField').addEventListener('click', event => { if (event.target.closest('#startGoal')) startGoalGame(); });
   $('#goalBall').addEventListener('click', saveGoal);
   $('#accessoryPalette').addEventListener('click', event => { const button = event.target.closest('[data-accessory]'); if (button) addAccessory(button.dataset.accessory); });
@@ -722,7 +779,7 @@ function setUpEvents() {
 }
 
 function init() {
-  renderResidents(); renderMap(); renderAdventures(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); setUpDifferences(); renderAccessories(); setUpEvents();
+  renderResidents(); renderMap(); renderAdventures(); renderStoryShelf(); renderDorszopedia(); resetMemory(); newQuiz(); newDetective(); setUpDifferences(); renderAccessories(); setUpEvents();
 }
 
 init();

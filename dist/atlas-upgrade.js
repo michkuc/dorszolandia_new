@@ -77,9 +77,9 @@ function patchAtlasCards() {
     const category = copy?.querySelector('small');
     const role = copy?.querySelector('em');
     const tagline = copy?.querySelector('.person-tagline');
-    if (category) category.textContent = 'Atlas Dworu Koralu';
-    if (role) role.textContent = profile.role;
-    if (tagline) tagline.textContent = profile.history;
+    if (category && category.textContent !== 'Atlas Dworu Koralu') category.textContent = 'Atlas Dworu Koralu';
+    if (role && role.textContent !== profile.role) role.textContent = profile.role;
+    if (tagline && tagline.textContent !== profile.history) tagline.textContent = profile.history;
   });
 }
 

@@ -6,51 +6,55 @@ export const navigation = [
   ['Czytaj', '#opowiadania'], ['Słuchaj', '#muzyka'], ['Kolekcja', '#sklep']
 ];
 
+const driveImage = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
+
+// Dane i nazwy zgodne z „Wielką Księgą Bohaterów Dorszolandii”.
+// Atlas dworu jest odrębnym światem, nie miesza fabuł Borysa i Dorszusia.
 export const court = [
-  ['krol', 'Król Dorsz', 'Król', '00', 'Czuwa nad pokojem i odwagą całej Dorszolandii.'],
-  ['krolowa', 'Królowa Perła', 'Królowa', '01', 'Przypomina, że mądrość idzie w parze z życzliwością.'],
-  ['rycerz', 'Sir Łuskarz', 'Rycerz', '02', 'Broni słabszych i dotrzymuje danego słowa.'],
-  ['czarodziej', 'Mag Bąbel', 'Czarodziej', '03', 'Łączy magię z ciekawością i rozsądkiem.'],
-  ['lucznik', 'Strzałka', 'Łucznik', '04', 'Trafia do celu, bo najpierw uważnie patrzy.'],
-  ['blazen', 'Błazen Fikołek', 'Błazen', '05', 'Rozśmiesza dwór, lecz nigdy cudzym kosztem.'],
-  ['mnich', 'Brat Muszel', 'Mnich', '06', 'Uczy spokoju i cierpliwego słuchania.'],
-  ['kowal', 'Kowal Iskra', 'Kowal', '07', 'Naprawia to, co ważne, i tworzy nowe narzędzia.'],
-  ['minstrel', 'Minstrel Nuta', 'Minstrel', '08', 'Pamięta melodie wszystkich wielkich wypraw.'],
-  ['zielarka', 'Zielarka Koralka', 'Zielarka', '09', 'Zna podwodne rośliny i pomaga nimi mądrze.'],
-  ['pisarz', 'Pisarz Atrament', 'Pisarz', '10', 'Zapisuje historie, aby żadna nie zniknęła.'],
-  ['kupiec', 'Kupiec Muszla', 'Kupiec', '11', 'Wymienia się uczciwie i zawsze liczy dwa razy.'],
-  ['straznik', 'Strażnik Rafa', 'Strażnik', '12', 'Pilnuje bram zamku i bezpieczeństwa gości.'],
-  ['wojownik', 'Wojownik Grom', 'Wojownik', '13', 'Ćwiczy siłę po to, by chronić innych.'],
-  ['zwiadowca', 'Zwiadowca Cień', 'Zwiadowca', '14', 'Pierwszy odkrywa nowe ścieżki i ostrzega drużynę.'],
-  ['mysliwy', 'Myśliwy Trop', 'Myśliwy', '15', 'Tropi zagadki i zawsze dba o naturę.'],
-  ['krzyzowiec', 'Krzyżowiec Fala', 'Krzyżowiec', '16', 'Jest wytrwały, pomocny i gotowy do drogi.'],
-  ['pogromca-smokow', 'Pogromca Smoków Żar', 'Pogromca Smoków', '17', 'Stawia czoła smokom i własnym obawom.']
-].map(([id, name, role, number, description]) => ({
-  id, name, role, description, category: 'Dwór Króla',
-  art: `generated/sredniowieczny-${number}.png`
-}));
+  ['krol','Król Koralis I','Władca Dorszolandii','Rozważny władca, który po Wielkiej Burzy zjednoczył mieszkańców i do dziś słucha ich głosu.','1EcTTzoxD5tbmxRx7YvXrDpt9sZCnzuON'],
+  ['krolowa','Królowa Perlena','Królowa i główna dyplomatka','Mądra dyplomatka, która wierzy, że rozmowa i współpraca są silniejsze niż spór.','1JXvHObwXW0fg3gdisabQtPP5Go-u0GvG'],
+  ['rycerz','Sir Mieczopłetw','Rycerz Królewskiej Straży','Niezawodny obrońca pałacu i szlaków. Jego siłą są odwaga, honor i dotrzymane słowo.','17hgC6qrJ1hT4PDR7FLAN4KWbEAlm6KQK'],
+  ['czarodziej','Mistrz Bąblomir','Czarodziej Głębin','Badacz magii bąbelków; z ciekawością testuje zaklęcia i szuka rozsądnych rozwiązań.','1vn43bqNGK8JuTtT108bDdOvKTx_SCSvM'],
+  ['lucznik','Robin Wodorost','Leśny łucznik i obrońca szlaków','Czuwa nad Lasami Wodorostowymi i pomaga każdemu, kto zgubi drogę.','1fmkpM-U7oz6BnFBIltzEPQjOtCfWMGZh'],
+  ['blazen','Plumcio Rozbawiony','Nadworny błazen','Rozładowuje napięcie dowcipem i przypomina, że śmiech może łączyć, a nie ranić.','1sig_30I5Ze2HGUJ6y5tCHt9FWYMf7w4U'],
+  ['mnich','Brat Kapturion','Mnich i opiekun dawnych zapisów','Strzeże kronik i uczy, że cierpliwość pomaga zobaczyć to, czego inni nie zauważają.','1yCH2Y8mkZywhhRByNCLiyAXlRBZAwdwk'],
+  ['kowal','Młotopłetwy','Królewski kowal i konstruktor','Naprawia narzędzia, buduje wynalazki i udowadnia, że dobry pomysł wymaga pracy.','1cTKydfFuUTji2yH60d0kBmmxOLlEeVJJ'],
+  ['minstrel','Lutniak Czerwonopłetwy','Bard i wędrowny pieśniarz','Zbiera opowieści z całej krainy i zmienia je w pieśni, które pamięta cały dwór.','12BRlGT7vPouwnkmIzZtxWHA45rRALCXS'],
+  ['zielarka','Siostra Muszelina','Zielarka i uzdrowicielka','Zna rośliny rafy, lecz przede wszystkim potrafi słuchać i spokojnie pomagać.','1-Uza2j3UYed4OG-DTjA2QHep61ndymdo'],
+  ['pisarz','Profesor Atramentor','Kronikarz i uczony','Porządkuje wiedzę, sprawdza zapisy i przypomina, że historia jest wspólną pamięcią.','1RKxGL85l1Q7fZ7-LfvDijVwkHSSrdrdT'],
+  ['kupiec','Sakiewiusz Złotobrzuch','Kupiec i handlarz dalekich mórz','Zna porty, szlaki i uczciwe zasady wymiany; zawsze pamięta, że zaufanie jest najcenniejsze.','1tgpIZUceVINtrsUPztj2Ul2ysdO9tBbt'],
+  ['straznik','Wartownik Rafgard','Strażnik głównej bramy','Pilnuje bezpieczeństwa przy bramie zamku i wita gości z rozwagą oraz życzliwością.','1T-kkt9yCvn01o3mr0s6aK3Z3_jqAMzgQ'],
+  ['wojownik','Jarl Śledziobrody','Wojownik i podróżnik Północnych Mórz','Doświadczony podróżnik, który dzieli się wiedzą o odległych morzach i odwadze w drodze.','1aQSD-mFG9Kk_mCNWKfb87eTNFXUOi2nP'],
+  ['zwiadowca','Cień Fali','Zwiadowca i tajny posłaniec','Porusza się cicho, dostrzega szczegóły i przekazuje ważne wiadomości tam, gdzie trzeba.','1bB_lcnDKK3dWqy0udjrNJ25LrlANHAmb'],
+  ['mysliwy','Rogalik Zielonopióry','Strażnik Lasów Wodorostowych','Zna ścieżki lasu wodorostów i dba, by przyroda oraz podróżnicy byli bezpieczni.','1Jr8P-RiNqNRdv9a-YkA5Tz2WjfhmXrlY'],
+  ['krzyzowiec','Sir Białopłetwy','Strażnik Zakonu Białej Rafy','Wytrwały opiekun Białej Rafy, zawsze gotów wyruszyć z pomocą.','1_oeH2OAMCTbrikI94DVI8QaMrztNqOb2'],
+  ['pogromca-smokow','Drakoryn i Pyrtek','Opiekun smoka morskiego i jego towarzysz','Opiekuje się morskim smokiem Pyrtkiem i uczy, że odwaga idzie w parze z troską.','13qfeqCQkVdG4UaZv-IniQvnK8WSQTQe2']
+].map(([id, name, role, description, imageId]) => ({ id, name, role, description, category: 'Dwór Królewski', art: driveImage(imageId) }));
+
+// Katalog źródłowy obejmuje 36 pozycji. Grafiki są podpinane w kolejnym kroku
+// wyłącznie z osobnych plików źródłowych, bez automatycznego wycinania z arkusza.
+const propArt = {
+  ksiazka: driveImage('1ziobV72LPKSubv0L047V3bwFapRUPpwc'),
+  plecak: driveImage('1pXDnvG_fiHFalhEaQzquy9elMLKFNQpC'),
+  helm: driveImage('1cv_wTQD7bWP9Lw3sTRRR86qm2NDrml3X'),
+  pilka: driveImage('1B-oAjeHoa77XuYUTmUJLqUBp4JSZlspW'),
+  stetoskop: driveImage('1vPxwlDBLH4HOqKfWPCIT-BKwSBKk_zxU'),
+  kontroler: driveImage('1fZ_YK6xqM7Fy6-aGEiEnMN6YDvH-myAZ'),
+  czapka: driveImage('1NXOGJuK74ft-ksWc04RVKOjFYr9XaIbL'),
+  aparat: driveImage('1gwjIRLcn80nB6se_gv8Pd5CdVELjuUxs')
+};
 
 export const creatorProps = [
-  ['korona', 'Korona', 'korona.webp', 82], ['helm', 'Hełm rycerza', 'helm.webp', 92],
-  ['kapelusz-czarodzieja', 'Kapelusz czarodzieja', 'kapelusz-czarodzieja.webp', 96],
-  ['kapelusz-pirata', 'Kapelusz pirata', 'kapelusz-pirata.webp', 94],
-  ['czapka-kapitana', 'Czapka kapitana', 'czapka-kapitana.webp', 88],
-  ['gogle', 'Gogle nurka', 'gogle.webp', 106], ['miecz', 'Miecz', 'miecz.webp', 105],
-  ['tarcza', 'Tarcza', 'tarcza.webp', 100], ['luk', 'Łuk', 'luk.webp', 110],
-  ['rozczka', 'Różdżka', 'rozdzka.webp', 98], ['pilka', 'Piłka', 'pilka.webp', 72],
-  ['gitara', 'Gitara', 'gitara.webp', 116], ['bebnek', 'Bębenek', 'bebnek.webp', 100],
-  ['trabka', 'Trąbka', 'trabka.webp', 104], ['aparat', 'Aparat', 'aparat.webp', 90],
-  ['lornetka', 'Lornetka', 'lornetka.webp', 100], ['kotwica', 'Kotwica', 'kotwica.webp', 98],
-  ['kolo', 'Koło ratunkowe', 'kolo.webp', 118], ['luneta', 'Luneta', 'luneta.webp', 110]
-].map(([id, label, file, defaultSize]) => ({ id, label, src: `assets/props/${file}`, defaultSize }));
+  ['czapka','Czapka'],['korona','Korona'],['helm','Hełm'],['czapka-kapitana','Czapka kapitana'],['okulary','Okulary'],['maska-nurka','Maska nurka'],['sluchawki','Słuchawki'],['mucha','Mucha'],['plecak','Plecak'],['pilka','Piłka'],['lupa','Lupa'],['stetoskop','Stetoskop'],['ksiazka','Książka'],['mapa','Mapa'],['kompas','Kompas'],['aparat','Aparat'],['gitara','Gitara'],['pedzel','Pędzel'],['paleta','Paleta'],['latarka','Latarka'],['tablet','Tablet'],['mikroskop','Mikroskop'],['roslinka','Roślinka'],['odznaka','Odznaka'],['flaga','Flaga'],['gwizdek','Gwizdek'],['dzwonek','Dzwonek szkolny'],['bilet','Bilet na meduzotram'],['chronobabel','Chronobąbel'],['latarnia','Latarnia'],['puchar','Puchar'],['rakieta','Rakieta Koral-1'],['meduza','Świecąca meduza'],['ksiezyc','Nocny księżyc'],['narzedzia','Narzędzia Torpedy'],['stara-mapa','Stara mapa']
+].map(([id, label]) => ({ id, label, src: propArt[id] || '', defaultSize: 112 }));
 
 export const games = [
-  { id: 'memory', title: 'Memory mieszkańców', icon: '🫧', description: 'Odkrywaj pary bohaterów.' },
-  { id: 'quiz', title: 'Jaki to zawód?', icon: '❔', description: 'Dopasuj opis do mieszkańca.' },
-  { id: 'goal', title: 'Bramkarz Dorsz', icon: '⚽', description: 'Obroń jak najwięcej strzałów.' },
-  { id: 'detective', title: 'Detektyw Muszla', icon: '🔎', description: 'Wybierz przydatny rekwizyt.' },
-  { id: 'code', title: 'Kod bąbelków', icon: '🔵', description: 'Zapamiętaj rosnącą sekwencję.' },
-  { id: 'treasure', title: 'Skarby rafy', icon: '⭐', description: 'Odnajdź ukryte skarby.' }
+  { id: 'memory', title: 'Memory mieszkańców', icon: '🫧', description: 'Cel: odkryj sześć par bohaterów.' },
+  { id: 'quiz', title: 'Jaki to zawód?', icon: '❔', description: 'Cel: dopasuj opis do właściwej ryby.' },
+  { id: 'goal', title: 'Bramkarz Dorsz', icon: '⚽', description: 'Cel: obroń jak najwięcej piłek w 15 sekund.' },
+  { id: 'detective', title: 'Detektyw Muszla', icon: '🔎', description: 'Cel: wybierz rekwizyt potrzebny w misji.' },
+  { id: 'code', title: 'Kod bąbelków', icon: '🔵', description: 'Cel: odtwórz sekwencję bąbelków.' },
+  { id: 'treasure', title: 'Skarby rafy', icon: '⭐', description: 'Cel: znajdź cztery ukryte skarby.' }
 ];
 
 export const collection = [

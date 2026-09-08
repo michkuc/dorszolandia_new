@@ -424,6 +424,8 @@ const storyResidents = [
   { id: 'lila', name: 'Lila', role: 'Mieszkanka od radosnych pomysłów', category: 'Dorszo-Kumple', art: 'generated/zawod-06-transparent.png', place: 'Plac Bąbelkowy', tagline: 'Potrafi połączyć zabawę z troską o innych.', story: 'Lila dołącza do przygód, kiedy miastu potrzebny jest pomysł, ale nie kolejny hałas. Pomogła Algorii zrozumieć, że śmiech najlepiej działa wtedy, gdy każdy może do niego dołączyć.', roleText: 'Wspólna zabawa jest najlepsza, gdy ma jasne zasady i nikt nie zostaje z boku.', fact: 'Jej ulubione wyzwanie brzmi: „Zrób coś śmiesznego, ale najpierw zapytaj, czy wszyscy chcą”.', task: 'Wymyśl zabawę dla trzech osób, w której każdy ma równie ważne zadanie.' }
 ];
 
-residents.push(...newResidents, ...storyResidents);
+// Zachowujemy postacie fabularne, ale nie dublujemy tu dawnego, roboczego dworu.
+// Pełny dwór jest źródłowo opisany w katalogu `court`.
+residents.push(...newResidents.filter(person => person.category !== 'Dwór Króla'), ...storyResidents);
 
 export const categoryOrder = ['Wszystkie', 'Dwór Króla', 'Dorszo-Kumple', 'Zdrowie', 'Bezpieczeństwo', 'Edukacja', 'Nauka', 'Technika', 'Technologia', 'Kultura', 'Transport', 'Sport', 'Podróże', 'Natura', 'Usługi'];

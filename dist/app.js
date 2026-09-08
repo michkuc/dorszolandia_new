@@ -8,7 +8,10 @@ const inlineArtwork = {
   'inline:dorszusi': 'generated/story-characters/dorszusi.webp',
   'inline:borys': 'generated/story-characters/borys.webp'
 };
-const imagePath = art => `assets/${inlineArtwork[art] || art}`;
+const imagePath = art => {
+  const source = inlineArtwork[art] || art;
+  return /^https?:\/\//.test(source) ? source : `assets/${source}`;
+};
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
 const shuffle = list => [...list].sort(() => Math.random() - .5);
 
@@ -22,6 +25,7 @@ let activeGame = 'memory';
 let creatorItems = [];
 let selectedItemId = null;
 let goalTimer;
+const allPeople = [...residents, ...court];
 
 function notice(message) {
   toast.textContent = message;
@@ -59,26 +63,27 @@ function renderNavigation() {
 
 function renderPortals() {
   const portals = [
-    ['Mieszkańcy', 'Poznaj zawody, marzenia i codzienne supermoce.', '#mieszkancy', '🫧'],
-    ['Dwór Króla', 'Pełna drużyna 18 średniowiecznych ryb.', '#dwor-krola', '👑'],
-    ['Mapa i misje', 'Otwieraj miejsca i wybieraj wyprawy.', '#mapa', '🗺️']
+    ['Postacie', 'Mieszkańcy miasta i cały królewski dwór w jednej księdze.', '#mieszkancy', '🫧'],
+    ['Mapa miejsc', 'Zobacz prawdziwe miejsca Dorszolandii.', '#mapa', '🗺️'],
+    ['Gry', 'Wybierz grę i od razu poznaj jej cel.', '#gry', '🎮']
   ];
   $('#portalGrid').innerHTML = portals.map(([title, copy, href, icon]) => `<a class="portal-card" href="${href}"><span>${icon}</span><h3>${title}</h3><p>${copy}</p><b>Odkryj →</b></a>`).join('');
 }
 
 function getVisibleResidents() {
-  const filtered = activeCategory === 'Wszystkie' ? residents : residents.filter(person => person.category === activeCategory);
+  const filtered = activeCategory === 'Wszystkie' ? allPeople : allPeople.filter(person => person.category === activeCategory);
   return residentsExpanded ? filtered : filtered.slice(0, 12);
 }
 
 function renderResidents() {
-  const available = categoryOrder.filter(category => category === 'Wszystkie' || residents.some(person => person.category === category));
+  const available = ['Wszystkie', 'Dwór Królewski', ...categoryOrder.filter(category => category !== 'Wszystkie' && category !== 'Dwór Króla')]
+    .filter(category => category === 'Wszystkie' || allPeople.some(person => person.category === category));
   $('#categoryFilters').innerHTML = available.map(category => `<button class="filter ${category === activeCategory ? 'is-active' : ''}" type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join('');
   $('#residentGrid').innerHTML = getVisibleResidents().map(person => `
     <button class="person-card" type="button" data-person-id="${person.id}">
       <span class="person-art">${cardImage(person)}</span><span class="person-copy"><small>${escapeHtml(person.category)}</small><strong>${escapeHtml(person.name)}</strong><em>${escapeHtml(person.role)}</em></span>
     </button>`).join('');
-  const filteredCount = activeCategory === 'Wszystkie' ? residents.length : residents.filter(person => person.category === activeCategory).length;
+  const filteredCount = activeCategory === 'Wszystkie' ? allPeople.length : allPeople.filter(person => person.category === activeCategory).length;
   const more = $('#showAllResidents');
   more.hidden = residentsExpanded || filteredCount <= 12;
   more.textContent = `Pokaż wszystkich mieszkańców (${filteredCount}) →`;
@@ -88,13 +93,8 @@ function openPerson(person) {
   openModal(`<article class="profile-modal">${cardImage(person, 'profile-art')}<div><p class="kicker">${escapeHtml(person.category || 'Dorszolandia')}</p><h2>${escapeHtml(person.name)}</h2><h3>${escapeHtml(person.role)}</h3><p>${escapeHtml(person.description || person.story || '')}</p>${person.roleText ? `<p><b>Co robi?</b> ${escapeHtml(person.roleText)}</p>` : ''}${person.fact ? `<p><b>Ciekawostka:</b> ${escapeHtml(person.fact)}</p>` : ''}${person.task ? `<p class="task"><b>Misja:</b> ${escapeHtml(person.task)}</p>` : ''}</div></article>`);
 }
 
-function renderCourt() {
-  $('#courtGrid').innerHTML = court.map(person => `<button class="court-card" type="button" data-court-id="${person.id}">${cardImage(person)}<span><small>${escapeHtml(person.role)}</small><strong>${escapeHtml(person.name)}</strong></span></button>`).join('');
-}
-
 function renderMap() {
   $('#placeList').innerHTML = places.map(place => `<button class="place-link" type="button" data-place-id="${place.id}"><span>⌁</span><b>${escapeHtml(place.name)}</b><small>${escapeHtml(place.type || 'miejsce')}</small></button>`).join('');
-  $('#mapPins').innerHTML = places.slice(0, 8).map((place, index) => `<button type="button" data-place-id="${place.id}" style="--pin:${index}">${index + 1}</button>`).join('');
   $('#adventureGrid').innerHTML = adventures.map(adventure => `<button class="adventure-card" type="button" data-adventure-id="${adventure.id}">${cardImage(adventure)}<span><small>Misja</small><strong>${escapeHtml(adventure.title)}</strong><p>${escapeHtml(adventure.short || adventure.description || '')}</p></span></button>`).join('');
 }
 
@@ -216,12 +216,6 @@ function initTreasure() {
   }));
 }
 
-function readableChapters(story) {
-  const paragraphs = story.body.split(/\n+/).map(part => part.trim()).filter(Boolean);
-  const chunkSize = Math.max(5, Math.ceil(paragraphs.length / 4));
-  return Array.from({ length: Math.ceil(paragraphs.length / chunkSize) }, (_, index) => paragraphs.slice(index * chunkSize, (index + 1) * chunkSize));
-}
-
 function renderStories() {
   $('#storyTabs').innerHTML = Object.entries(storyVolumeLabels).map(([volume, meta]) => `<button class="story-tab ${Number(volume) === activeVolume ? 'is-active' : ''}" data-volume="${volume}" type="button"><b>${meta.title}</b><span>${meta.subtitle}</span></button>`).join('');
   const volumeStories = storyLibrary.filter(story => story.volume === activeVolume);
@@ -229,14 +223,13 @@ function renderStories() {
 }
 
 function openStory(story) {
-  const chapters = readableChapters(story);
-  const content = chapters.map((chapter, index) => `<section class="story-chapter"><h3>Część ${index + 1} z ${chapters.length}</h3>${chapter.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}</section>`).join('');
-  openModal(`<article class="reading-modal story-reading"><p class="kicker">${storyVolumeLabels[story.volume].title} · pełna opowieść</p><h2>${escapeHtml(story.title)}</h2><p class="story-meta">${story.minutes} minut czytania · ${chapters.length} wygodne części</p>${content}</article>`);
+  const content = story.body.split(/\n+/).map(paragraph => paragraph.trim()).filter(Boolean).map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('');
+  openModal(`<article class="reading-modal story-reading"><p class="kicker">${storyVolumeLabels[story.volume].title} · pełna opowieść</p><h2>${escapeHtml(story.title)}</h2><p class="story-meta">${story.minutes} minut czytania · tekst zgodny ze źródłem</p><section class="story-chapter original-text">${content}</section></article>`);
 }
 
 function renderCreator() {
-  $('#accessoryPalette').innerHTML = creatorProps.map(prop => `<button type="button" class="prop-button" data-prop-id="${prop.id}"><img src="${prop.src}" alt="" /><span>${escapeHtml(prop.label)}</span></button>`).join('');
-  $('#placedItems').innerHTML = creatorItems.map(item => `<button type="button" class="placed-prop ${item.id === selectedItemId ? 'is-selected' : ''}" data-item-id="${item.id}" style="--x:${item.x}%;--y:${item.y}%;--size:${item.size}px;--rotate:${item.rotation}deg"><img src="${item.src}" alt="${escapeHtml(item.label)}" /></button>`).join('');
+  $('#accessoryPalette').innerHTML = creatorProps.map(prop => `<button type="button" class="prop-button ${prop.src ? '' : 'is-text-prop'}" data-prop-id="${prop.id}">${prop.src ? `<img src="${prop.src}" alt="" />` : '<i aria-hidden="true">✦</i>'}<span>${escapeHtml(prop.label)}</span></button>`).join('');
+  $('#placedItems').innerHTML = creatorItems.map(item => `<button type="button" class="placed-prop ${item.id === selectedItemId ? 'is-selected' : ''} ${item.src ? '' : 'is-text-prop'}" data-item-id="${item.id}" style="--x:${item.x}%;--y:${item.y}%;--size:${item.size}px;--rotate:${item.rotation}deg">${item.src ? `<img src="${item.src}" alt="${escapeHtml(item.label)}" />` : `<span>${escapeHtml(item.label)}</span>`}</button>`).join('');
   const selected = creatorItems.find(item => item.id === selectedItemId);
   $('#accessorySelection').textContent = selected ? `${selected.label} — przeciągnij na planszy.` : 'Wybierz dodatek z planszy.';
   ['accessorySize', 'accessoryRotation', 'duplicateAccessory', 'removeSelectedAccessory'].forEach(id => $(`#${id}`).disabled = !selected);
@@ -276,11 +269,10 @@ function renderCollection() {
 function bindEvents() {
   $('#categoryFilters').addEventListener('click', event => { const button = event.target.closest('[data-category]'); if (!button) return; activeCategory = button.dataset.category; residentsExpanded = false; renderResidents(); });
   $('#showAllResidents').addEventListener('click', () => { residentsExpanded = true; renderResidents(); });
-  $('#residentGrid').addEventListener('click', event => { const button = event.target.closest('[data-person-id]'); if (button) openPerson(residents.find(person => person.id === button.dataset.personId)); });
-  $('#randomResident').addEventListener('click', () => openPerson(residents[Math.floor(Math.random() * residents.length)]));
-  $('#courtGrid').addEventListener('click', event => { const button = event.target.closest('[data-court-id]'); if (button) openPerson(court.find(person => person.id === button.dataset.courtId)); });
+  $('#residentGrid').addEventListener('click', event => { const button = event.target.closest('[data-person-id]'); if (button) openPerson(allPeople.find(person => person.id === button.dataset.personId)); });
+  $('#randomResident').addEventListener('click', () => openPerson(allPeople[Math.floor(Math.random() * allPeople.length)]));
   const mapClick = event => { const button = event.target.closest('[data-place-id]'); if (button) openPlace(places.find(place => place.id === button.dataset.placeId)); };
-  $('#placeList').addEventListener('click', mapClick); $('#mapPins').addEventListener('click', mapClick);
+  $('#placeList').addEventListener('click', mapClick);
   $('#adventureGrid').addEventListener('click', event => { const button = event.target.closest('[data-adventure-id]'); if (button) openAdventure(adventures.find(item => item.id === button.dataset.adventureId)); });
   $('#gameCatalog').addEventListener('click', event => { const button = event.target.closest('[data-game]'); if (!button) return; activeGame = button.dataset.game; renderGameCatalog(); });
   $('#gameStage').addEventListener('click', event => { if (event.target.closest('[data-restart-game]')) renderActiveGame(); });
@@ -297,4 +289,4 @@ function bindEvents() {
   $('#modalClose').addEventListener('click', closeModal); modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
 }
 
-renderNavigation(); renderPortals(); renderResidents(); renderCourt(); renderMap(); renderGameCatalog(); renderCreator(); renderStories(); renderCollection(); bindEvents();
+renderNavigation(); renderPortals(); renderResidents(); renderMap(); renderGameCatalog(); renderCreator(); renderStories(); renderCollection(); bindEvents();

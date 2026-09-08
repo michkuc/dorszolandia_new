@@ -39,12 +39,13 @@ function patchLabels() {
   Object.entries(atlasPlaces).forEach(([id, place]) => {
     $$(`[data-map-id="${id}"]`).forEach(node => {
       const label = node.querySelector('b');
-      if (label) label.textContent = place.name;
-      node.setAttribute('aria-label', place.name);
+      if (label && label.textContent !== place.name) label.textContent = place.name;
+      if (node.getAttribute('aria-label') !== place.name) node.setAttribute('aria-label', place.name);
     });
   });
   const subtitle = $('.hero-subtitle');
-  if (subtitle) subtitle.textContent = 'Świat Dorszusia i Borysa, mieszkańców Neptunopolu oraz niezależnego Atlasu Dworu Koralu.';
+  const heroCopy = 'Świat Dorszusia i Borysa, mieszkańców Neptunopolu oraz niezależnego Atlasu Dworu Koralu.';
+  if (subtitle && subtitle.textContent !== heroCopy) subtitle.textContent = heroCopy;
 }
 
 function showPlace(id) {

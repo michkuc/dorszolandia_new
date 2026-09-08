@@ -129,6 +129,16 @@
               </div>
               <p class="difference-result" id="differenceResult">Znajdź 4 ukryte skarby. Klikaj tylko różne elementy!</p><button class="text-button" type="button" id="resetDifferences">Ułóż zagadkę od nowa</button>
             </article>
+            <article class="game-card detective-game">
+              <div class="game-title-row"><span class="game-icon">🕵️</span><div><h3>Detektyw Dorszuś</h3><p>Rozwiąż zagadkę, korzystając z tropu.</p></div></div>
+              <p class="game-howto">Jak grać: przeczytaj trop i wybierz przedmiot, który najlepiej pomoże w tej misji.</p><div class="detective-body" id="detectiveBody" aria-live="polite"></div>
+              <button class="button button-small button-light" type="button" id="nextDetective">Nowy trop <span aria-hidden="true">↻</span></button>
+            </article>
+            <article class="game-card bubble-code-game">
+              <div class="game-title-row"><span class="game-icon">🫧</span><div><h3>Bąbelkowy kod</h3><p>Zapamiętaj kolejność symboli.</p></div></div>
+              <p class="game-howto">Jak grać: obejrzyj kod, a potem klikaj bąbelki w tej samej kolejności. Każdy poziom dodaje symbol.</p><div class="bubble-code" id="bubbleCode" aria-live="polite"><p class="bubble-code-prompt">Naciśnij „Pokaż kod”, aby rozpocząć.</p><div class="bubble-code-display" id="bubbleCodeDisplay"></div><div class="bubble-code-options" id="bubbleCodeOptions"></div><p class="bubble-code-result" id="bubbleCodeResult"></p></div>
+              <button class="button button-small button-light" type="button" id="startBubbleCode">Pokaż kod <span aria-hidden="true">→</span></button>
+            </article>
           </div>
         </div>
       </section>
@@ -198,7 +208,7 @@
 
     </main>
 
-<footer id="kontakt"><div class="shell footer-inner"><a href="#start" class="brand footer-brand"><img src="assets/hero/logo-dorszolandia.png" alt="" /><span>Dorszolandia</span></a><p>Lepiej jutro zaczyna się od nas! <span aria-hidden="true">♥</span></p><div class="footer-links"><a href="#start">Start</a><a href="#mapa">Mapa</a><a href="#mieszkancy">Mieszkańcy</a><a href="#przygody">Przygody</a><a href="#gry">Gry</a><a href="#dorszopedia">Dorszopedia</a></div><div class="social-links" aria-label="Media społecznościowe"><a href="#kontakt" aria-label="YouTube">▶</a><a href="#kontakt" aria-label="Instagram">◎</a><a href="#kontakt" aria-label="Facebook">f</a></div><p class="ocean-note">Razem dla czystego oceanu! ♡</p></div></footer>
+<footer id="kontakt"><div class="shell footer-inner"><a href="#start" class="brand footer-brand"><img src="assets/hero/logo-dorszolandia.png" alt="" /><span>Dorszolandia</span></a><p>Lepiej jutro zaczyna się od nas! <span aria-hidden="true">♥</span></p><div class="footer-links"><a href="#start">Start</a><a href="#mapa">Mapa</a><a href="#mieszkancy">Mieszkańcy</a><a href="#przygody">Przygody</a><a href="#gry">Gry</a><a href="#dorszopedia">Dorszopedia</a></div><div class="social-links" aria-label="Media społecznościowe"><a href="#kontakt" aria-label="YouTube">▶</a><a href="#kontakt" aria-label="Instagram">◎</a><a href="#kontakt" aria-label="Facebook">f</a></div><p class="ocean-note">Razem dla czystego oceanu! ♡</p><small class="copyright">© 2026 Alexander Kuc. Wszelkie prawa zastrzeżone.</small></div></footer>
 
     <dialog class="modal" id="modal"><button type="button" class="modal-close" id="modalClose" aria-label="Zamknij okno">×</button><div class="modal-content" id="modalContent"></div></dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

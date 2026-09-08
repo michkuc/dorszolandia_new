@@ -551,7 +551,7 @@ function selectAccessory(id) {
 function updateAccessorySize(size) {
   const selected = creatorItems.find(item => item.id === selectedItemId);
   if (!selected) return;
-  selected.size = Math.min(104, Math.max(24, Math.round(Number(size))));
+  selected.size = Math.min(240, Math.max(24, Math.round(Number(size))));
   const element = $(`[data-item-id="${selected.id}"]`);
   if (element) element.style.fontSize = `${selected.size}px`;
   $('#accessorySize').value = String(selected.size); $('#accessorySizeValue').textContent = `${selected.size}px`;

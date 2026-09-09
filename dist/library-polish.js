@@ -10,6 +10,10 @@ const courtIds = new Set([
   'zielarka','pisarz','kupiec','straznik','wojownik','zwiadowca','mysliwy','krzyzowiec','pogromca-smokow'
 ]);
 
+function setTextIfChanged(node, value) {
+  if (node && node.textContent !== value) node.textContent = value;
+}
+
 function polishCanonicalUi() {
   if (!document.querySelector('#canonical-library-layout-fix')) {
     const style = document.createElement('style');
@@ -21,18 +25,12 @@ function polishCanonicalUi() {
   document.querySelectorAll('#residentGrid .person-card').forEach(card => {
     const id = card.dataset.personId;
     const role = canonicalRoles[id];
-    if (role) {
-      const roleNode = card.querySelector('.person-copy em');
-      if (roleNode) roleNode.textContent = role;
-    }
-    if (courtIds.has(id)) {
-      const category = card.querySelector('.person-copy small');
-      if (category) category.textContent = 'Atlas Dworu Koralu';
-    }
+    if (role) setTextIfChanged(card.querySelector('.person-copy em'), role);
+    if (courtIds.has(id)) setTextIfChanged(card.querySelector('.person-copy small'), 'Atlas Dworu Koralu');
   });
 
   document.querySelectorAll('#categoryFilters [data-category="Dwór Królewski"]').forEach(button => {
-    button.textContent = 'Atlas Dworu Koralu';
+    setTextIfChanged(button, 'Atlas Dworu Koralu');
   });
 
   const modalKicker = document.querySelector('#modalContent .profile-modal .kicker');
@@ -41,7 +39,18 @@ function polishCanonicalUi() {
 
 window.setTimeout(() => {
   polishCanonicalUi();
-  const targets = [document.querySelector('#residentGrid'), document.querySelector('#categoryFilters'), document.querySelector('#modalContent')].filter(Boolean);
-  const observer = new MutationObserver(polishCanonicalUi);
-  targets.forEach(target => observer.observe(target, { childList: true, subtree: true }));
+
+  // Obserwujemy wyłącznie wymianę bezpośrednich elementów. Wcześniejsze subtree:true
+  // reagowało na własne zmiany textContent i mogło tworzyć nieskończoną pętlę
+  // microtasków, blokując kliknięcia na całej stronie.
+  const targets = [
+    document.querySelector('#residentGrid'),
+    document.querySelector('#categoryFilters'),
+    document.querySelector('#modalContent')
+  ].filter(Boolean);
+
+  const observer = new MutationObserver(() => {
+    window.requestAnimationFrame(polishCanonicalUi);
+  });
+  targets.forEach(target => observer.observe(target, { childList: true }));
 }, 0);

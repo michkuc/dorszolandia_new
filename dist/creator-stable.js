@@ -1,3 +1,4 @@
+function initStableCreator() {
 const root = document.querySelector('#kreator');
 if (root) {
   const oldLayout = root.querySelector('.creator-layout');
@@ -16,7 +17,6 @@ if (root) {
       id, label, src, category, fit: { x, y, size, rotation }
     });
 
-    // Zestaw 36 rekwizytów. Priorytet: lokalne assety + pliki z przekazanego folderu Google Drive.
     const props = [
       prop('aparat','Aparat','assets/props/aparat.webp',67,62,122,0,'Zawody'),
       prop('bebnek','Bębenek','assets/props/bebnek.webp',66,67,132,0,'Muzyka'),
@@ -37,7 +37,6 @@ if (root) {
       prop('rozdzka','Różdżka','assets/props/rozdzka.webp',70,55,150,-25,'Fantazja'),
       prop('tarcza','Tarcza','assets/props/tarcza.webp',63,66,154,0,'Średniowieczne'),
       prop('trabka','Trąbka','assets/props/trabka.webp',68,59,150,-12,'Muzyka'),
-
       prop('pergamin','Pergamin',drive('1J91ldtorzG_Lf0AwexKHoeC7PZovEWzJ'),67,70,132,-8,'Przygoda'),
       prop('latarenka','Latarenka',drive('1gwoaJRkhTeAXoNgiqs09tENh-UkvcILg'),68,64,125,0,'Przygoda'),
       prop('helm-czerwony','Hełm z pióropuszem',drive('1A4YzyOPL6mjq9bj-hW6Ch4OjKnzSA0ID'),43,20,178,0,'Średniowieczne'),
@@ -48,7 +47,6 @@ if (root) {
       prop('korona-niebieska','Korona z klejnotami',drive('1MLFOfaWCouSauOMMKWuVSR1Ue_qtDVPo'),43,16,170,0,'Głowa'),
       prop('topor','Topór bojowy',drive('12sf_KViDJgbIDEm0ke_vPl_sfLEj0a9F'),70,61,170,-18,'Średniowieczne'),
       prop('miecz-zloty','Miecz ze złotym jelcem',drive('1rmQlihFLCjpUDhHMNFmS2tfDoqxnmccJ'),70,61,170,-20,'Średniowieczne'),
-
       prop('plecak','Plecak',drive('1pXDnvG_fiHFalhEaQzquy9elMLKFNQpC'),29,61,150,0,'Przygoda'),
       prop('czapka','Czapka',drive('1NXOGJuK74ft-ksWc04RVKOjFYr9XaIbL'),43,18,170,0,'Głowa'),
       prop('stetoskop','Stetoskop',drive('1vPxwlDBLH4HOqKfWPCIT-BKwSBKk_zxU'),57,59,150,0,'Zawody'),
@@ -84,7 +82,6 @@ if (root) {
 
     if (!stage || !placed || !palette || !form || !actions) return;
 
-    // Usuwamy elementy dodane przez wcześniejsze warstwy i budujemy jeden zestaw kontrolek.
     actions.querySelectorAll('#fitAccessory,#bringFront,#sendBack,#mirrorHorizontal,#mirrorVertical').forEach(node => node.remove());
 
     const makeButton = (id, label) => {
@@ -128,10 +125,11 @@ if (root) {
         .creator-prop-filter{white-space:nowrap;border:1px solid #b9e6ef;border-radius:999px;background:#fff;color:#073d79;padding:.42rem .66rem;font-weight:900;font-size:.72rem}
         .creator-prop-filter.is-active{background:#073d79;color:#fff;border-color:#073d79}
         .creator-extra-control[disabled]{opacity:.4;cursor:not-allowed}
+        .creator-extra-control.is-active{background:#073d79;color:#fff;border-color:#073d79}
         .creator-saved-card{max-width:430px;margin:1.2rem auto 0;border-radius:24px;background:#063c78;color:#fff;padding:1rem;box-shadow:0 14px 35px #003a6726}
         .creator-saved-preview{position:relative;aspect-ratio:1.15/1;border-radius:20px;overflow:hidden;background:linear-gradient(#1292ce,#07548e);border:4px solid #fff}
         .creator-saved-preview>.saved-fish{position:absolute;z-index:1;left:11%;top:14%;height:70%;width:78%;object-fit:contain}
-        .creator-saved-prop{position:absolute;transform:translate(-50%,-50%);object-fit:contain;pointer-events:none}
+        .creator-saved-prop{position:absolute;object-fit:contain;pointer-events:none}
         .creator-saved-card h3{color:#ffc62f;margin:.75rem 0 .15rem}
         .creator-saved-card p{color:#eafaff!important;margin:0}
         .creator-drive-note{font-size:.76rem!important;color:#38708e!important;margin:.45rem 0 0!important}
@@ -177,27 +175,18 @@ if (root) {
     const selected = () => items.find(item => item.id === selectedId) || null;
 
     function renderFilters() {
-      filters.innerHTML = categories.map(category => `
-        <button type="button" class="creator-prop-filter ${category === activeCategory ? 'is-active' : ''}" data-creator-category="${esc(category)}">${esc(category)}</button>
-      `).join('');
+      filters.innerHTML = categories.map(category => `<button type="button" class="creator-prop-filter ${category === activeCategory ? 'is-active' : ''}" data-creator-category="${esc(category)}">${esc(category)}</button>`).join('');
     }
 
     function renderPalette() {
       const visible = activeCategory === 'Wszystkie' ? props : props.filter(item => item.category === activeCategory);
-      palette.innerHTML = visible.map(item => `
-        <button type="button" class="prop-button" data-prop-id="${esc(item.id)}" title="${esc(item.label)}">
-          <img src="${item.src}" alt="" loading="lazy" data-prop-preview="${esc(item.id)}">
-          <span>${esc(item.label)}</span>
-        </button>
-      `).join('');
+      palette.innerHTML = visible.map(item => `<button type="button" class="prop-button" data-prop-id="${esc(item.id)}" title="${esc(item.label)}"><img src="${item.src}" alt="" loading="lazy" data-prop-preview="${esc(item.id)}"><span>${esc(item.label)}</span></button>`).join('');
     }
 
     function updateControls() {
       const item = selected();
       const disabled = !item;
-      [sizeInput, rotationInput, duplicateButton, removeButton, fitButton, mirrorH, mirrorV, frontButton, backButton].forEach(node => {
-        if (node) node.disabled = disabled;
-      });
+      [sizeInput, rotationInput, duplicateButton, removeButton, fitButton, mirrorH, mirrorV, frontButton, backButton].forEach(node => { if (node) node.disabled = disabled; });
       if (selection) selection.textContent = item ? `${item.label} — przeciągnij po planszy lub użyj kontrolek.` : 'Wybierz rekwizyt.';
       if (sizeInput) sizeInput.value = String(item?.size ?? 112);
       if (rotationInput) rotationInput.value = String(item?.rotation ?? 0);
@@ -208,32 +197,14 @@ if (root) {
     }
 
     function renderItems() {
-      placed.innerHTML = items.map(item => `
-        <button type="button"
-          class="placed-prop ${item.id === selectedId ? 'is-selected' : ''}"
-          data-item-id="${esc(item.id)}"
-          aria-label="${esc(item.label)}"
-          style="--x:${item.x}%;--y:${item.y}%;--size:${item.size}px;--rotate:${item.rotation}deg;--flip-x:${item.flipX};--flip-y:${item.flipY};z-index:${item.z}">
-          <img src="${item.src}" alt="${esc(item.label)}" draggable="false">
-        </button>
-      `).join('');
+      placed.innerHTML = items.map(item => `<button type="button" class="placed-prop ${item.id === selectedId ? 'is-selected' : ''}" data-item-id="${esc(item.id)}" aria-label="${esc(item.label)}" style="--x:${item.x}%;--y:${item.y}%;--size:${item.size}px;--rotate:${item.rotation}deg;--flip-x:${item.flipX};--flip-y:${item.flipY};z-index:${item.z}"><img src="${item.src}" alt="${esc(item.label)}" draggable="false" data-placed-image="${esc(item.id)}"></button>`).join('');
       updateControls();
     }
 
     function addItem(propDef) {
       if (!propDef) return;
       const fit = propDef.fit || { x:50, y:50, size:112, rotation:0 };
-      const item = {
-        ...propDef,
-        id: `${propDef.id}-${Date.now()}-${serial++}`,
-        x: fit.x,
-        y: fit.y,
-        size: fit.size,
-        rotation: fit.rotation || 0,
-        flipX: 1,
-        flipY: 1,
-        z: 3
-      };
+      const item = { ...propDef, sourceId: propDef.id, id: `${propDef.id}-${Date.now()}-${serial++}`, x: fit.x, y: fit.y, size: fit.size, rotation: fit.rotation || 0, flipX: 1, flipY: 1, z: 3 };
       items.push(item);
       selectedId = item.id;
       renderItems();
@@ -249,7 +220,7 @@ if (root) {
     function fitSelected() {
       const item = selected();
       if (!item) return;
-      const fit = item.fit || propById.get(item.sourceId)?.fit;
+      const fit = propById.get(item.sourceId)?.fit || item.fit;
       if (!fit) return;
       item.x = fit.x; item.y = fit.y; item.size = fit.size; item.rotation = fit.rotation || 0;
       renderItems();
@@ -258,13 +229,7 @@ if (root) {
     function cloneSelected() {
       const item = selected();
       if (!item) return;
-      const copy = {
-        ...item,
-        id: `${item.id}-copy-${serial++}`,
-        x: Math.min(94, item.x + 6),
-        y: Math.min(94, item.y + 6),
-        z: item.z === 0 ? 0 : Math.max(3, ...items.map(entry => entry.z || 0)) + 1
-      };
+      const copy = { ...item, id: `${item.sourceId}-copy-${Date.now()}-${serial++}`, x: Math.min(94, item.x + 6), y: Math.min(94, item.y + 6), z: item.z === 0 ? 0 : Math.max(3, ...items.map(entry => entry.z || 0)) + 1 };
       items.push(copy);
       selectedId = copy.id;
       renderItems();
@@ -288,18 +253,29 @@ if (root) {
     palette.addEventListener('error', event => {
       const image = event.target;
       if (!(image instanceof HTMLImageElement)) return;
-      const id = image.dataset.propPreview;
-      const item = propById.get(id);
+      const item = propById.get(image.dataset.propPreview);
       if (!item || image.dataset.fallback) return;
       image.dataset.fallback = '1';
-      image.src = fallback(item.label);
+      item.src = fallback(item.label);
+      image.src = item.src;
+    }, true);
+
+    placed.addEventListener('error', event => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement) || image.dataset.fallback) return;
+      const item = items.find(entry => entry.id === image.dataset.placedImage);
+      if (!item) return;
+      image.dataset.fallback = '1';
+      item.src = fallback(item.label);
+      image.src = item.src;
     }, true);
 
     placed.addEventListener('click', event => {
       const node = event.target.closest('[data-item-id]');
       if (!node) return;
       selectedId = node.dataset.itemId;
-      renderItems();
+      $$('#placedItems .placed-prop', freshLayout).forEach(entry => entry.classList.toggle('is-selected', entry.dataset.itemId === selectedId));
+      updateControls();
     });
 
     let drag = null;
@@ -313,7 +289,8 @@ if (root) {
       const rect = stage.getBoundingClientRect();
       drag = { id: item.id, rect };
       node.setPointerCapture?.(event.pointerId);
-      renderItems();
+      $$('#placedItems .placed-prop', freshLayout).forEach(entry => entry.classList.toggle('is-selected', entry.dataset.itemId === selectedId));
+      updateControls();
     });
 
     window.addEventListener('pointermove', event => {
@@ -323,10 +300,7 @@ if (root) {
       item.x = Math.max(3, Math.min(97, ((event.clientX - drag.rect.left) / drag.rect.width) * 100));
       item.y = Math.max(3, Math.min(97, ((event.clientY - drag.rect.top) / drag.rect.height) * 100));
       const node = placed.querySelector(`[data-item-id="${CSS.escape(item.id)}"]`);
-      if (node) {
-        node.style.setProperty('--x', `${item.x}%`);
-        node.style.setProperty('--y', `${item.y}%`);
-      }
+      if (node) { node.style.setProperty('--x', `${item.x}%`); node.style.setProperty('--y', `${item.y}%`); }
     });
 
     window.addEventListener('pointerup', () => { drag = null; });
@@ -352,44 +326,14 @@ if (root) {
     fitButton.addEventListener('click', fitSelected);
     duplicateButton?.addEventListener('click', cloneSelected);
     removeButton?.addEventListener('click', removeSelected);
+    clearButton?.addEventListener('click', () => { items = []; selectedId = null; renderItems(); });
 
-    clearButton?.addEventListener('click', () => {
-      items = [];
-      selectedId = null;
-      renderItems();
-    });
+    mirrorH.addEventListener('click', () => { const item = selected(); if (!item) return; item.flipX *= -1; renderItems(); });
+    mirrorV.addEventListener('click', () => { const item = selected(); if (!item) return; item.flipY *= -1; renderItems(); });
+    frontButton.addEventListener('click', () => { const item = selected(); if (!item) return; item.z = Math.max(3, ...items.map(entry => entry.z || 0)) + 1; renderItems(); });
+    backButton.addEventListener('click', () => { const item = selected(); if (!item) return; item.z = 0; renderItems(); });
 
-    mirrorH.addEventListener('click', () => {
-      const item = selected();
-      if (!item) return;
-      item.flipX *= -1;
-      renderItems();
-    });
-
-    mirrorV.addEventListener('click', () => {
-      const item = selected();
-      if (!item) return;
-      item.flipY *= -1;
-      renderItems();
-    });
-
-    frontButton.addEventListener('click', () => {
-      const item = selected();
-      if (!item) return;
-      item.z = Math.max(3, ...items.map(entry => entry.z || 0)) + 1;
-      renderItems();
-    });
-
-    backButton.addEventListener('click', () => {
-      const item = selected();
-      if (!item) return;
-      item.z = 0;
-      renderItems();
-    });
-
-    nameInput?.addEventListener('input', () => {
-      if (nameLabel) nameLabel.textContent = nameInput.value.trim() || 'Mój Dorsz';
-    });
+    nameInput?.addEventListener('input', () => { if (nameLabel) nameLabel.textContent = nameInput.value.trim() || 'Mój Dorsz'; });
 
     function resetCreator() {
       items = [];
@@ -399,9 +343,7 @@ if (root) {
       if (nameLabel) nameLabel.textContent = 'Mój Dorsz';
       if (roleInput) roleInput.selectedIndex = 0;
       if (output) output.innerHTML = '';
-      renderFilters();
-      renderPalette();
-      renderItems();
+      renderFilters(); renderPalette(); renderItems();
     }
 
     newFishButton.addEventListener('click', resetCreator);
@@ -411,22 +353,9 @@ if (root) {
       const name = nameInput?.value.trim() || 'Mój Dorsz';
       const role = roleInput?.value || 'Odkrywca';
       const stageWidth = Math.max(1, stage.getBoundingClientRect().width);
-      const savedItems = items.map(item => ({
-        ...item,
-        sizePct: Math.max(4, Math.min(65, item.size / stageWidth * 100))
-      }));
-
+      const savedItems = items.map(item => ({ ...item, sizePct: Math.max(4, Math.min(65, item.size / stageWidth * 100)) }));
       if (output) {
-        output.innerHTML = `
-          <article class="creator-saved-card">
-            <div class="creator-saved-preview">
-              ${savedItems.filter(item => item.z === 0).map(item => `<img class="creator-saved-prop" src="${item.src}" alt="" style="left:${item.x}%;top:${item.y}%;width:${item.sizePct}%;z-index:0;transform:translate(-50%,-50%) rotate(${item.rotation}deg) scaleX(${item.flipX}) scaleY(${item.flipY})">`).join('')}
-              <img class="saved-fish" src="assets/generated/dorsz-baza-transparent.png" alt="${esc(name)}">
-              ${savedItems.filter(item => item.z !== 0).map(item => `<img class="creator-saved-prop" src="${item.src}" alt="" style="left:${item.x}%;top:${item.y}%;width:${item.sizePct}%;z-index:${item.z};transform:translate(-50%,-50%) rotate(${item.rotation}deg) scaleX(${item.flipX}) scaleY(${item.flipY})">`).join('')}
-            </div>
-            <h3>${esc(name)}</h3>
-            <p>${esc(role)} · ${items.length} rekwizytów</p>
-          </article>`;
+        output.innerHTML = `<article class="creator-saved-card"><div class="creator-saved-preview">${savedItems.filter(item => item.z === 0).map(item => `<img class="creator-saved-prop" src="${item.src}" alt="" style="left:${item.x}%;top:${item.y}%;width:${item.sizePct}%;z-index:0;transform:translate(-50%,-50%) rotate(${item.rotation}deg) scaleX(${item.flipX}) scaleY(${item.flipY})">`).join('')}<img class="saved-fish" src="assets/generated/dorsz-baza-transparent.png" alt="${esc(name)}">${savedItems.filter(item => item.z !== 0).map(item => `<img class="creator-saved-prop" src="${item.src}" alt="" style="left:${item.x}%;top:${item.y}%;width:${item.sizePct}%;z-index:${item.z};transform:translate(-50%,-50%) rotate(${item.rotation}deg) scaleX(${item.flipX}) scaleY(${item.flipY})">`).join('')}</div><h3>${esc(name)}</h3><p>${esc(role)} · ${items.length} rekwizytów</p></article>`;
         output.scrollIntoView({ behavior:'smooth', block:'nearest' });
       }
     });
@@ -434,7 +363,8 @@ if (root) {
     renderFilters();
     renderPalette();
     renderItems();
-
     console.info(`[Dorszolandia] Stabilny kreator aktywny: ${props.length} rekwizytów, lustro poziome/pionowe, drag, skala, obrót i warstwy.`);
   }
 }
+}
+initStableCreator();

@@ -11,25 +11,29 @@ const legacyCourtIds = new Set([
   'zielarka','pisarz','kupiec','straznik','wojownik','zwiadowca','mysliwy','krzyzowiec','pogromca-smokow'
 ]);
 
+// Postacie 43–59 korzystają z najlepszych dostępnych, lokalnych ilustracji ról.
+// Dzięki temu Atlas nie zależy od nieistniejącego katalogu assets/canon i nie generuje 404.
 const lateArt = [
-  'canon/43-bibliotekarz-ksiazkoluski.svg',
-  'canon/44-florka-kwiatopletwa.svg',
-  'canon/45-deskopletwy.svg',
-  'canon/46-wstazka-fala.svg',
-  'canon/47-gambit-pletwa.svg',
-  'canon/48-kapitan-czarnopletwy.svg',
-  'canon/49-blyskawiczny-pletw.svg',
-  'canon/50-detektyw-luszczek.svg',
-  'canon/51-serwus-siatkopletwy.svg',
-  'canon/52-bramkownik-bulgot.svg',
-  'canon/53-koszor-pletwa.svg',
-  'canon/54-judomir-pas.svg',
-  'canon/55-golik-fala.svg',
-  'canon/56-biegus-prad.svg',
-  'canon/57-aqua-nurta.svg',
-  'canon/58-rakietnik-topspin.svg',
-  'canon/59-kolopletwy-sprint.svg'
+  'generated/roles/czytelnik.png',      // 43 Bibliotekarz Książkołuski
+  'generated/roles/ogrodniczka.png',    // 44 Florka Kwiatopłetwa
+  'generated/roles/majsterkowicz.png',  // 45 Deskopłetwy
+  'generated/roles/architektka.png',    // 46 Wstążka Fala
+  'generated/roles/szachistka.png',     // 47 Gambit Płetwa
+  'generated/roles/reporter.png',       // 48 Kapitan Czarnopłetwy
+  'generated/roles/ratownik.png',       // 49 Błyskawiczny Płetw
+  'generated/roles/detektyw.png',       // 50 Detektyw Łuszczek
+  'generated/roles/siatkarka.png',      // 51 Serwus Siatkopłetwy
+  'generated/roles/mechanik.png',       // 52 Bramkownik Bulgot
+  'generated/roles/koszykarz.png',      // 53 Koszor Płetwa
+  'generated/roles/wynalazczyni.png',   // 54 Judomir Pas
+  'generated/roles/pilkarz.png',        // 55 Golik Fala
+  'generated/roles/listonosz.png',      // 56 Biegus Prąd
+  'generated/roles/plywak.png',         // 57 Aqua Nurta
+  'generated/roles/tenisistka.png',     // 58 Rakietnik Topspin
+  'generated/roles/kolarz.png'          // 59 Kołopłetwy Sprint
 ];
+
+const FALLBACK_ART = 'assets/generated/dorsz-baza-transparent.png';
 
 function artFor(profile, index) {
   if (index < 18) return `assets/source/${profile.id}.webp`;
@@ -50,6 +54,16 @@ function removeLegacyCourtCards() {
   });
   const oldFilter = $('#categoryFilters [data-category="Dwór Królewski"]');
   if (oldFilter) oldFilter.style.display = 'none';
+}
+
+function installImageFallback(scope = document) {
+  $$('img[data-atlas-art]', scope).forEach(img => {
+    img.addEventListener('error', () => {
+      if (img.dataset.fallbackApplied === '1') return;
+      img.dataset.fallbackApplied = '1';
+      img.src = FALLBACK_ART;
+    }, { once: true });
+  });
 }
 
 function installStyles() {
@@ -96,7 +110,7 @@ function openProfile(profile, index) {
   if (!modal || !content) return;
   content.innerHTML = `
     <article class="atlas59-profile">
-      <img src="${artFor(profile,index)}" alt="${esc(profile.name)}" />
+      <img data-atlas-art src="${artFor(profile,index)}" alt="${esc(profile.name)}" />
       <div>
         <p class="kicker">Wielka Księga Bohaterów · postać ${index + 1} z ${atlasProfiles.length}</p>
         <h2>${esc(profile.name)}</h2>
@@ -113,6 +127,7 @@ function openProfile(profile, index) {
         ${profile.potential ? `<section class="atlas59-story"><h3>Potencjał postaci</h3><p>${esc(profile.potential)}</p></section>` : ''}
       </div>
     </article>`;
+  installImageFallback(content);
   if (!modal.open) modal.showModal();
 }
 
@@ -121,6 +136,7 @@ function installAtlas59() {
     console.error(`[Dorszolandia] Błąd Atlasu: oczekiwano 59 profili, otrzymano ${atlasProfiles.length}.`);
     return;
   }
+
   installStyles();
   removeLegacyCourtCards();
 
@@ -157,9 +173,10 @@ function installAtlas59() {
       .filter(item => active === 'Wszystkie' || item.group === active)
       .map(({profile,index,group}) => `
         <button class="atlas59-card" type="button" data-atlas-index="${index}">
-          <img src="${artFor(profile,index)}" alt="" loading="lazy" />
+          <img data-atlas-art src="${artFor(profile,index)}" alt="" loading="lazy" />
           <span class="atlas59-copy"><small>${esc(group)} · ${index + 1}/59</small><strong>${esc(profile.name)}</strong><em>${esc(profile.role)}</em><p>${esc(profile.history)}</p></span>
         </button>`).join('');
+    installImageFallback(grid);
   };
 
   filters.addEventListener('click', event => {
@@ -168,6 +185,7 @@ function installAtlas59() {
     active = button.dataset.atlasGroup;
     render();
   });
+
   grid.addEventListener('click', event => {
     const card = event.target.closest('[data-atlas-index]');
     if (!card) return;

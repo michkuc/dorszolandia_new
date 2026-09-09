@@ -4,6 +4,7 @@ const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const modal = $('#modal');
 const modalContent = $('#modalContent');
+const FALLBACK_ART = 'assets/generated/dorsz-baza-transparent.png';
 
 const storyPeople = [
   {
@@ -24,29 +25,59 @@ const storyPeople = [
   }
 ];
 
+// Lokalne ilustracje dla postaci 43–59. Nie odwołujemy się już do nieistniejącego assets/canon.
 const lateArt = [
-  '43-bibliotekarz-ksiazkoluski.svg','44-florka-kwiatopletwa.svg','45-deskopletwy.svg','46-wstazka-fala.svg','47-gambit-pletwa.svg','48-kapitan-czarnopletwy.svg','49-blyskawiczny-pletw.svg','50-detektyw-luszczek.svg','51-serwus-siatkopletwy.svg','52-bramkownik-bulgot.svg','53-koszor-pletwa.svg','54-judomir-pas.svg','55-golik-fala.svg','56-biegus-prad.svg','57-aqua-nurta.svg','58-rakietnik-topspin.svg','59-kolopletwy-sprint.svg'
+  'assets/generated/roles/czytelnik.png',
+  'assets/generated/roles/ogrodniczka.png',
+  'assets/generated/roles/majsterkowicz.png',
+  'assets/generated/roles/architektka.png',
+  'assets/generated/roles/szachistka.png',
+  'assets/generated/roles/reporter.png',
+  'assets/generated/roles/ratownik.png',
+  'assets/generated/roles/detektyw.png',
+  'assets/generated/roles/siatkarka.png',
+  'assets/generated/roles/mechanik.png',
+  'assets/generated/roles/koszykarz.png',
+  'assets/generated/roles/wynalazczyni.png',
+  'assets/generated/roles/pilkarz.png',
+  'assets/generated/roles/listonosz.png',
+  'assets/generated/roles/plywak.png',
+  'assets/generated/roles/tenisistka.png',
+  'assets/generated/roles/kolarz.png'
 ];
 
 const groupFor = index => index < 18 ? 'Dwór i legendy' : index < 42 ? 'Miasto i zawody' : index < 50 ? 'Nowe role' : 'Sport';
 const artFor = (profile,index) => {
   if (index < 18) return `assets/source/${profile.id}.webp`;
   if (index < 42) return `assets/generated/zawod-${String(index - 18).padStart(2,'0')}-transparent.png`;
-  return `assets/canon/${lateArt[index - 42]}`;
+  return lateArt[index - 42] || FALLBACK_ART;
 };
 
+function installImageFallback(scope = document) {
+  scope.querySelectorAll('img[data-local-art]').forEach(img => {
+    img.addEventListener('error', () => {
+      if (img.dataset.fallbackApplied === '1') return;
+      img.dataset.fallbackApplied = '1';
+      img.src = FALLBACK_ART;
+    }, { once:true });
+  });
+}
+
 function openStoryPerson(person) {
-  modalContent.innerHTML = `<article class="character-profile"><img src="${person.art}" alt="${esc(person.name)}" /><div><p class="kicker">Bohater głównego cyklu</p><h2>${esc(person.name)}</h2><h3>${esc(person.role)}</h3><p>${esc(person.description)}</p><p class="canon-note"><b>Warstwa świata:</b> Borys i Dorszuś — nie jest częścią niezależnego Atlasu 59.</p></div></article>`;
+  modalContent.innerHTML = `<article class="character-profile"><img data-local-art src="${person.art}" alt="${esc(person.name)}" /><div><p class="kicker">Bohater głównego cyklu</p><h2>${esc(person.name)}</h2><h3>${esc(person.role)}</h3><p>${esc(person.description)}</p><p class="canon-note"><b>Warstwa świata:</b> Borys i Dorszuś — nie jest częścią niezależnego Atlasu 59.</p></div></article>`;
+  installImageFallback(modalContent);
   if (!modal.open) modal.showModal();
 }
 
 function openAtlas(profile,index) {
-  modalContent.innerHTML = `<article class="character-profile"><img src="${artFor(profile,index)}" alt="${esc(profile.name)}" /><div><p class="kicker">Wielka Księga Bohaterów · ${index + 1}/59</p><h2>${esc(profile.name)}</h2><h3>${esc(profile.role)}</h3>${profile.quote ? `<blockquote>„${esc(profile.quote)}”</blockquote>` : ''}<dl class="profile-facts"><div><dt>Miejsce</dt><dd>${esc(profile.place)}</dd></div><div><dt>Charakter</dt><dd>${esc(profile.character)}</dd></div><div><dt>Talent</dt><dd>${esc(profile.talent)}</dd></div><div><dt>Słabość</dt><dd>${esc(profile.weakness)}</dd></div></dl><section><h3>Historia postaci</h3><p>${esc(profile.history)}</p></section><section><h3>Mini-historia / zaczep fabularny</h3><p>${esc(profile.hook)}</p></section>${profile.potential ? `<section><h3>Potencjał postaci</h3><p>${esc(profile.potential)}</p></section>` : ''}</div></article>`;
+  modalContent.innerHTML = `<article class="character-profile"><img data-local-art src="${artFor(profile,index)}" alt="${esc(profile.name)}" /><div><p class="kicker">Wielka Księga Bohaterów · ${index + 1}/59</p><h2>${esc(profile.name)}</h2><h3>${esc(profile.role)}</h3>${profile.quote ? `<blockquote>„${esc(profile.quote)}”</blockquote>` : ''}<dl class="profile-facts"><div><dt>Miejsce</dt><dd>${esc(profile.place)}</dd></div><div><dt>Charakter</dt><dd>${esc(profile.character)}</dd></div><div><dt>Talent</dt><dd>${esc(profile.talent)}</dd></div><div><dt>Słabość</dt><dd>${esc(profile.weakness)}</dd></div></dl><section><h3>Historia postaci</h3><p>${esc(profile.history)}</p></section><section><h3>Mini-historia / zaczep fabularny</h3><p>${esc(profile.hook)}</p></section>${profile.potential ? `<section><h3>Potencjał postaci</h3><p>${esc(profile.potential)}</p></section>` : ''}</div></article>`;
+  installImageFallback(modalContent);
   if (!modal.open) modal.showModal();
 }
 
 const storyRoot = $('#storyPeople');
-storyRoot.innerHTML = storyPeople.map((person,index) => `<button class="story-person-card" type="button" data-story-person="${person.id}"><span class="story-person-art"><img src="${person.art}" alt="" loading="lazy" /></span><span class="story-person-copy"><small>${index < 2 ? 'Dorszo-Kumple' : 'Bohater opowieści'}</small><strong>${esc(person.name)}</strong><em>${esc(person.role)}</em><p>${esc(person.description)}</p><b>Poznaj bohatera →</b></span></button>`).join('');
+storyRoot.innerHTML = storyPeople.map((person,index) => `<button class="story-person-card" type="button" data-story-person="${person.id}"><span class="story-person-art"><img data-local-art src="${person.art}" alt="" loading="lazy" /></span><span class="story-person-copy"><small>${index < 2 ? 'Dorszo-Kumple' : 'Bohater opowieści'}</small><strong>${esc(person.name)}</strong><em>${esc(person.role)}</em><p>${esc(person.description)}</p><b>Poznaj bohatera →</b></span></button>`).join('');
+installImageFallback(storyRoot);
 storyRoot.addEventListener('click', event => {
   const card = event.target.closest('[data-story-person]');
   if (!card) return;
@@ -74,7 +105,8 @@ function renderAtlas() {
     if (!normalized) return true;
     return [item.profile.name,item.profile.role,item.profile.place,item.profile.character,item.profile.talent,item.profile.history].join(' ').toLocaleLowerCase('pl').includes(normalized);
   });
-  grid.innerHTML = items.map(({profile,index,group}) => `<button class="atlas-page-card" type="button" data-atlas-index="${index}"><span class="atlas-page-art"><img src="${artFor(profile,index)}" alt="" loading="lazy" /></span><span class="atlas-page-copy"><small>${esc(group)} · ${index + 1}/59</small><strong>${esc(profile.name)}</strong><em>${esc(profile.role)}</em><p>${esc(profile.history)}</p><b>Pełny profil →</b></span></button>`).join('');
+  grid.innerHTML = items.map(({profile,index,group}) => `<button class="atlas-page-card" type="button" data-atlas-index="${index}"><span class="atlas-page-art"><img data-local-art src="${artFor(profile,index)}" alt="" loading="lazy" /></span><span class="atlas-page-copy"><small>${esc(group)} · ${index + 1}/59</small><strong>${esc(profile.name)}</strong><em>${esc(profile.role)}</em><p>${esc(profile.history)}</p><b>Pełny profil →</b></span></button>`).join('');
+  installImageFallback(grid);
   empty.hidden = items.length > 0;
 }
 

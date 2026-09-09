@@ -1,15 +1,11 @@
 import fs from 'node:fs';
 import zlib from 'node:zlib';
 
-const sourcePath = 'dist/atlas-profiles-data.js';
 const outDir = 'recovery-output';
 fs.mkdirSync(outDir, { recursive: true });
 
-const source = fs.readFileSync(sourcePath, 'utf8').trim();
-const match = source.match(/^export\s+default\s+['"]([A-Za-z0-9+/_=-]+)['"];?$/s);
-if (!match) throw new Error('Nie udało się wydobyć payloadu base64 z atlas-profiles-data.js');
-
-const normalized = match[1]
+const { default: encoded } = await import('../dist/atlas-profiles-data.js');
+const normalized = String(encoded)
   .replace(/-/g, '+')
   .replace(/_/g, '/')
   .replace(/[^A-Za-z0-9+/=]/g, '');

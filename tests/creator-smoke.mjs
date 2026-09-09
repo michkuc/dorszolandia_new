@@ -27,6 +27,9 @@ try {
   if (layout.stageWidth < 600 || layout.stageHeight < 500) throw new Error(`Plansza Dorsza jest za mała: ${layout.stageWidth}x${layout.stageHeight}`);
   if (layout.thumbHeight < 60) throw new Error(`Miniatury rekwizytów są za małe: ${layout.thumbHeight}`);
 
+  const placedLayer = await page.$eval('#placedItems', el => getComputedStyle(el).zIndex);
+  if (placedLayer !== 'auto') throw new Error(`Kontener rekwizytów blokuje warstwy: z-index=${placedLayer}`);
+
   for (const id of ['mirrorHorizontal','mirrorVertical','fitAccessory','bringFront','sendBack','newFish']) {
     if (!await page.$(`#${id}`)) throw new Error(`Brakuje kontrolki ${id}`);
   }
@@ -51,6 +54,13 @@ try {
   const rotation = await page.$eval('#placedItems .placed-prop', el => el.style.getPropertyValue('--rotate').trim());
   if (rotation !== '45deg') throw new Error(`Obrót nie działa: ${rotation}`);
 
+  await page.click('#sendBack');
+  let itemZ = await page.$eval('#placedItems .placed-prop', el => getComputedStyle(el).zIndex);
+  if (itemZ !== '0') throw new Error(`Za Dorsza nie ustawia warstwy 0: ${itemZ}`);
+  await page.click('#bringFront');
+  itemZ = await page.$eval('#placedItems .placed-prop', el => Number(getComputedStyle(el).zIndex));
+  if (!(itemZ > 1)) throw new Error(`Przed Dorsza nie ustawia warstwy przed rybą: ${itemZ}`);
+
   await page.$eval('#fishName', el => {
     el.value = 'Testowy Dorsz';
     el.dispatchEvent(new Event('input', { bubbles: true }));
@@ -67,8 +77,19 @@ try {
   placedCount = await page.$$eval('#placedItems .placed-prop', nodes => nodes.length);
   if (placedCount !== 0) throw new Error(`Nowy Dorsz nie wyczyścił rekwizytów: ${placedCount}`);
 
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
+  await new Promise(resolve => setTimeout(resolve, 150));
+  const mobile = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    clientWidth: document.documentElement.clientWidth,
+    columns: getComputedStyle(document.querySelector('#kreator .creator-premium-layout')).gridTemplateColumns,
+    stageWidth: document.querySelector('#creatorStage').getBoundingClientRect().width
+  }));
+  if (mobile.scrollWidth > mobile.clientWidth + 2) throw new Error(`Kreator powoduje poziomy scroll na mobile: ${mobile.scrollWidth}/${mobile.clientWidth}`);
+  if (mobile.stageWidth > mobile.clientWidth) throw new Error(`Plansza wychodzi poza ekran mobile: ${mobile.stageWidth}/${mobile.clientWidth}`);
+
   if (pageErrors.length) throw new Error(`Błędy JS strony: ${pageErrors.join(' | ')}`);
-  console.log(`CREATOR_PREMIUM_SMOKE_PASS props=${propCount} stage=${layout.stageWidth}x${layout.stageHeight} thumb=${layout.thumbHeight}`);
+  console.log(`CREATOR_PREMIUM_SMOKE_PASS props=${propCount} stage=${layout.stageWidth}x${layout.stageHeight} thumb=${layout.thumbHeight} mobile=${mobile.clientWidth}`);
 } finally {
   await browser.close();
 }

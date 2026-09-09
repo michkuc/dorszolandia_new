@@ -3,8 +3,17 @@ import puppeteer from 'puppeteer';
 const browser = await puppeteer.launch({headless:true,args:['--no-sandbox','--disable-setuid-sandbox']});
 const page = await browser.newPage();
 const errors=[];
+const missing=[];
 page.on('pageerror', error => { errors.push(String(error.message || error)); console.error('[pageerror]', error.message || error); });
 page.on('console', message => console.log(`[browser:${message.type()}] ${message.text()}`));
+page.on('response', response => {
+  if (response.status() === 404) {
+    const url = response.url();
+    missing.push(url);
+    console.error('[404]', url);
+  }
+});
+
 try {
   await page.setViewport({width:1440,height:1000,deviceScaleFactor:1});
   await page.goto('http://127.0.0.1:4173/mieszkancy.html', {waitUntil:'domcontentloaded', timeout:30000});
@@ -31,5 +40,6 @@ try {
   if (!await page.$('#modalContent .master-source-note')) throw new Error('Brak jawnego statusu źródła dla historii 48–56');
   await page.click('#modalClose');
   if (errors.length) throw new Error(`Błędy JS: ${errors.join(' | ')}`);
-  console.log(`CANON_SMOKE_PASS atlas=${atlas.count} storyPeople=${atlas.storyPeople} stories=${total} sections=${tabs.length}`);
+  if (missing.length) throw new Error(`Brakujące zasoby 404 (${missing.length}): ${[...new Set(missing)].join(' | ')}`);
+  console.log(`CANON_SMOKE_PASS atlas=${atlas.count} storyPeople=${atlas.storyPeople} stories=${total} sections=${tabs.length} missing=0`);
 } finally { await browser.close(); }

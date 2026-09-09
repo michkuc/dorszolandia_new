@@ -21,10 +21,10 @@ jobs:
       - name: Install Puppeteer
         run: npm install --no-save puppeteer@24
 
-      - name: Start static server
+      - name: Run creator smoke test in Chromium
         run: |
           python3 -m http.server 4173 --directory dist >/tmp/dorsz-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
           sleep 2
-
-      - name: Run creator smoke test
-        run: node tests/creator-smoke.mjs
+          node tests/creator-smoke.mjs

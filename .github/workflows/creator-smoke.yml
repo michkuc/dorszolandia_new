@@ -18,6 +18,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Recover Atlas payload
+        id: recover_atlas
+        continue-on-error: true
+        run: node tests/recover-atlas.mjs
+      - name: Upload Atlas recovery artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-recovery
+          path: recovery-output/
+          if-no-files-found: warn
+          retention-days: 2
       - name: Install Puppeteer
         run: npm install --no-save puppeteer@24
       - name: Run browser smoke suite

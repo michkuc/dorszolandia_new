@@ -1,0 +1,30 @@
+name: Dorsz creator smoke test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  creator-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Puppeteer
+        run: npm install --no-save puppeteer@24
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --directory dist >/tmp/dorsz-server.log 2>&1 &
+          sleep 2
+
+      - name: Run creator smoke test
+        run: node tests/creator-smoke.mjs

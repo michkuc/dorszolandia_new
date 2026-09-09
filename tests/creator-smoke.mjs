@@ -2,20 +2,34 @@ import puppeteer from 'puppeteer';
 
 const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
 const page = await browser.newPage();
+await page.setViewport({ width: 1440, height: 1000, deviceScaleFactor: 1 });
 const pageErrors = [];
 page.on('pageerror', error => pageErrors.push(error.message));
 page.on('console', message => console.log(`[browser:${message.type()}] ${message.text()}`));
 
 try {
   await page.goto('http://127.0.0.1:4173/', { waitUntil: 'domcontentloaded', timeout: 20000 });
-  await page.waitForSelector('#kreator .prop-button', { timeout: 10000 });
+  await page.waitForSelector('#kreator.creator-premium .prop-button', { timeout: 10000 });
 
   const propCount = await page.$$eval('#kreator .prop-button', nodes => nodes.length);
-  if (propCount < 30) throw new Error(`Za mało rekwizytów w kreatorze: ${propCount}`);
+  if (propCount !== 36) throw new Error(`Kreator powinien mieć 36 rekwizytów, ma: ${propCount}`);
 
-  const mirrorExists = await page.$('#mirrorHorizontal');
-  const newFishExists = await page.$('#newFish');
-  if (!mirrorExists || !newFishExists) throw new Error('Brakuje kontrolek Lustro lub Nowy Dorsz');
+  const duplicateFilters = await page.$$eval('#creatorPropFilters', nodes => nodes.length);
+  if (duplicateFilters !== 1) throw new Error(`Kreator zainicjalizował się wielokrotnie: ${duplicateFilters}`);
+
+  const layout = await page.$eval('#kreator .creator-premium-layout', el => {
+    const rect = el.getBoundingClientRect();
+    const stage = el.querySelector('#creatorStage')?.getBoundingClientRect();
+    const paletteImg = el.querySelector('.prop-button img')?.getBoundingClientRect();
+    return { width: rect.width, stageWidth: stage?.width || 0, stageHeight: stage?.height || 0, thumbHeight: paletteImg?.height || 0 };
+  });
+  if (layout.width < 1200) throw new Error(`Układ desktop jest za wąski: ${layout.width}`);
+  if (layout.stageWidth < 600 || layout.stageHeight < 500) throw new Error(`Plansza Dorsza jest za mała: ${layout.stageWidth}x${layout.stageHeight}`);
+  if (layout.thumbHeight < 60) throw new Error(`Miniatury rekwizytów są za małe: ${layout.thumbHeight}`);
+
+  for (const id of ['mirrorHorizontal','mirrorVertical','fitAccessory','bringFront','sendBack','newFish']) {
+    if (!await page.$(`#${id}`)) throw new Error(`Brakuje kontrolki ${id}`);
+  }
 
   await page.click('#kreator .prop-button');
   await page.waitForSelector('#placedItems .placed-prop', { timeout: 5000 });
@@ -54,8 +68,7 @@ try {
   if (placedCount !== 0) throw new Error(`Nowy Dorsz nie wyczyścił rekwizytów: ${placedCount}`);
 
   if (pageErrors.length) throw new Error(`Błędy JS strony: ${pageErrors.join(' | ')}`);
-
-  console.log(`CREATOR_SMOKE_PASS props=${propCount}`);
+  console.log(`CREATOR_PREMIUM_SMOKE_PASS props=${propCount} stage=${layout.stageWidth}x${layout.stageHeight} thumb=${layout.thumbHeight}`);
 } finally {
   await browser.close();
 }

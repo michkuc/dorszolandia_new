@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interaktywna mapa Dorszolandii — miejsca, mieszkańcy i misje." />
+  <title>Mapa — Dorszolandia</title>
+  <link rel="icon" href="assets/hero/logo-dorszolandia.png" />
+  <link rel="stylesheet" href="styles.css?v=20260909-6" />
+  <link rel="stylesheet" href="multipage.css?v=20260909-1" />
+  <link rel="stylesheet" href="mapa.css?v=20260909-1" />
+</head>
+<body data-page="mapa">
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <header id="siteHeader"></header>
+  <main id="main" class="page-main">
+    <section class="page-hero"><div class="wrap"><p class="eyebrow">Mapa Krainy</p><h1>Wyrusz w podróż po Dorszolandii</h1><p class="lead">Kliknij numer bezpośrednio na mapie albo wybierz miejsce z listy. Opis, mieszkańcy i misja zmienią się bez przeładowywania strony.</p></div></section>
+    <section class="content-section"><div class="wrap"><div class="map-page-layout"><div class="map-page-canvas"><img src="assets/source/map.webp" alt="Mapa Dorszolandii" /><div class="map-page-hotspots" id="mapHotspots" aria-label="Punkty mapy"></div></div><aside class="map-side"><div class="map-place-list" id="mapPlaceList"></div><article class="map-detail" id="mapDetail" aria-live="polite"></article></aside></div></div></section>
+    <section class="content-section alt"><div class="wrap"><div class="section-title"><p class="kicker">Przygody z mapy</p><h2>Misje do wykonania</h2><p>Krótka zabawa lub zadanie inspirowane miejscami Dorszolandii.</p></div><div class="map-adventure-grid" id="mapAdventures"></div></div></section>
+  </main>
+  <footer id="siteFooter"></footer>
+  <dialog class="modal" id="modal"><button class="modal-close" id="modalClose" type="button" aria-label="Zamknij">×</button><div id="modalContent"></div></dialog>
+  <script type="module" src="site-shell.js?v=20260909-1"></script>
+  <script type="module" src="mapa-page.js?v=20260909-1"></script>
+</body>
+</html>

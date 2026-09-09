@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mieszkańcy Dorszolandii — Dorszuś, Borys i niezależny Atlas 59 postaci." />
+  <title>Mieszkańcy — Dorszolandia</title>
+  <link rel="icon" href="assets/hero/logo-dorszolandia.png" />
+  <link rel="stylesheet" href="styles.css?v=20260909-6" />
+  <link rel="stylesheet" href="multipage.css?v=20260909-1" />
+</head>
+<body data-page="mieszkancy">
+  <a class="skip-link" href="#main">Przejdź do treści</a>
+  <header id="siteHeader"></header>
+  <main id="main" class="page-main">
+    <section class="page-hero">
+      <div class="wrap"><p class="eyebrow">Bohaterowie i mieszkańcy</p><h1>Mieszkańcy Dorszolandii</h1><p class="lead">Główny cykl Borysa i Dorszusia jest pokazany osobno od niezależnego Atlasu 59 postaci. Dzięki temu nie mieszamy dwóch warstw świata i każdą można rozwijać niezależnie.</p></div>
+    </section>
+
+    <section class="content-section">
+      <div class="wrap">
+        <div class="section-title"><p class="kicker">Główny cykl opowieści</p><h2>Borys, Dorszuś i ich świat</h2><p>To bohaterowie serii opowiadań. Król Dorsz nie jest Królem Koralisem I z Atlasu.</p></div>
+        <div class="story-people-grid" id="storyPeople"></div>
+      </div>
+    </section>
+
+    <section class="content-section alt" id="atlas">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="kicker">Wielka Księga Bohaterów</p><h2>Atlas 59 postaci</h2><p>Każda postać ma własne miejsce, charakter, talent, słabość, historię i zaczep fabularny.</p></div><span class="atlas-counter">59 postaci</span></div>
+        <div class="atlas-toolbar"><div class="chip-row" id="atlasFilters"></div><label class="atlas-search">Szukaj postaci<input id="atlasSearch" type="search" placeholder="np. detektyw, sport, królowa…" /></label></div>
+        <div class="atlas-page-grid" id="atlasGrid" aria-live="polite"></div>
+        <p class="empty-state" id="atlasEmpty" hidden>Nie znaleziono postaci dla wybranego filtra.</p>
+      </div>
+    </section>
+  </main>
+  <footer id="siteFooter"></footer>
+  <dialog class="modal" id="modal"><button class="modal-close" id="modalClose" type="button" aria-label="Zamknij">×</button><div id="modalContent"></div></dialog>
+  <script type="module" src="site-shell.js?v=20260909-1"></script>
+  <script type="module" src="mieszkancy-page.js?v=20260909-1"></script>
+</body>
+</html>
